@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		497C69A11C52709000FCB6F5 /* Anomaly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69871C52709000FCB6F5 /* Anomaly.swift */; };
+		497C69A21C52709000FCB6F5 /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69881C52709000FCB6F5 /* Association.swift */; };
+		497C69A31C52709000FCB6F5 /* AssociationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69891C52709000FCB6F5 /* AssociationItem.swift */; };
+		497C69A41C52709000FCB6F5 /* AssociationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C698A1C52709000FCB6F5 /* AssociationRule.swift */; };
+		497C69A51C52709000FCB6F5 /* Centroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C698B1C52709000FCB6F5 /* Centroid.swift */; };
+		497C69A61C52709000FCB6F5 /* ChiSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C698C1C52709000FCB6F5 /* ChiSquare.swift */; };
+		497C69A71C52709000FCB6F5 /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C698D1C52709000FCB6F5 /* Cluster.swift */; };
+		497C69A81C52709000FCB6F5 /* Ensemble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C698E1C52709000FCB6F5 /* Ensemble.swift */; };
+		497C69A91C52709000FCB6F5 /* FieldResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C698F1C52709000FCB6F5 /* FieldResource.swift */; };
+		497C69AB1C52709000FCB6F5 /* LogisticRegression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69911C52709000FCB6F5 /* LogisticRegression.swift */; };
+		497C69AC1C52709000FCB6F5 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69921C52709000FCB6F5 /* Model.swift */; };
+		497C69AD1C52709000FCB6F5 /* MultiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69931C52709000FCB6F5 /* MultiModel.swift */; };
+		497C69AE1C52709000FCB6F5 /* MultiVote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69941C52709000FCB6F5 /* MultiVote.swift */; };
+		497C69AF1C52709000FCB6F5 /* Predicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69951C52709000FCB6F5 /* Predicates.swift */; };
+		497C69B01C52709000FCB6F5 /* PredictionTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69961C52709000FCB6F5 /* PredictionTree.swift */; };
+		497C69B11C52709000FCB6F5 /* TreePrediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69971C52709000FCB6F5 /* TreePrediction.swift */; };
+		497C69B21C52709000FCB6F5 /* BMLConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 497C69981C52709000FCB6F5 /* BMLConnector.h */; };
+		497C69B31C52709000FCB6F5 /* BMLConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69991C52709000FCB6F5 /* BMLConnector.swift */; };
+		497C69B41C52709000FCB6F5 /* BMLEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699A1C52709000FCB6F5 /* BMLEnums.swift */; };
+		497C69B51C52709000FCB6F5 /* BMLHTTPConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699B1C52709000FCB6F5 /* BMLHTTPConnector.swift */; };
+		497C69B61C52709000FCB6F5 /* BMLHTTPMethodHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699C1C52709000FCB6F5 /* BMLHTTPMethodHandler.swift */; };
+		497C69B71C52709000FCB6F5 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699D1C52709000FCB6F5 /* Resource.swift */; };
+		497C69B81C52709000FCB6F5 /* ResourceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699E1C52709000FCB6F5 /* ResourceStatus.swift */; };
+		497C69B91C52709000FCB6F5 /* ResourceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699F1C52709000FCB6F5 /* ResourceTypes.swift */; };
+		497C69BA1C52709000FCB6F5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69A01C52709000FCB6F5 /* Utils.swift */; };
+		497C69DC1C52716E00FCB6F5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DB1C52716E00FCB6F5 /* credentials.plist */; };
+		497C69EE1C5271A400FCB6F5 /* baseball.ensemble in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DE1C5271A400FCB6F5 /* baseball.ensemble */; };
+		497C69EF1C5271A400FCB6F5 /* diab.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DF1C5271A400FCB6F5 /* diab.csv */; };
+		497C69F01C5271A400FCB6F5 /* iris-sp-chars.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E01C5271A400FCB6F5 /* iris-sp-chars.csv */; };
+		497C69F11C5271A400FCB6F5 /* iris.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E11C5271A400FCB6F5 /* iris.csv */; };
+		497C69F21C5271A400FCB6F5 /* iris.ensemble in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E21C5271A400FCB6F5 /* iris.ensemble */; };
+		497C69F31C5271A400FCB6F5 /* iris.logistic in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E31C5271A400FCB6F5 /* iris.logistic */; };
+		497C69F41C5271A400FCB6F5 /* iris.model in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E41C5271A400FCB6F5 /* iris.model */; };
+		497C69F51C5271A400FCB6F5 /* movies.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E51C5271A400FCB6F5 /* movies.csv */; };
+		497C69F61C5271A400FCB6F5 /* salaries.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E61C5271A400FCB6F5 /* salaries.csv */; };
+		497C69F71C5271A400FCB6F5 /* spam-text.cluster in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E71C5271A400FCB6F5 /* spam-text.cluster */; };
+		497C69F81C5271A400FCB6F5 /* spam.cluster in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E81C5271A400FCB6F5 /* spam.cluster */; };
+		497C69F91C5271A400FCB6F5 /* spam.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E91C5271A400FCB6F5 /* spam.csv */; };
+		497C69FA1C5271A400FCB6F5 /* spam.model in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EA1C5271A400FCB6F5 /* spam.model */; };
+		497C69FB1C5271A400FCB6F5 /* testAnomaly.json in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EB1C5271A400FCB6F5 /* testAnomaly.json */; };
+		497C69FC1C5271A400FCB6F5 /* testCluster.json in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EC1C5271A400FCB6F5 /* testCluster.json */; };
+		497C69FD1C5271A400FCB6F5 /* wines.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69ED1C5271A400FCB6F5 /* wines.csv */; };
+		497C6A3B1C52775100FCB6F5 /* bigmlSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C5AA6E1AEF943800B81AA6 /* bigmlSwift.framework */; };
+		497C6A421C52777C00FCB6F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C6A411C52777C00FCB6F5 /* Info.plist */; };
+		497C6A431C52779800FCB6F5 /* bigmlSwiftPredicateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A061C5271C400FCB6F5 /* bigmlSwiftPredicateTests.swift */; };
+		497C6A441C5277A400FCB6F5 /* bigmlSwiftAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69FE1C5271C400FCB6F5 /* bigmlSwiftAPITests.swift */; };
+		497C6A461C5277B300FCB6F5 /* bigmlSwiftAssociationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69FF1C5271C400FCB6F5 /* bigmlSwiftAssociationTests.swift */; };
+		497C6A471C5277B300FCB6F5 /* bigmlSwiftBaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A001C5271C400FCB6F5 /* bigmlSwiftBaseTest.swift */; };
+		497C6A481C5277B300FCB6F5 /* bigmlSwiftCentroidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A011C5271C400FCB6F5 /* bigmlSwiftCentroidTests.swift */; };
+		497C6A491C5277B300FCB6F5 /* bigmlSwiftChiSquaredTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A021C5271C400FCB6F5 /* bigmlSwiftChiSquaredTests.swift */; };
+		497C6A4A1C5277B300FCB6F5 /* bigmlSwiftEnsembleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A031C5271C400FCB6F5 /* bigmlSwiftEnsembleTests.swift */; };
+		497C6A4B1C5277B300FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A041C5271C400FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift */; };
+		497C6A4D1C5277B300FCB6F5 /* bigmlSwiftPredictionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A071C5271C400FCB6F5 /* bigmlSwiftPredictionTests.swift */; };
+		497C6A4F1C5278EE00FCB6F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C6A4E1C5278EE00FCB6F5 /* Info.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		497C6A3C1C52775100FCB6F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49C5AA651AEF943800B81AA6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49C5AA6D1AEF943800B81AA6;
+			remoteInfo = bigmlSwift;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		497C69871C52709000FCB6F5 /* Anomaly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anomaly.swift; sourceTree = "<group>"; };
+		497C69881C52709000FCB6F5 /* Association.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
+		497C69891C52709000FCB6F5 /* AssociationItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssociationItem.swift; sourceTree = "<group>"; };
+		497C698A1C52709000FCB6F5 /* AssociationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssociationRule.swift; sourceTree = "<group>"; };
+		497C698B1C52709000FCB6F5 /* Centroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Centroid.swift; sourceTree = "<group>"; };
+		497C698C1C52709000FCB6F5 /* ChiSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChiSquare.swift; sourceTree = "<group>"; };
+		497C698D1C52709000FCB6F5 /* Cluster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
+		497C698E1C52709000FCB6F5 /* Ensemble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ensemble.swift; sourceTree = "<group>"; };
+		497C698F1C52709000FCB6F5 /* FieldResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldResource.swift; sourceTree = "<group>"; };
+		497C69911C52709000FCB6F5 /* LogisticRegression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogisticRegression.swift; sourceTree = "<group>"; };
+		497C69921C52709000FCB6F5 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		497C69931C52709000FCB6F5 /* MultiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiModel.swift; sourceTree = "<group>"; };
+		497C69941C52709000FCB6F5 /* MultiVote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiVote.swift; sourceTree = "<group>"; };
+		497C69951C52709000FCB6F5 /* Predicates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Predicates.swift; sourceTree = "<group>"; };
+		497C69961C52709000FCB6F5 /* PredictionTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionTree.swift; sourceTree = "<group>"; };
+		497C69971C52709000FCB6F5 /* TreePrediction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreePrediction.swift; sourceTree = "<group>"; };
+		497C69981C52709000FCB6F5 /* BMLConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMLConnector.h; sourceTree = "<group>"; };
+		497C69991C52709000FCB6F5 /* BMLConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMLConnector.swift; sourceTree = "<group>"; };
+		497C699A1C52709000FCB6F5 /* BMLEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMLEnums.swift; sourceTree = "<group>"; };
+		497C699B1C52709000FCB6F5 /* BMLHTTPConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMLHTTPConnector.swift; sourceTree = "<group>"; };
+		497C699C1C52709000FCB6F5 /* BMLHTTPMethodHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMLHTTPMethodHandler.swift; sourceTree = "<group>"; };
+		497C699D1C52709000FCB6F5 /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		497C699E1C52709000FCB6F5 /* ResourceStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceStatus.swift; sourceTree = "<group>"; };
+		497C699F1C52709000FCB6F5 /* ResourceTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTypes.swift; sourceTree = "<group>"; };
+		497C69A01C52709000FCB6F5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		497C69DB1C52716E00FCB6F5 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = credentials.plist; path = "bigml-swiftTests/credentials.plist"; sourceTree = SOURCE_ROOT; };
+		497C69DE1C5271A400FCB6F5 /* baseball.ensemble */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = baseball.ensemble; sourceTree = "<group>"; };
+		497C69DF1C5271A400FCB6F5 /* diab.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = diab.csv; sourceTree = "<group>"; };
+		497C69E01C5271A400FCB6F5 /* iris-sp-chars.csv */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iris-sp-chars.csv"; sourceTree = "<group>"; };
+		497C69E11C5271A400FCB6F5 /* iris.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iris.csv; sourceTree = "<group>"; };
+		497C69E21C5271A400FCB6F5 /* iris.ensemble */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iris.ensemble; sourceTree = "<group>"; };
+		497C69E31C5271A400FCB6F5 /* iris.logistic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iris.logistic; sourceTree = "<group>"; };
+		497C69E41C5271A400FCB6F5 /* iris.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iris.model; sourceTree = "<group>"; };
+		497C69E51C5271A400FCB6F5 /* movies.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = movies.csv; sourceTree = "<group>"; };
+		497C69E61C5271A400FCB6F5 /* salaries.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = salaries.csv; sourceTree = "<group>"; };
+		497C69E71C5271A400FCB6F5 /* spam-text.cluster */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "spam-text.cluster"; sourceTree = "<group>"; };
+		497C69E81C5271A400FCB6F5 /* spam.cluster */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spam.cluster; sourceTree = "<group>"; };
+		497C69E91C5271A400FCB6F5 /* spam.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spam.csv; sourceTree = "<group>"; };
+		497C69EA1C5271A400FCB6F5 /* spam.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spam.model; sourceTree = "<group>"; };
+		497C69EB1C5271A400FCB6F5 /* testAnomaly.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testAnomaly.json; sourceTree = "<group>"; };
+		497C69EC1C5271A400FCB6F5 /* testCluster.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testCluster.json; sourceTree = "<group>"; };
+		497C69ED1C5271A400FCB6F5 /* wines.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wines.csv; sourceTree = "<group>"; };
+		497C69FE1C5271C400FCB6F5 /* bigmlSwiftAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftAPITests.swift; path = "bigml-swiftTests/bigmlSwiftAPITests.swift"; sourceTree = SOURCE_ROOT; };
+		497C69FF1C5271C400FCB6F5 /* bigmlSwiftAssociationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftAssociationTests.swift; path = "bigml-swiftTests/bigmlSwiftAssociationTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A001C5271C400FCB6F5 /* bigmlSwiftBaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftBaseTest.swift; path = "bigml-swiftTests/bigmlSwiftBaseTest.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A011C5271C400FCB6F5 /* bigmlSwiftCentroidTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftCentroidTests.swift; path = "bigml-swiftTests/bigmlSwiftCentroidTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A021C5271C400FCB6F5 /* bigmlSwiftChiSquaredTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftChiSquaredTests.swift; path = "bigml-swiftTests/bigmlSwiftChiSquaredTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A031C5271C400FCB6F5 /* bigmlSwiftEnsembleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftEnsembleTests.swift; path = "bigml-swiftTests/bigmlSwiftEnsembleTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A041C5271C400FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftLogisticRegressionTests.swift; path = "bigml-swiftTests/bigmlSwiftLogisticRegressionTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A061C5271C400FCB6F5 /* bigmlSwiftPredicateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftPredicateTests.swift; path = "bigml-swiftTests/bigmlSwiftPredicateTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A071C5271C400FCB6F5 /* bigmlSwiftPredictionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = bigmlSwiftPredictionTests.swift; path = "bigml-swiftTests/bigmlSwiftPredictionTests.swift"; sourceTree = SOURCE_ROOT; };
+		497C6A361C52775000FCB6F5 /* bigml-swiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "bigml-swiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		497C6A411C52777C00FCB6F5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "bigml-swiftTests/Info.plist"; sourceTree = SOURCE_ROOT; };
+		497C6A4E1C5278EE00FCB6F5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		49C5AA6E1AEF943800B81AA6 /* bigmlSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = bigmlSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		497C6A331C52775000FCB6F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				497C6A3B1C52775100FCB6F5 /* bigmlSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C5AA6A1AEF943800B81AA6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		497C69851C52709000FCB6F5 /* bigml-swift */ = {
+			isa = PBXGroup;
+			children = (
+				497C69861C52709000FCB6F5 /* algorithms */,
+				497C69981C52709000FCB6F5 /* BMLConnector.h */,
+				497C69991C52709000FCB6F5 /* BMLConnector.swift */,
+				497C699A1C52709000FCB6F5 /* BMLEnums.swift */,
+				497C699B1C52709000FCB6F5 /* BMLHTTPConnector.swift */,
+				497C699C1C52709000FCB6F5 /* BMLHTTPMethodHandler.swift */,
+				497C699D1C52709000FCB6F5 /* Resource.swift */,
+				497C699E1C52709000FCB6F5 /* ResourceStatus.swift */,
+				497C699F1C52709000FCB6F5 /* ResourceTypes.swift */,
+				497C69A01C52709000FCB6F5 /* Utils.swift */,
+				49C5AA711AEF943800B81AA6 /* Supporting Files */,
+			);
+			path = "bigml-swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		497C69861C52709000FCB6F5 /* algorithms */ = {
+			isa = PBXGroup;
+			children = (
+				497C69871C52709000FCB6F5 /* Anomaly.swift */,
+				497C69881C52709000FCB6F5 /* Association.swift */,
+				497C69891C52709000FCB6F5 /* AssociationItem.swift */,
+				497C698A1C52709000FCB6F5 /* AssociationRule.swift */,
+				497C698B1C52709000FCB6F5 /* Centroid.swift */,
+				497C698C1C52709000FCB6F5 /* ChiSquare.swift */,
+				497C698D1C52709000FCB6F5 /* Cluster.swift */,
+				497C698E1C52709000FCB6F5 /* Ensemble.swift */,
+				497C698F1C52709000FCB6F5 /* FieldResource.swift */,
+				497C69911C52709000FCB6F5 /* LogisticRegression.swift */,
+				497C69921C52709000FCB6F5 /* Model.swift */,
+				497C69931C52709000FCB6F5 /* MultiModel.swift */,
+				497C69941C52709000FCB6F5 /* MultiVote.swift */,
+				497C69951C52709000FCB6F5 /* Predicates.swift */,
+				497C69961C52709000FCB6F5 /* PredictionTree.swift */,
+				497C69971C52709000FCB6F5 /* TreePrediction.swift */,
+			);
+			path = algorithms;
+			sourceTree = "<group>";
+		};
+		497C69DD1C5271A400FCB6F5 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				497C69DE1C5271A400FCB6F5 /* baseball.ensemble */,
+				497C69DF1C5271A400FCB6F5 /* diab.csv */,
+				497C69E01C5271A400FCB6F5 /* iris-sp-chars.csv */,
+				497C69E11C5271A400FCB6F5 /* iris.csv */,
+				497C69E21C5271A400FCB6F5 /* iris.ensemble */,
+				497C69E31C5271A400FCB6F5 /* iris.logistic */,
+				497C69E41C5271A400FCB6F5 /* iris.model */,
+				497C69E51C5271A400FCB6F5 /* movies.csv */,
+				497C69E61C5271A400FCB6F5 /* salaries.csv */,
+				497C69E71C5271A400FCB6F5 /* spam-text.cluster */,
+				497C69E81C5271A400FCB6F5 /* spam.cluster */,
+				497C69E91C5271A400FCB6F5 /* spam.csv */,
+				497C69EA1C5271A400FCB6F5 /* spam.model */,
+				497C69EB1C5271A400FCB6F5 /* testAnomaly.json */,
+				497C69EC1C5271A400FCB6F5 /* testCluster.json */,
+				497C69ED1C5271A400FCB6F5 /* wines.csv */,
+			);
+			name = data;
+			path = "bigml-swiftTests/data";
+			sourceTree = SOURCE_ROOT;
+		};
+		49C5AA641AEF943800B81AA6 = {
+			isa = PBXGroup;
+			children = (
+				497C69851C52709000FCB6F5 /* bigml-swift */,
+				49C5AA7D1AEF943900B81AA6 /* bigm-swiftTest */,
+				49C5AA6F1AEF943800B81AA6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		49C5AA6F1AEF943800B81AA6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49C5AA6E1AEF943800B81AA6 /* bigmlSwift.framework */,
+				497C6A361C52775000FCB6F5 /* bigml-swiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		49C5AA711AEF943800B81AA6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				497C6A4E1C5278EE00FCB6F5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			path = "../bigml-swift";
+			sourceTree = "<group>";
+		};
+		49C5AA7D1AEF943900B81AA6 /* bigm-swiftTest */ = {
+			isa = PBXGroup;
+			children = (
+				497C69DD1C5271A400FCB6F5 /* data */,
+				497C69DB1C52716E00FCB6F5 /* credentials.plist */,
+				49C5AA7E1AEF943900B81AA6 /* Supporting Files */,
+				497C69FE1C5271C400FCB6F5 /* bigmlSwiftAPITests.swift */,
+				497C69FF1C5271C400FCB6F5 /* bigmlSwiftAssociationTests.swift */,
+				497C6A001C5271C400FCB6F5 /* bigmlSwiftBaseTest.swift */,
+				497C6A011C5271C400FCB6F5 /* bigmlSwiftCentroidTests.swift */,
+				497C6A021C5271C400FCB6F5 /* bigmlSwiftChiSquaredTests.swift */,
+				497C6A031C5271C400FCB6F5 /* bigmlSwiftEnsembleTests.swift */,
+				497C6A041C5271C400FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift */,
+				497C6A061C5271C400FCB6F5 /* bigmlSwiftPredicateTests.swift */,
+				497C6A071C5271C400FCB6F5 /* bigmlSwiftPredictionTests.swift */,
+			);
+			name = "bigm-swiftTest";
+			path = "bigml-swiftTests";
+			sourceTree = "<group>";
+		};
+		49C5AA7E1AEF943900B81AA6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				497C6A411C52777C00FCB6F5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		49C5AA6B1AEF943800B81AA6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				497C69B21C52709000FCB6F5 /* BMLConnector.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		497C6A351C52775000FCB6F5 /* bigml-swiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 497C6A3E1C52775100FCB6F5 /* Build configuration list for PBXNativeTarget "bigml-swiftTests" */;
+			buildPhases = (
+				497C6A321C52775000FCB6F5 /* Sources */,
+				497C6A331C52775000FCB6F5 /* Frameworks */,
+				497C6A341C52775000FCB6F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				497C6A3D1C52775100FCB6F5 /* PBXTargetDependency */,
+			);
+			name = "bigml-swiftTests";
+			productName = "bigml-swiftTests";
+			productReference = 497C6A361C52775000FCB6F5 /* bigml-swiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		49C5AA6D1AEF943800B81AA6 /* bigmlSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49C5AA841AEF943900B81AA6 /* Build configuration list for PBXNativeTarget "bigmlSwift" */;
+			buildPhases = (
+				49C5AA691AEF943800B81AA6 /* Sources */,
+				49C5AA6A1AEF943800B81AA6 /* Frameworks */,
+				49C5AA6B1AEF943800B81AA6 /* Headers */,
+				49C5AA6C1AEF943800B81AA6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bigmlSwift;
+			productName = bigmlSwift;
+			productReference = 49C5AA6E1AEF943800B81AA6 /* bigmlSwift.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		49C5AA651AEF943800B81AA6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "BigML Inc.";
+				TargetAttributes = {
+					497C6A351C52775000FCB6F5 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					49C5AA6D1AEF943800B81AA6 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+				};
+			};
+			buildConfigurationList = 49C5AA681AEF943800B81AA6 /* Build configuration list for PBXProject "bigml-swift" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 49C5AA641AEF943800B81AA6;
+			productRefGroup = 49C5AA6F1AEF943800B81AA6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				49C5AA6D1AEF943800B81AA6 /* bigmlSwift */,
+				497C6A351C52775000FCB6F5 /* bigml-swiftTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		497C6A341C52775000FCB6F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				497C6A421C52777C00FCB6F5 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C5AA6C1AEF943800B81AA6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				497C69FA1C5271A400FCB6F5 /* spam.model in Resources */,
+				497C69FC1C5271A400FCB6F5 /* testCluster.json in Resources */,
+				497C69F71C5271A400FCB6F5 /* spam-text.cluster in Resources */,
+				497C69F31C5271A400FCB6F5 /* iris.logistic in Resources */,
+				497C69F51C5271A400FCB6F5 /* movies.csv in Resources */,
+				497C69F81C5271A400FCB6F5 /* spam.cluster in Resources */,
+				497C69F41C5271A400FCB6F5 /* iris.model in Resources */,
+				497C69EE1C5271A400FCB6F5 /* baseball.ensemble in Resources */,
+				497C69DC1C52716E00FCB6F5 /* credentials.plist in Resources */,
+				497C6A4F1C5278EE00FCB6F5 /* Info.plist in Resources */,
+				497C69F91C5271A400FCB6F5 /* spam.csv in Resources */,
+				497C69FB1C5271A400FCB6F5 /* testAnomaly.json in Resources */,
+				497C69F21C5271A400FCB6F5 /* iris.ensemble in Resources */,
+				497C69F01C5271A400FCB6F5 /* iris-sp-chars.csv in Resources */,
+				497C69FD1C5271A400FCB6F5 /* wines.csv in Resources */,
+				497C69EF1C5271A400FCB6F5 /* diab.csv in Resources */,
+				497C69F61C5271A400FCB6F5 /* salaries.csv in Resources */,
+				497C69F11C5271A400FCB6F5 /* iris.csv in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		497C6A321C52775000FCB6F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				497C6A431C52779800FCB6F5 /* bigmlSwiftPredicateTests.swift in Sources */,
+				497C6A461C5277B300FCB6F5 /* bigmlSwiftAssociationTests.swift in Sources */,
+				497C6A471C5277B300FCB6F5 /* bigmlSwiftBaseTest.swift in Sources */,
+				497C6A441C5277A400FCB6F5 /* bigmlSwiftAPITests.swift in Sources */,
+				497C6A4D1C5277B300FCB6F5 /* bigmlSwiftPredictionTests.swift in Sources */,
+				497C6A491C5277B300FCB6F5 /* bigmlSwiftChiSquaredTests.swift in Sources */,
+				497C6A4A1C5277B300FCB6F5 /* bigmlSwiftEnsembleTests.swift in Sources */,
+				497C6A481C5277B300FCB6F5 /* bigmlSwiftCentroidTests.swift in Sources */,
+				497C6A4B1C5277B300FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49C5AA691AEF943800B81AA6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				497C69B11C52709000FCB6F5 /* TreePrediction.swift in Sources */,
+				497C69A31C52709000FCB6F5 /* AssociationItem.swift in Sources */,
+				497C69AF1C52709000FCB6F5 /* Predicates.swift in Sources */,
+				497C69A41C52709000FCB6F5 /* AssociationRule.swift in Sources */,
+				497C69AB1C52709000FCB6F5 /* LogisticRegression.swift in Sources */,
+				497C69AD1C52709000FCB6F5 /* MultiModel.swift in Sources */,
+				497C69B71C52709000FCB6F5 /* Resource.swift in Sources */,
+				497C69B41C52709000FCB6F5 /* BMLEnums.swift in Sources */,
+				497C69A11C52709000FCB6F5 /* Anomaly.swift in Sources */,
+				497C69A61C52709000FCB6F5 /* ChiSquare.swift in Sources */,
+				497C69B51C52709000FCB6F5 /* BMLHTTPConnector.swift in Sources */,
+				497C69A81C52709000FCB6F5 /* Ensemble.swift in Sources */,
+				497C69B01C52709000FCB6F5 /* PredictionTree.swift in Sources */,
+				497C69B81C52709000FCB6F5 /* ResourceStatus.swift in Sources */,
+				497C69AE1C52709000FCB6F5 /* MultiVote.swift in Sources */,
+				497C69A91C52709000FCB6F5 /* FieldResource.swift in Sources */,
+				497C69A21C52709000FCB6F5 /* Association.swift in Sources */,
+				497C69AC1C52709000FCB6F5 /* Model.swift in Sources */,
+				497C69A51C52709000FCB6F5 /* Centroid.swift in Sources */,
+				497C69B31C52709000FCB6F5 /* BMLConnector.swift in Sources */,
+				497C69A71C52709000FCB6F5 /* Cluster.swift in Sources */,
+				497C69B91C52709000FCB6F5 /* ResourceTypes.swift in Sources */,
+				497C69B61C52709000FCB6F5 /* BMLHTTPMethodHandler.swift in Sources */,
+				497C69BA1C52709000FCB6F5 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		497C6A3D1C52775100FCB6F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49C5AA6D1AEF943800B81AA6 /* bigmlSwift */;
+			targetProxy = 497C6A3C1C52775100FCB6F5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		497C6A3F1C52775100FCB6F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "bigml-swiftTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.bigml-swiftTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		497C6A401C52775100FCB6F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "bigml-swiftTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.bigml-swiftTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		49C5AA821AEF943900B81AA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		49C5AA831AEF943900B81AA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		49C5AA851AEF943900B81AA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "bigml-swift/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = bigmlSwift;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		49C5AA861AEF943900B81AA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "bigml-swift/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = bigmlSwift;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		497C6A3E1C52775100FCB6F5 /* Build configuration list for PBXNativeTarget "bigml-swiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				497C6A3F1C52775100FCB6F5 /* Debug */,
+				497C6A401C52775100FCB6F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49C5AA681AEF943800B81AA6 /* Build configuration list for PBXProject "bigml-swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49C5AA821AEF943900B81AA6 /* Debug */,
+				49C5AA831AEF943900B81AA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49C5AA841AEF943900B81AA6 /* Build configuration list for PBXNativeTarget "bigmlSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49C5AA851AEF943900B81AA6 /* Debug */,
+				49C5AA861AEF943900B81AA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 49C5AA651AEF943800B81AA6 /* Project object */;
+}

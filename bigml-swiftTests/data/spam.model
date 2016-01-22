@@ -1,0 +1,3611 @@
+{
+"category": {
+"id": 0,
+"name": "Miscellaneous"
+},
+"description": "Predictor for Type from model/542d6e2b288afe36b2000023",
+"tags": [
+"Type"
+],
+"objective_field": "000000",
+"name": "spam.tsv",
+"created": "2014-10-02T15:24:27.661000",
+"input_fields": [
+"000001"
+],
+"model": {
+"kind": "mtree",
+"importance": [
+[
+"000001",
+1
+]
+],
+"fields": {
+"000000": {
+"optype": "categorical",
+"name": "Type",
+"datatype": "string",
+"preferred": true,
+"term_analysis": {
+"enabled": true
+},
+"column_number": 0,
+"order": 0
+},
+"000001": {
+"optype": "categorical",
+"name": "Message",
+"datatype": "string",
+"preferred": false,
+"term_analysis": {
+"enabled": true
+},
+"column_number": 1,
+"order": 1
+}
+},
+"node_threshold": 512,
+"model_fields": {
+"000000": {
+"optype": "categorical",
+"name": "Type",
+"datatype": "string",
+"term_analysis": {
+"enabled": true
+},
+"preferred": true,
+"column_number": 0
+},
+"000001": {
+"optype": "categorical",
+"name": "Message",
+"datatype": "string",
+"term_analysis": {
+"enabled": true
+},
+"preferred": false,
+"column_number": 1
+}
+},
+"missing_tokens": [
+"",
+"NaN",
+"NULL",
+"N/A",
+"null",
+"-",
+"#REF!",
+"#VALUE!",
+"?",
+"#NULL!",
+"#NUM!",
+"#DIV/0",
+"n/a",
+"#NAME?",
+"NIL",
+"nil",
+"na",
+"#N/A",
+"NA"
+],
+"root": {
+"count": 656,
+"confidence": 0.85243,
+"predicate": true,
+"id": 0,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+79
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "2p per min to call Germany 08448350055 from your BT line. Just 2p per min. Check PlanetTalkInstant.com for info & T's & C's. Text stop to opt out"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 1
+},
+{
+"count": 655,
+"confidence": 0.85386,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "2p per min to call Germany 08448350055 from your BT line. Just 2p per min. Check PlanetTalkInstant.com for info & T's & C's. Text stop to opt out"
+},
+"id": 2,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+78
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "500 New Mobiles from 2004, MUST GO! Txt: NOKIA to No: 89545 & collect yours today!From ONLY \u00a31 www.4-tc.biz 2optout 087187262701.50gbp/mtmsg18"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 3
+},
+{
+"count": 654,
+"confidence": 0.8553,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "500 New Mobiles from 2004, MUST GO! Txt: NOKIA to No: 89545 & collect yours today!From ONLY \u00a31 www.4-tc.biz 2optout 087187262701.50gbp/mtmsg18"
+},
+"id": 4,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+77
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "88066 FROM 88066 LOST 3POUND HELP"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 5
+},
+{
+"count": 653,
+"confidence": 0.85674,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "88066 FROM 88066 LOST 3POUND HELP"
+},
+"id": 6,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+76
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "<Forwarded from 21870000>Hi - this is your Mailbox Messaging SMS alert. You have 4 messages. You have 21 matches. Please call back on 09056242159 to retrieve your messages and matches"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 7
+},
+{
+"count": 652,
+"confidence": 0.85819,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "<Forwarded from 21870000>Hi - this is your Mailbox Messaging SMS alert. You have 4 messages. You have 21 matches. Please call back on 09056242159 to retrieve your messages and matches"
+},
+"id": 8,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+75
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "<Forwarded from 88877>FREE entry into our \u00a3250 weekly comp just send the word ENTER to 88877 NOW. 18 T&C www.textcomp.com"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 9
+},
+{
+"count": 651,
+"confidence": 0.85965,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "<Forwarded from 88877>FREE entry into our \u00a3250 weekly comp just send the word ENTER to 88877 NOW. 18 T&C www.textcomp.com"
+},
+"id": 10,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+74
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "A \u00a3400 XMAS REWARD IS WAITING FOR YOU! Our computer has randomly picked you from our loyal mobile customers to receive a \u00a3400 reward. Just call 09066380611"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 11
+},
+{
+"count": 650,
+"confidence": 0.86111,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "A \u00a3400 XMAS REWARD IS WAITING FOR YOU! Our computer has randomly picked you from our loyal mobile customers to receive a \u00a3400 reward. Just call 09066380611"
+},
+"id": 12,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+73
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "ASKED 3MOBILE IF 0870 CHATLINES INCLU IN FREE MINS. INDIA CUST SERVs SED YES. L8ER GOT MEGA BILL. 3 DONT GIV A SHIT. BAILIFF DUE IN DAYS. I O \u00a3250 3 WANT \u00a3800"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 13
+},
+{
+"count": 649,
+"confidence": 0.86257,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "ASKED 3MOBILE IF 0870 CHATLINES INCLU IN FREE MINS. INDIA CUST SERVs SED YES. L8ER GOT MEGA BILL. 3 DONT GIV A SHIT. BAILIFF DUE IN DAYS. I O \u00a3250 3 WANT \u00a3800"
+},
+"id": 14,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+72
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Back 2 work 2morro half term over! Can U C me 2nite 4 some sexy passion B4 I have 2 go back? Chat NOW 09099726481 Luv DENA Calls \u00a31/minMobsmoreLKPOBOX177HP51FL"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 15
+},
+{
+"count": 648,
+"confidence": 0.86404,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Back 2 work 2morro half term over! Can U C me 2nite 4 some sexy passion B4 I have 2 go back? Chat NOW 09099726481 Luv DENA Calls \u00a31/minMobsmoreLKPOBOX177HP51FL"
+},
+"id": 16,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+71
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Call 09095350301 and send our girls into erotic ecstacy. Just 60p/min. To stop texts call 08712460324 (nat rate)"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 17
+},
+{
+"count": 647,
+"confidence": 0.86552,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Call 09095350301 and send our girls into erotic ecstacy. Just 60p/min. To stop texts call 08712460324 (nat rate)"
+},
+"id": 18,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+70
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Camera - You are awarded a SiPix Digital Camera! call 09061221066 fromm landline. Delivery within 28 days."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 19
+},
+{
+"count": 646,
+"confidence": 0.867,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Camera - You are awarded a SiPix Digital Camera! call 09061221066 fromm landline. Delivery within 28 days."
+},
+"id": 20,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+69
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Congrats! 1 year special cinema pass for 2 is yours. call 09061209465 now! C Suprman V, Matrix3, StarWars3, etc all 4 FREE! bx420-ip4-5we. 150pm. Dont miss out!"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 21
+},
+{
+"count": 645,
+"confidence": 0.86849,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Congrats! 1 year special cinema pass for 2 is yours. call 09061209465 now! C Suprman V, Matrix3, StarWars3, etc all 4 FREE! bx420-ip4-5we. 150pm. Dont miss out!"
+},
+"id": 22,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+68
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Congrats! 2 mobile 3G Videophones R yours. call 09063458130 now! videochat wid your mates, play java games, Dload polyPH music, noline rentl."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 23
+},
+{
+"count": 644,
+"confidence": 0.86999,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Congrats! 2 mobile 3G Videophones R yours. call 09063458130 now! videochat wid your mates, play java games, Dload polyPH music, noline rentl."
+},
+"id": 24,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+67
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Congratulations! Thanks to a good friend U have WON the \u00a32,000 Xmas prize. 2 claim is easy, just call 08718726971 NOW! Only 10p per minute. BT-national-rate."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 25
+},
+{
+"count": 643,
+"confidence": 0.87149,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Congratulations! Thanks to a good friend U have WON the \u00a32,000 Xmas prize. 2 claim is easy, just call 08718726971 NOW! Only 10p per minute. BT-national-rate."
+},
+"id": 26,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+66
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Dear Matthew please call 09063440451 from a landline, your complimentary 4*Lux Tenerife holiday or \u00a31000 CASH await collection. ppm150 SAE T&Cs Box334 SK38XH."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 27
+},
+{
+"count": 642,
+"confidence": 0.873,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Dear Matthew please call 09063440451 from a landline, your complimentary 4*Lux Tenerife holiday or \u00a31000 CASH await collection. ppm150 SAE T&Cs Box334 SK38XH."
+},
+"id": 28,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+65
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "December only! Had your mobile 11mths+? You are entitled to update to the latest colour camera mobile for Free! Call The Mobile Update Co FREE on 08002986906"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 29
+},
+{
+"count": 641,
+"confidence": 0.87451,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "December only! Had your mobile 11mths+? You are entitled to update to the latest colour camera mobile for Free! Call The Mobile Update Co FREE on 08002986906"
+},
+"id": 30,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+64
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Double your mins & txts on Orange or 1/2 price linerental - Motorola and SonyEricsson with B/Tooth FREE-Nokia FREE Call MobileUpd8 on 08000839402 or2optout/HV9D"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 31
+},
+{
+"count": 640,
+"confidence": 0.87603,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Double your mins & txts on Orange or 1/2 price linerental - Motorola and SonyEricsson with B/Tooth FREE-Nokia FREE Call MobileUpd8 on 08000839402 or2optout/HV9D"
+},
+"id": 32,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+63
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Download as many ringtones as u like no restrictions, 1000s 2 choose. U can even send 2 yr buddys. Txt Sir to 80082 \u00a33"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 33
+},
+{
+"count": 639,
+"confidence": 0.87756,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Download as many ringtones as u like no restrictions, 1000s 2 choose. U can even send 2 yr buddys. Txt Sir to 80082 \u00a33"
+},
+"id": 34,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+62
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "FREE MESSAGE Activate your 500 FREE Text Messages by replying to this message with the word FREE For terms & conditions, visit www.07781482378.com"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 35
+},
+{
+"count": 638,
+"confidence": 0.87909,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "FREE MESSAGE Activate your 500 FREE Text Messages by replying to this message with the word FREE For terms & conditions, visit www.07781482378.com"
+},
+"id": 36,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+61
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "FREE camera phones with linerental from 4.49/month with 750 cross ntwk mins. 1/2 price txt bundle deals also avble. Call 08001950382 or call2optout/J MF"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 37
+},
+{
+"count": 637,
+"confidence": 0.88063,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "FREE camera phones with linerental from 4.49/month with 750 cross ntwk mins. 1/2 price txt bundle deals also avble. Call 08001950382 or call2optout/J MF"
+},
+"id": 38,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+60
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 39
+},
+{
+"count": 636,
+"confidence": 0.88218,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"
+},
+"id": 40,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+59
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Filthy stories and GIRLS waiting for your"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 41
+},
+{
+"count": 635,
+"confidence": 0.88373,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Filthy stories and GIRLS waiting for your"
+},
+"id": 42,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+58
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "For the most sparkling shopping breaks from 45 per person; call 0121 2025050 or visit www.shortbreaks.org.uk"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 43
+},
+{
+"count": 634,
+"confidence": 0.88529,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "For the most sparkling shopping breaks from 45 per person; call 0121 2025050 or visit www.shortbreaks.org.uk"
+},
+"id": 44,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+57
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question(std txt rate)T&C's apply 08452810075over18's"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 45
+},
+{
+"count": 633,
+"confidence": 0.88686,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Free entry in 2 a wkly comp to win FA Cup final tkts 21st May 2005. Text FA to 87121 to receive entry question(std txt rate)T&C's apply 08452810075over18's"
+},
+"id": 46,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+56
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Free entry to the gr8prizes wkly comp 4 a chance to win the latest Nokia 8800, PSP or \u00a3250 cash every wk.TXT GREAT to 80878 http//www.gr8prizes.com 08715705022"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 47
+},
+{
+"count": 632,
+"confidence": 0.88843,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Free entry to the gr8prizes wkly comp 4 a chance to win the latest Nokia 8800, PSP or \u00a3250 cash every wk.TXT GREAT to 80878 http//www.gr8prizes.com 08715705022"
+},
+"id": 48,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+55
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "FreeMsg Hey there darling it's been 3 week's now and no word back! I'd like some fun you up for it still? Tb ok! XxX std chgs to send, \u00a31.50 to rcv"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 49
+},
+{
+"count": 631,
+"confidence": 0.89001,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "FreeMsg Hey there darling it's been 3 week's now and no word back! I'd like some fun you up for it still? Tb ok! XxX std chgs to send, \u00a31.50 to rcv"
+},
+"id": 50,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+54
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Get your garden ready for summer with a FREE selection of summer bulbs and seeds worth \u00a333:50 only with The Scotsman this Saturday. To stop go2 notxt.co.uk"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 51
+},
+{
+"count": 630,
+"confidence": 0.8916,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Get your garden ready for summer with a FREE selection of summer bulbs and seeds worth \u00a333:50 only with The Scotsman this Saturday. To stop go2 notxt.co.uk"
+},
+"id": 52,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+53
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Had your contract mobile 11 Mnths? Latest Motorola, Nokia etc. all FREE! Double Mins & Text on Orange tariffs. TEXT YES for callback, no to remove from records."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 53
+},
+{
+"count": 629,
+"confidence": 0.89319,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Had your contract mobile 11 Mnths? Latest Motorola, Nokia etc. all FREE! Double Mins & Text on Orange tariffs. TEXT YES for callback, no to remove from records."
+},
+"id": 54,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+52
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Had your mobile 11 months or more? U R entitled to Update to the latest colour mobiles with camera for Free! Call The Mobile Update Co FREE on 08002986030"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 55
+},
+{
+"count": 628,
+"confidence": 0.89479,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Had your mobile 11 months or more? U R entitled to Update to the latest colour mobiles with camera for Free! Call The Mobile Update Co FREE on 08002986030"
+},
+"id": 56,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+51
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Had your mobile 11mths ? Update for FREE to Oranges latest colour camera mobiles & unlimited weekend calls. Call Mobile Upd8 on freefone 08000839402 or 2StopTx"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 57
+},
+{
+"count": 627,
+"confidence": 0.8964,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Had your mobile 11mths ? Update for FREE to Oranges latest colour camera mobiles & unlimited weekend calls. Call Mobile Upd8 on freefone 08000839402 or 2StopTx"
+},
+"id": 58,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+50
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Hi ya babe x u 4goten bout me?' scammers getting smart..Though this is a regular vodafone no, if you respond you get further prem rate msg/subscription. Other nos used also. Beware!"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 59
+},
+{
+"count": 626,
+"confidence": 0.89802,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Hi ya babe x u 4goten bout me?' scammers getting smart..Though this is a regular vodafone no, if you respond you get further prem rate msg/subscription. Other nos used also. Beware!"
+},
+"id": 60,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+49
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "How about getting in touch with folks waiting for company? Just txt back your NAME and AGE to opt in! Enjoy the community (150p/SMS)"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 61
+},
+{
+"count": 625,
+"confidence": 0.89964,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "How about getting in touch with folks waiting for company? Just txt back your NAME and AGE to opt in! Enjoy the community (150p/SMS)"
+},
+"id": 62,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+48
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "IMPORTANT MESSAGE. This is a final contact attempt. You have important messages waiting out our customer claims dept. Expires 13/4/04. Call 08717507382 NOW!"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 63
+},
+{
+"count": 624,
+"confidence": 0.90127,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "IMPORTANT MESSAGE. This is a final contact attempt. You have important messages waiting out our customer claims dept. Expires 13/4/04. Call 08717507382 NOW!"
+},
+"id": 64,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+47
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "January Male Sale! Hot Gay chat now cheaper, call 08709222922. National rate from 1.5p/min cheap to 7.8p/min peak! To stop texts call 08712460324 (10p/min)"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 65
+},
+{
+"count": 623,
+"confidence": 0.90291,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "January Male Sale! Hot Gay chat now cheaper, call 08709222922. National rate from 1.5p/min cheap to 7.8p/min peak! To stop texts call 08712460324 (10p/min)"
+},
+"id": 66,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+46
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Latest News! Police station toilet stolen, cops have nothing to go on!"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 67
+},
+{
+"count": 622,
+"confidence": 0.90456,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Latest News! Police station toilet stolen, cops have nothing to go on!"
+},
+"id": 68,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+45
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Marvel Mobile Play the official Ultimate Spider-man game (\u00a34.50) on ur mobile right now. Text SPIDER to 83338 for the game & we ll send u a FREE 8Ball wallpaper"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 69
+},
+{
+"count": 621,
+"confidence": 0.90622,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Marvel Mobile Play the official Ultimate Spider-man game (\u00a34.50) on ur mobile right now. Text SPIDER to 83338 for the game & we ll send u a FREE 8Ball wallpaper"
+},
+"id": 70,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+44
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Moby Pub Quiz.Win a \u00a3100 High Street prize if u know who the new Duchess of Cornwall will be? Txt her first name to 82277.unsub STOP \u00a31.50 008704050406 SP Arrow"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 71
+},
+{
+"count": 620,
+"confidence": 0.90788,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Moby Pub Quiz.Win a \u00a3100 High Street prize if u know who the new Duchess of Cornwall will be? Txt her first name to 82277.unsub STOP \u00a31.50 008704050406 SP Arrow"
+},
+"id": 72,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+43
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Not heard from U4 a while. Call 4 rude chat private line 01223585334 to cum. Wan 2C pics of me gettin shagged then text PIX to 8552. 2End send STOP 8552 SAM xxx"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 73
+},
+{
+"count": 619,
+"confidence": 0.90955,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Not heard from U4 a while. Call 4 rude chat private line 01223585334 to cum. Wan 2C pics of me gettin shagged then text PIX to 8552. 2End send STOP 8552 SAM xxx"
+},
+"id": 74,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+42
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "PRIVATE! Your 2003 Account Statement for 07808247860 shows 800 un-redeemed S. I. M. points. Call 08719899229 Identifier Code: 40411 Expires 06/11/04"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 75
+},
+{
+"count": 618,
+"confidence": 0.91123,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "PRIVATE! Your 2003 Account Statement for 07808247860 shows 800 un-redeemed S. I. M. points. Call 08719899229 Identifier Code: 40411 Expires 06/11/04"
+},
+"id": 76,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+41
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "PRIVATE! Your 2003 Account Statement for shows 800 un-redeemed S.I.M. points. Call 08718738001 Identifier Code: 49557 Expires 26/11/04"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 77
+},
+{
+"count": 617,
+"confidence": 0.91292,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "PRIVATE! Your 2003 Account Statement for shows 800 un-redeemed S.I.M. points. Call 08718738001 Identifier Code: 49557 Expires 26/11/04"
+},
+"id": 78,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+40
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "RCT' THNQ Adrian for U text. Rgds Vatian"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 79
+},
+{
+"count": 616,
+"confidence": 0.91462,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "RCT' THNQ Adrian for U text. Rgds Vatian"
+},
+"id": 80,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+39
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "SIX chances to win CASH! From 100 to 20,000 pounds txt> CSH11 and send to 87575. Cost 150p/day, 6days, 16+ TsandCs apply Reply HL 4 info"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 81
+},
+{
+"count": 615,
+"confidence": 0.91633,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "SIX chances to win CASH! From 100 to 20,000 pounds txt> CSH11 and send to 87575. Cost 150p/day, 6days, 16+ TsandCs apply Reply HL 4 info"
+},
+"id": 82,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+38
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "SMS SERVICES. for your inclusive text credits, pls goto www.comuk.net login= 3qxj9 unsubscribe with STOP, no extra charge. help 08702840625.COMUK. 220-CM2 9AE"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 83
+},
+{
+"count": 614,
+"confidence": 0.91804,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "SMS SERVICES. for your inclusive text credits, pls goto www.comuk.net login= 3qxj9 unsubscribe with STOP, no extra charge. help 08702840625.COMUK. 220-CM2 9AE"
+},
+"id": 84,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+37
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Santa Calling! Would your little ones like a call from Santa Xmas eve? Call 09058094583 to book your time."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 85
+},
+{
+"count": 613,
+"confidence": 0.91977,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Santa Calling! Would your little ones like a call from Santa Xmas eve? Call 09058094583 to book your time."
+},
+"id": 86,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+36
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Shop till u Drop, IS IT YOU, either 10K, 5K, \u00a3500 Cash or \u00a3100 Travel voucher, Call now, 09064011000. NTT PO Box CR01327BT fixedline Cost 150ppm mobile vary"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 87
+},
+{
+"count": 612,
+"confidence": 0.9215,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Shop till u Drop, IS IT YOU, either 10K, 5K, \u00a3500 Cash or \u00a3100 Travel voucher, Call now, 09064011000. NTT PO Box CR01327BT fixedline Cost 150ppm mobile vary"
+},
+"id": 88,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+35
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Sorry I missed your call let's talk when you have the time. I'm on 07090201529"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 89
+},
+{
+"count": 611,
+"confidence": 0.92325,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Sorry I missed your call let's talk when you have the time. I'm on 07090201529"
+},
+"id": 90,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+34
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "SplashMobile: Choose from 1000s of gr8 tones each wk! This is a subscrition service with weekly tones costing 300p. U have one credit - kick back and ENJOY"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 91
+},
+{
+"count": 610,
+"confidence": 0.925,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "SplashMobile: Choose from 1000s of gr8 tones each wk! This is a subscrition service with weekly tones costing 300p. U have one credit - kick back and ENJOY"
+},
+"id": 92,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+33
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Text & meet someone sexy today. U can find a date or even flirt its up to U. Join 4 just 10p. REPLY with NAME & AGE eg Sam 25. 18 -msg recd@thirtyeight pence"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 93
+},
+{
+"count": 609,
+"confidence": 0.92676,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Text & meet someone sexy today. U can find a date or even flirt its up to U. Join 4 just 10p. REPLY with NAME & AGE eg Sam 25. 18 -msg recd@thirtyeight pence"
+},
+"id": 94,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+32
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Thanks for your ringtone order, ref number K718. Your mobile will be charged \u00a34.50. Should your tone not arrive please call customer services on 09065069120"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 95
+},
+{
+"count": 608,
+"confidence": 0.92854,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Thanks for your ringtone order, ref number K718. Your mobile will be charged \u00a34.50. Should your tone not arrive please call customer services on 09065069120"
+},
+"id": 96,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+31
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Thanks for your ringtone order, ref number R836. Your mobile will be charged \u00a34.50. Should your tone not arrive please call customer services on 09065069154"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 97
+},
+{
+"count": 607,
+"confidence": 0.93032,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Thanks for your ringtone order, ref number R836. Your mobile will be charged \u00a34.50. Should your tone not arrive please call customer services on 09065069154"
+},
+"id": 98,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+30
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "The current leading bid is 151. To pause this auction send OUT. Customer Care: 08718726270"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 99
+},
+{
+"count": 606,
+"confidence": 0.93212,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "The current leading bid is 151. To pause this auction send OUT. Customer Care: 08718726270"
+},
+"id": 100,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+29
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "This message is free. Welcome to the new & improved Sex & Dogging club! To unsubscribe from this service reply STOP. msgs@150p 18 only"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 101
+},
+{
+"count": 605,
+"confidence": 0.93392,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "This message is free. Welcome to the new & improved Sex & Dogging club! To unsubscribe from this service reply STOP. msgs@150p 18 only"
+},
+"id": 102,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+28
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Txt: CALL to No: 86888 & claim your reward of 3 hours talk time to use from your phone now! Subscribe6GBP/mnth inc 3hrs 16 stop?txtStop www.gamb.tv"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 103
+},
+{
+"count": 604,
+"confidence": 0.93574,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Txt: CALL to No: 86888 & claim your reward of 3 hours talk time to use from your phone now! Subscribe6GBP/mnth inc 3hrs 16 stop?txtStop www.gamb.tv"
+},
+"id": 104,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+27
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT We are trying to contact you Last weekends draw shows u have won a \u00a31000 prize GUARANTEED Call 09064017295 Claim code K52 Valid 12hrs 150p pm"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 105
+},
+{
+"count": 603,
+"confidence": 0.93757,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT We are trying to contact you Last weekends draw shows u have won a \u00a31000 prize GUARANTEED Call 09064017295 Claim code K52 Valid 12hrs 150p pm"
+},
+"id": 106,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+26
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT! Last weekend's draw shows that you have won \u00a31000 cash or a Spanish holiday! CALL NOW 09050000332 to claim. T&C: RSTM, SW7 3SS. 150ppm"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 107
+},
+{
+"count": 602,
+"confidence": 0.93941,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT! Last weekend's draw shows that you have won \u00a31000 cash or a Spanish holiday! CALL NOW 09050000332 to claim. T&C: RSTM, SW7 3SS. 150ppm"
+},
+"id": 108,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+25
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT! We are trying to contact U. Todays draw shows that you have won a \u00a3800 prize GUARANTEED. Call 09050001808 from land line. Claim M95. Valid12hrs only"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 109
+},
+{
+"count": 601,
+"confidence": 0.94127,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT! We are trying to contact U. Todays draw shows that you have won a \u00a3800 prize GUARANTEED. Call 09050001808 from land line. Claim M95. Valid12hrs only"
+},
+"id": 110,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+24
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT! You have won a 1 week FREE membership in our \u00a3100,000 Prize Jackpot! Txt the word: CLAIM to No: 81010 T&C www.dbuk.net LCCLTD POBOX 4403LDNW1A7RW18"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 111
+},
+{
+"count": 600,
+"confidence": 0.94314,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT! You have won a 1 week FREE membership in our \u00a3100,000 Prize Jackpot! Txt the word: CLAIM to No: 81010 T&C www.dbuk.net LCCLTD POBOX 4403LDNW1A7RW18"
+},
+"id": 112,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+23
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT! Your mobile No 07xxxxxxxxx won a \u00a32,000 bonus caller prize on 02/06/03! this is the 2nd attempt to reach YOU! call 09066362231 ASAP! BOX97N7QP, 150PPM"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 113
+},
+{
+"count": 599,
+"confidence": 0.94502,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT! Your mobile No 07xxxxxxxxx won a \u00a32,000 bonus caller prize on 02/06/03! this is the 2nd attempt to reach YOU! call 09066362231 ASAP! BOX97N7QP, 150PPM"
+},
+"id": 114,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+22
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT! Your mobile number *************** WON a \u00a32000 Bonus Caller prize on 10/06/03! This is the 2nd attempt to reach you! Call 09066368753 ASAP! Box 97N7QP, 150ppm"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 115
+},
+{
+"count": 598,
+"confidence": 0.94691,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT! Your mobile number *************** WON a \u00a32000 Bonus Caller prize on 10/06/03! This is the 2nd attempt to reach you! Call 09066368753 ASAP! Box 97N7QP, 150ppm"
+},
+"id": 116,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+21
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "URGENT!! Your 4* Costa Del Sol Holiday or \u00a35000 await collection. Call 09050090044 Now toClaim. SAE, TC s, POBox334, Stockport, SK38xh, Cost\u00a31.50/pm, Max10mins"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 117
+},
+{
+"count": 597,
+"confidence": 0.94882,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "URGENT!! Your 4* Costa Del Sol Holiday or \u00a35000 await collection. Call 09050090044 Now toClaim. SAE, TC s, POBox334, Stockport, SK38xh, Cost\u00a31.50/pm, Max10mins"
+},
+"id": 118,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+20
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Ur cash-balance is currently 500 pounds - to maximize ur cash-in now send GO to 86688 only 150p/msg. CC: 08718720201 PO BOX 114/14 TCR/W1"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 119
+},
+{
+"count": 596,
+"confidence": 0.95075,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Ur cash-balance is currently 500 pounds - to maximize ur cash-in now send GO to 86688 only 150p/msg. CC: 08718720201 PO BOX 114/14 TCR/W1"
+},
+"id": 120,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+19
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Urgent! call 09061749602 from Landline. Your complimentary 4* Tenerife Holiday or \u00a310,000 cash await collection SAE T&Cs BOX 528 HP20 1YF 150ppm 18+"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 121
+},
+{
+"count": 595,
+"confidence": 0.95269,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Urgent! call 09061749602 from Landline. Your complimentary 4* Tenerife Holiday or \u00a310,000 cash await collection SAE T&Cs BOX 528 HP20 1YF 150ppm 18+"
+},
+"id": 122,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+18
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "WIN a year supply of CDs 4 a store of ur choice worth \u00a3500 & enter our \u00a3100 Weekly draw txt MUSIC to 87066 Ts&Cs www.Ldew.com.subs16+1win150ppmx3"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 123
+},
+{
+"count": 594,
+"confidence": 0.95465,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "WIN a year supply of CDs 4 a store of ur choice worth \u00a3500 & enter our \u00a3100 Weekly draw txt MUSIC to 87066 Ts&Cs www.Ldew.com.subs16+1win150ppmx3"
+},
+"id": 124,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+17
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "WINNER!! As a valued network customer you have been selected to receivea \u00a3900 prize reward! To claim call 09061701461. Claim code KL341. Valid 12 hours only."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 125
+},
+{
+"count": 593,
+"confidence": 0.95662,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "WINNER!! As a valued network customer you have been selected to receivea \u00a3900 prize reward! To claim call 09061701461. Claim code KL341. Valid 12 hours only."
+},
+"id": 126,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+16
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Want explicit SEX in 30 secs? Ring 02073162414 now! Costs 20p/min Gsex POBOX 2667 WC1N 3XX"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 127
+},
+{
+"count": 592,
+"confidence": 0.95862,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Want explicit SEX in 30 secs? Ring 02073162414 now! Costs 20p/min Gsex POBOX 2667 WC1N 3XX"
+},
+"id": 128,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+15
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Will u meet ur dream partner soon? Is ur career off 2 a flyng start? 2 find out free, txt HORO followed by ur star sign, e. g. HORO ARIES"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 129
+},
+{
+"count": 591,
+"confidence": 0.96063,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Will u meet ur dream partner soon? Is ur career off 2 a flyng start? 2 find out free, txt HORO followed by ur star sign, e. g. HORO ARIES"
+},
+"id": 130,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+14
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You are awarded a SiPix Digital Camera! call 09061221061 from landline. Delivery within 28days. T Cs Box177. M221BP. 2yr warranty. 150ppm. 16 . p p\u00a33.99"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 131
+},
+{
+"count": 590,
+"confidence": 0.96267,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You are awarded a SiPix Digital Camera! call 09061221061 from landline. Delivery within 28days. T Cs Box177. M221BP. 2yr warranty. 150ppm. 16 . p p\u00a33.99"
+},
+"id": 132,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+13
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You are being contacted by our dating service by someone you know! To find out who it is, call from a land line 09050000928. PoBox45W2TG150P"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 133
+},
+{
+"count": 589,
+"confidence": 0.96473,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You are being contacted by our dating service by someone you know! To find out who it is, call from a land line 09050000928. PoBox45W2TG150P"
+},
+"id": 134,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+12
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You have 1 new message. Call 0207-083-6089"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 135
+},
+{
+"count": 588,
+"confidence": 0.96681,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You have 1 new message. Call 0207-083-6089"
+},
+"id": 136,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+11
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You have 1 new message. Please call 08718738034."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 137
+},
+{
+"count": 587,
+"confidence": 0.96893,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You have 1 new message. Please call 08718738034."
+},
+"id": 138,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+10
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You have WON a guaranteed \u00a31000 cash or a \u00a32000 prize. To claim yr prize call our customer service representative on 08714712379 between 10am-7pm Cost 10p"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 139
+},
+{
+"count": 586,
+"confidence": 0.97107,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You have WON a guaranteed \u00a31000 cash or a \u00a32000 prize. To claim yr prize call our customer service representative on 08714712379 between 10am-7pm Cost 10p"
+},
+"id": 140,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+9
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You have won a Nokia 7250i. This is what you get when you win our FREE auction. To take part send Nokia to 86021 now. HG/Suite342/2Lands Row/W1JHL 16+"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 141
+},
+{
+"count": 585,
+"confidence": 0.97325,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You have won a Nokia 7250i. This is what you get when you win our FREE auction. To take part send Nokia to 86021 now. HG/Suite342/2Lands Row/W1JHL 16+"
+},
+"id": 142,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+8
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "You have won a guaranteed 32000 award or maybe even \u00a31000 cash to claim ur award call free on 0800 ..... (18+). Its a legitimat efreefone number wat do u think???"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 143
+},
+{
+"count": 584,
+"confidence": 0.97547,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "You have won a guaranteed 32000 award or maybe even \u00a31000 cash to claim ur award call free on 0800 ..... (18+). Its a legitimat efreefone number wat do u think???"
+},
+"id": 144,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+7
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "Your free ringtone is waiting to be collected. Simply text the password \"MIX\" to 85069 to verify. Get Usher and Britney. FML, PO Box 5249, MK17 92H. 450Ppw 16"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 145
+},
+{
+"count": 583,
+"confidence": 0.97773,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "Your free ringtone is waiting to be collected. Simply text the password \"MIX\" to 85069 to verify. Get Usher and Britney. FML, PO Box 5249, MK17 92H. 450Ppw 16"
+},
+"id": 146,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+6
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "all the lastest from Stereophonics, Marley, Dizzee Racal, Libertines and The Strokes! Win Nookii games with Flirt!! Click TheMob WAP Bookmark or text WAP to 82468"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 147
+},
+{
+"count": 582,
+"confidence": 0.98005,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "all the lastest from Stereophonics, Marley, Dizzee Racal, Libertines and The Strokes! Win Nookii games with Flirt!! Click TheMob WAP Bookmark or text WAP to 82468"
+},
+"id": 148,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+5
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "dating:i have had two of these. Only started after i sent a text to talk sport radio last week. Any connection do you think or coincidence?"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 149
+},
+{
+"count": 581,
+"confidence": 0.98243,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "dating:i have had two of these. Only started after i sent a text to talk sport radio last week. Any connection do you think or coincidence?"
+},
+"id": 150,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+4
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "http//tms. widelive.com/index. wml?id=820554ad0a1705572711&first=true\u00a1C C Ringtone\u00a1"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 151
+},
+{
+"count": 580,
+"confidence": 0.9849,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "http//tms. widelive.com/index. wml?id=820554ad0a1705572711&first=true\u00a1C C Ringtone\u00a1"
+},
+"id": 152,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+3
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "money!!! you r a lucky winner ! 2 claim your prize text money 2 88600 over \u00a31million to give away ! ppt150x3+normal text rate box403 w1t1jy"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 153
+},
+{
+"count": 579,
+"confidence": 0.98749,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "money!!! you r a lucky winner ! 2 claim your prize text money 2 88600 over \u00a31million to give away ! ppt150x3+normal text rate box403 w1t1jy"
+},
+"id": 154,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+2
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "tddnewsletter@emc1.co.uk (More games from TheDailyDraw) Dear Helen, Dozens of Free Games - with great prizesWith.."
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 155
+},
+{
+"count": 578,
+"confidence": 0.99027,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "tddnewsletter@emc1.co.uk (More games from TheDailyDraw) Dear Helen, Dozens of Free Games - with great prizesWith.."
+},
+"id": 156,
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+1
+]
+]
+},
+"output": "ham",
+"children": [
+{
+"count": 1,
+"confidence": 0.20654,
+"predicate": {
+"operator": "=",
+"field": "000001",
+"value": "u r subscribed 2 TEXTCOMP 250 wkly comp. 1st wk?s free question follows, subsequent wks charged@150p/msg.2 unsubscribe txt STOP 2 84128,custcare 08712405020"
+},
+"objective_summary": {
+"categories": [
+[
+"spam",
+1
+]
+]
+},
+"output": "spam",
+"id": 157
+},
+{
+"count": 577,
+"confidence": 0.99339,
+"predicate": {
+"operator": "!=",
+"field": "000001",
+"value": "u r subscribed 2 TEXTCOMP 250 wkly comp. 1st wk?s free question follows, subsequent wks charged@150p/msg.2 unsubscribe txt STOP 2 84128,custcare 08712405020"
+},
+"objective_summary": {
+"categories": [
+[
+"ham",
+577
+]
+]
+},
+"output": "ham",
+"id": 158
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+}
+]
+},
+"distribution": {
+"training": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+79
+]
+]
+},
+"predictions": {
+"categories": [
+[
+"ham",
+577
+],
+[
+"spam",
+79
+]
+]
+}
+},
+"depth_threshold": 512
+}
+}

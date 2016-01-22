@@ -1,0 +1,264 @@
+{
+"scales": {
+"000000": 0.5,
+"000001": 0.5
+},
+"category": {
+"id": 0,
+"name": "Miscellaneous"
+},
+"clusters": {
+"clusters": [
+{
+"count": 77,
+"distance": {
+"sum_squares": 19,
+"standard_deviation": 0.05698,
+"sum": 38,
+"median": 0.4967,
+"maximum": 0.5,
+"minimum": 0,
+"variance": 0.00325,
+"counts": [
+[
+0,
+1
+],
+[
+0.5,
+76
+]
+],
+"mean": 0.49351,
+"population": 77
+},
+"center": {
+"000000": "spam",
+"000001": "URGENT! Your mobile No 07xxxxxxxxx won a \u00a32,000 bonus caller prize on 02/06/03! this is the 2nd attempt to reach YOU! call 09066362231 ASAP! BOX97N7QP, 150PPM"
+},
+"name": "Cluster 0",
+"id": "000000"
+},
+{
+"count": 573,
+"distance": {
+"sum_squares": 142,
+"standard_deviation": 0.04654,
+"sum": 284,
+"median": 0.49779,
+"maximum": 0.5,
+"minimum": 0,
+"variance": 0.00217,
+"counts": [
+[
+0,
+5
+],
+[
+0.5,
+568
+]
+],
+"mean": 0.49564,
+"population": 573
+},
+"center": {
+"000000": "ham",
+"000001": "Sorry, I'll call later"
+},
+"name": "Cluster 1",
+"id": "000001"
+},
+{
+"count": 1,
+"distance": {
+"sum_squares": 0,
+"standard_deviation": 0,
+"sum": 0,
+"median": 0,
+"maximum": 0,
+"minimum": 0,
+"variance": 0,
+"counts": [
+[
+0,
+1
+]
+],
+"mean": 0,
+"population": 1
+},
+"center": {
+"000000": "ham",
+"000001": "My slave! I want you to take 2 or 3 pictures of yourself today in bright light on your cell phone! Bright light!"
+},
+"name": "Cluster 2",
+"id": "000002"
+},
+{
+"count": 1,
+"distance": {
+"sum_squares": 0,
+"standard_deviation": 0,
+"sum": 0,
+"median": 0,
+"maximum": 0,
+"minimum": 0,
+"variance": 0,
+"counts": [
+[
+0,
+1
+]
+],
+"mean": 0,
+"population": 1
+},
+"center": {
+"000000": "spam",
+"000001": "88066 FROM 88066 LOST 3POUND HELP"
+},
+"name": "Cluster 3",
+"id": "000003"
+},
+{
+"count": 1,
+"distance": {
+"sum_squares": 0,
+"standard_deviation": 0,
+"sum": 0,
+"median": 0,
+"maximum": 0,
+"minimum": 0,
+"variance": 0,
+"counts": [
+[
+0,
+1
+]
+],
+"mean": 0,
+"population": 1
+},
+"center": {
+"000000": "ham",
+"000001": "Waaaat?? Lololo ok next time then!"
+},
+"name": "Cluster 4",
+"id": "000004"
+},
+{
+"count": 1,
+"distance": {
+"sum_squares": 0,
+"standard_deviation": 0,
+"sum": 0,
+"median": 0,
+"maximum": 0,
+"minimum": 0,
+"variance": 0,
+"counts": [
+[
+0,
+1
+]
+],
+"mean": 0,
+"population": 1
+},
+"center": {
+"000000": "ham",
+"000001": "What makes you most happy?"
+},
+"name": "Cluster 5",
+"id": "000005"
+},
+{
+"count": 1,
+"distance": {
+"sum_squares": 0,
+"standard_deviation": 0,
+"sum": 0,
+"median": 0,
+"maximum": 0,
+"minimum": 0,
+"variance": 0,
+"counts": [
+[
+0,
+1
+]
+],
+"mean": 0,
+"population": 1
+},
+"center": {
+"000000": "ham",
+"000001": "I have printed it oh. So  <#>  come upstairs"
+},
+"name": "Cluster 6",
+"id": "000006"
+},
+{
+"count": 1,
+"distance": {
+"sum_squares": 0,
+"standard_deviation": 0,
+"sum": 0,
+"median": 0,
+"maximum": 0,
+"minimum": 0,
+"variance": 0,
+"counts": [
+[
+0,
+1
+]
+],
+"mean": 0,
+"population": 1
+},
+"center": {
+"000000": "spam",
+"000001": "URGENT! We are trying to contact U. Todays draw shows that you have won a \u00a3800 prize GUARANTEED. Call 09050001808 from land line. Claim M95. Valid12hrs only"
+},
+"name": "Cluster 7",
+"id": "000007"
+}
+],
+"fields": {
+"000000": {
+"optype": "categorical",
+"name": "Type",
+"datatype": "string",
+"preferred": true,
+"term_analysis": {
+"enabled": true
+},
+"column_number": 0,
+"order": 0
+},
+"000001": {
+"optype": "categorical",
+"name": "Message",
+"datatype": "string",
+"preferred": false,
+"term_analysis": {
+"enabled": true
+},
+"column_number": 1,
+"order": 1
+}
+}
+},
+"description": "Centroids from cluster/5436ae3b954d3c26ac0005d5",
+"tags": [],
+"field_scales": {},
+"name": "spam.tsv",
+"created": "2014-10-09T15:48:11.218000",
+"k": 8,
+"input_fields": [
+"000000",
+"000001"
+]
+}
