@@ -18,12 +18,12 @@ import bigmlSwift
 
 class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
 
-    func localPredictionFromModel(modelId : String,
+    func localPredictionFromModel(_ modelId : String,
         args : [String : AnyObject],
         options : [String : Any],
-        completion : ([String : Any]) -> ()) {
+        completion : @escaping ([String : Any]) -> ()) {
         
-        self.connector!.getResource(BMLResourceType.Model, uuid: modelId) {
+        self.connector!.getResource(BMLResourceType.model, uuid: modelId) {
             (resource, error) -> Void in
             
             if let model = resource {
@@ -38,12 +38,12 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         }
     }
     
-    func localPredictionFromDataset(dataset : BMLResource,
+    func localPredictionFromDataset(_ dataset : BMLResource,
         args : [String : AnyObject],
         options : [String : Any],
-        completion : ([String : Any]) -> ()) {
+        completion : @escaping ([String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.Model,
+            self.connector!.createResource(BMLResourceType.model,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -58,7 +58,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                             args: args,
                             options: options) { (prediction : [String : Any]) in
                                     
-                                self.connector!.deleteResource(BMLResourceType.Model,
+                                self.connector!.deleteResource(BMLResourceType.model,
                                     uuid: resource.uuid) {
                                         (error) -> Void in
                                         XCTAssert(error == nil, "Pass")
@@ -72,31 +72,31 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
             }
     }
     
-    func localPredictionFromCSV(csv : String,
+    func localPredictionFromCSV(_ csv : String,
         name : String,
         args : [String : AnyObject],
         options : [BMLResourceType : [String : Any]],
-        completion : ([String : Any]) -> ()) {
+        completion : @escaping ([String : Any]) -> ()) {
             
             self.runTest(name) { (exp) in
                 
-                let filePath = NSBundle.pathForResource(csv)
+                let filePath = Bundle.pathForResource(csv)
                 let resource = BMLMinimalResource(name:name,
-                    type:BMLResourceType.File,
+                    type:BMLResourceType.file,
                     uuid:filePath!)
                 
-                self.connector!.createResource(BMLResourceType.Source,
+                self.connector!.createResource(BMLResourceType.source,
                     name: name,
-                    options: options[BMLResourceType.Source] ?? [:],
+                    options: options[BMLResourceType.source] ?? [:],
                     from: resource) { (resource, error) -> Void in
                         XCTAssert(resource != nil && error == nil, "Pass")
-                        self.connector!.createResource(BMLResourceType.Dataset,
+                        self.connector!.createResource(BMLResourceType.dataset,
                             name: name,
-                            options: options[BMLResourceType.Dataset] ?? [:],
+                            options: options[BMLResourceType.dataset] ?? [:],
                             from: resource!) { (resource, error) -> Void in
                                 XCTAssert(resource != nil && error == nil, "Pass")
                                 var opt = [String : Any]()
-                                for (k, v) in options[BMLResourceType.Prediction] ?? [:] {
+                                for (k, v) in options[BMLResourceType.prediction] ?? [:] {
                                     opt.updateValue(v as Any, forKey: k)
                                 }
                                 self.localPredictionFromDataset(resource as! BMLMinimalResource,
@@ -112,11 +112,11 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
     
     func testStoredIrisModel() {
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("iris", ofType:"model")
-        let data = NSData(contentsOfFile:path!)!
-        let model = try! NSJSONSerialization.JSONObjectWithData(data,
-            options: NSJSONReadingOptions.AllowFragments)
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "iris", ofType:"model")
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
+        let model = try! JSONSerialization.jsonObject(with: data,
+            options: JSONSerialization.ReadingOptions.allowFragments)
         
         let prediction = Model(jsonModel: model as! [String : AnyObject]).predict([
             "sepal length": 6.02,
@@ -165,19 +165,19 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         }
     }
     
-    func execTests(dataset : BMLResource,
+    func execTests(_ dataset : BMLResource,
         tests : [(args : [String : AnyObject], p : AnyObject, c : Double)],
         options : [String : Any]) {
         
         for (args, p, c) in tests {
 
-            let semaphore = dispatch_semaphore_create(0)
+            let semaphore = DispatchSemaphore(value: 0)
             self.localPredictionFromDataset(dataset,
                 args: args,
                 options: options) {
                     (prediction : [String : Any]) in
                     
-                    dispatch_semaphore_signal(semaphore)
+                    semaphore.signal()
                     print("Message: \(p) -- ", prediction["prediction"])
                     print("Confidence: \(c) -- ", prediction["confidence"])
                     if let p = p as? String {
@@ -187,11 +187,11 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                     }
                     XCTAssert(compareDoubles(prediction["confidence"] as! Double, d2: c))
             }
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            semaphore.wait(timeout: DispatchTime.distantFuture)
         }
     }
     
-    func runTestPrediction(file : String,
+    func runTestPrediction(_ file : String,
         tests : [(args : [String : AnyObject], p : AnyObject, c : Double)],
         options : [BMLResourceType : [String : Any]]) {
         
@@ -242,7 +242,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.796)
             ],
             options: [
-                BMLResourceType.Source : [
+                BMLResourceType.source : [
                     "fields" : [
                         "000001" : [
                             "optype" : "text",
@@ -252,7 +252,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                                 "stem_words" : true,
                                 "use_stopwords" : true,
                                 "language" : "en"]]]],
-                BMLResourceType.Prediction : [
+                BMLResourceType.prediction : [
                     "byName" : true]])
     }
     
@@ -265,7 +265,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.609)
             ],
             options: [
-                BMLResourceType.Source : [
+                BMLResourceType.source : [
                     "fields" : [
                         "000001" : [
                             "optype" : "text",
@@ -275,7 +275,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                                 "stem_words" : false,
                                 "use_stopwords" : false,
                                 "language" : "en"]]]],
-                BMLResourceType.Prediction : [
+                BMLResourceType.prediction : [
                     "byName" : true]])
     }
     
@@ -288,7 +288,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.2065)
             ],
             options: [
-                BMLResourceType.Source : [
+                BMLResourceType.source : [
                     "fields" : [
                         "000001" : [
                             "optype" : "text",
@@ -296,7 +296,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                                 "enabled" : true,
                                 "token_mode" : "full_terms_only",
                                 "language" : "en"]]]],
-                BMLResourceType.Prediction : [
+                BMLResourceType.prediction : [
                     "byName" : true]])
     }
     
@@ -308,8 +308,8 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 "sepal width": 3.15], "Iris-setosa", 0.2629)
             ],
             options: [
-                BMLResourceType.Prediction : [
-                    "missing_strategy" : MissingStrategy.Proportional,
+                BMLResourceType.prediction : [
+                    "missing_strategy" : MissingStrategy.proportional,
                     "byName" : true]])
     }
 

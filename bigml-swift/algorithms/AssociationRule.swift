@@ -13,7 +13,7 @@ import Foundation
  * https://bigml.com/developers/associations
  */
 
-public class AssociationRule {
+open class AssociationRule {
     
     let ruleId : String
     let confidence : Double
@@ -29,18 +29,18 @@ public class AssociationRule {
     public required init(ruleInfo : [String : AnyObject]) {
         
         self.ruleId = ruleInfo["id"] as? String ?? ""
-        self.confidence = ruleInfo["confidence"] as? Double ?? Double.NaN
-        self.leverage = ruleInfo["leverage"] as? Double ?? Double.NaN
+        self.confidence = ruleInfo["confidence"] as? Double ?? Double.nan
+        self.leverage = ruleInfo["leverage"] as? Double ?? Double.nan
         self.lhs = ruleInfo["lhs"] as? [Int] ?? []
         self.lhsCover = ruleInfo["lhs_cover"] as? [Int] ?? []
-        self.pValue = ruleInfo["p_value"] as? Double ?? Double.NaN
+        self.pValue = ruleInfo["p_value"] as? Double ?? Double.nan
         self.rhs = ruleInfo["rhs"] as? [Int] ?? []
         self.rhsCover = ruleInfo["rhs_cover"] as? [Int] ?? []
-        self.lift = ruleInfo["lift"] as? Double ?? Double.NaN
+        self.lift = ruleInfo["lift"] as? Double ?? Double.nan
         self.support = ruleInfo["support"] as? [Double] ?? []
     }
     
-    public func valueForMetric(metric : String) -> Any {
+    open func valueForMetric(_ metric : String) -> Any {
         
         switch metric {
         case "id":
@@ -96,16 +96,16 @@ public class AssociationRule {
             self.ruleId,
             self.lhs,
             self.rhs,
-            (self.lhsCover.count > 0) ? self.lhsCover[0] : Double.NaN,
-            (self.lhsCover.count > 1) ? self.lhsCover[1] : Double.NaN,
-            (self.support.count > 0) ? self.support[0] : Double.NaN,
-            (self.support.count > 1) ? self.support[1] : Double.NaN,
+            (self.lhsCover.count > 0) ? self.lhsCover[0] : Double.nan,
+            (self.lhsCover.count > 1) ? self.lhsCover[1] : Double.nan,
+            (self.support.count > 0) ? self.support[0] : Double.nan,
+            (self.support.count > 1) ? self.support[1] : Double.nan,
             self.confidence,
             self.leverage,
             self.lift,
             self.pValue,
-            (self.rhsCover.count > 0) ? self.rhsCover[0] : Double.NaN,
-            (self.rhsCover.count > 1) ? self.rhsCover[1] : Double.NaN
+            (self.rhsCover.count > 0) ? self.rhsCover[0] : Double.nan,
+            (self.rhsCover.count > 1) ? self.rhsCover[1] : Double.nan
         ]
     }
 

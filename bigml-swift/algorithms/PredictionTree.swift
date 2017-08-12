@@ -16,12 +16,12 @@ import Foundation
 
 let BINS_LIMIT = 32
 
-func arrayToDistribution(array : [[AnyObject]]) -> [(value : AnyObject, dist : Int)] {
+func arrayToDistribution(_ array : [[AnyObject]]) -> [(value : AnyObject, dist : Int)] {
     
     return array.map{ (value: $0[0], dist: $0[1] as? Int ?? -1) }
 }
 
-func splitNodes(nodes : [PredictionTree]) -> String {
+func splitNodes(_ nodes : [PredictionTree]) -> String {
     let set = Set(nodes.filter{ !$0.isPredicate }.map{ $0.predicate.field })
     return set.count == 1 ? (set.first ?? "") : ""
 }
@@ -43,10 +43,10 @@ internal class PredictionTree {
     var confidence : Double
     var maximum : Double
     var minimum : Double
-    var median : Double = Double.NaN
+    var median : Double = Double.nan
     var distribution : [(value : AnyObject, dist : Int)] = []
     var distributionUnit : String = ""
-    var impurity : Double = Double.NaN
+    var impurity : Double = Double.nan
     var regression : Bool = false
     
     let fields : [String : AnyObject]
@@ -58,23 +58,23 @@ internal class PredictionTree {
         objectiveFields : [String],
         rootDistribution : [String : AnyObject],
         parentId : Int,
-        inout idsMap : [Int : AnyObject],
+        idsMap : inout [Int : AnyObject],
         isSubtree : Bool,
-        inout treeInfo : [String : AnyObject]) {
+        treeInfo : inout [String : AnyObject]) {
 
             self.fields = fields
             self.objectiveFields = objectiveFields
-            self.output = tree["output"] ?? Double.NaN
-            self.confidence = tree["confidence"] as? Double ?? Double.NaN
+            self.output = tree["output"] ?? Double.nan as AnyObject
+            self.confidence = tree["confidence"] as? Double ?? Double.nan
             self.rootDistribution = rootDistribution
-            self.confidence = tree["confidence"] as? Double ?? Double.NaN
-            self.maximum = Double.NaN
-            self.minimum = Double.NaN
+            self.confidence = tree["confidence"] as? Double ?? Double.nan
+            self.maximum = Double.nan
+            self.minimum = Double.nan
             
             if let pDict = tree["predicate"] as? [String : AnyObject],
-                op = pDict["operator"] as? String,
-                field = pDict["field"] as? String,
-                value : AnyObject = pDict["value"] {
+                let op = pDict["operator"] as? String,
+                let field = pDict["field"] as? String,
+                let value : AnyObject = pDict["value"] {
                     
                     if let term = pDict["term"] as? String {
                         self.predicate = Predicate(op: op, field: field, value: value, term: term)
@@ -84,10 +84,10 @@ internal class PredictionTree {
                     self.isPredicate = false
             } else if let pPred = tree["predicate"] as? Bool {
                 self.isPredicate = pPred
-                self.predicate = Predicate(op: "TRUE", field: "", value: "")
+                self.predicate = Predicate(op: "TRUE", field: "", value: "" as AnyObject)
             } else {
                 assert(false, "PredictionTree init (1): Bad things happen")
-                self.predicate = Predicate(op: "FALSE", field: "", value: "")
+                self.predicate = Predicate(op: "FALSE", field: "", value: "" as AnyObject)
                 self.isPredicate = false
             }
             
@@ -158,20 +158,20 @@ internal class PredictionTree {
             }
             
             if (self.regression) {
-                treeInfo["maxBins"] = max(treeInfo["maxBins"] as? Int ?? 0, self.distribution.count)
+                treeInfo["maxBins"] = max(treeInfo["maxBins"] as? Int ?? 0, self.distribution.count) as AnyObject?
                 self.median = (summary["median"] as? Double) ??
                     medianOfDistribution(self.distribution, instances: self.count)
                 self.maximum = summary["maximum"] as? Double ??
                     self.distribution.map {
-                        $0.value as? Double ?? Double.NaN
-                    }.maxElement() ?? Double.NaN
+                        $0.value as? Double ?? Double.nan
+                    }.max() ?? Double.nan
                 self.minimum = summary["minimum"] as? Double ??
                     self.distribution.map {
-                        $0.value as? Double ?? Double.NaN
-                    }.minElement() ?? Double.NaN
+                        $0.value as? Double ?? Double.nan
+                    }.min() ?? Double.nan
             }
             self.impurity = (!self.regression && self.distribution.count > 0) ?
-                self.giniImpurity() : Double.NaN
+                self.giniImpurity() : Double.nan
             
             idsMap.updateValue(self, forKey: self.nodeId)
     }
@@ -181,9 +181,9 @@ internal class PredictionTree {
         objectiveField : String,
         rootDistribution : [String : AnyObject],
         parentId : Int,
-        inout idsMap : [Int : AnyObject],
+        idsMap : inout [Int : AnyObject],
         isSubtree : Bool,
-        inout treeInfo : [String : AnyObject]) {
+        treeInfo : inout [String : AnyObject]) {
             
             self.init(tree: tree,
                 fields: fields,
@@ -200,9 +200,9 @@ internal class PredictionTree {
      */
     func giniImpurity() -> Double {
         if (self.distribution.count == 0) {
-            return Double.NaN
+            return Double.nan
         }
-        let d = self.distribution.map { Double($0.dist) ?? Double.NaN }
+        let d = self.distribution.map { Double($0.dist) }
         let purity = d.reduce(0.0) {
             $0 + ($1/Double(self.count)) * ($1/Double(self.count))
         }
@@ -225,7 +225,7 @@ internal class PredictionTree {
     * @param children
     * @return
     */
-    func missingBranch(nodes : [PredictionTree]) -> Bool {
+    func missingBranch(_ nodes : [PredictionTree]) -> Bool {
         return nodes.reduce(false) { $0 || $1.predicate.missing }
     }
     
@@ -235,7 +235,7 @@ internal class PredictionTree {
     * @param nodes
     * @return
     */
-    func noneValue(nodes : [PredictionTree]) -> Bool {
+    func noneValue(_ nodes : [PredictionTree]) -> Bool {
         for node in nodes {
             if let _ = node.predicate.value as? NSNull {
                 return true
@@ -247,7 +247,7 @@ internal class PredictionTree {
     /**
      * Check if there's only one branch to be followed
      */
-    func isOneBranch(nodes : [PredictionTree], arguments : [String : AnyObject]) -> Bool {
+    func isOneBranch(_ nodes : [PredictionTree], arguments : [String : AnyObject]) -> Bool {
         let missing = arguments.keys.contains(splitNodes(nodes))
         return missing || self.missingBranch(nodes) || self.noneValue(nodes)
     }
@@ -259,7 +259,7 @@ internal class PredictionTree {
     */
     func isRegression() -> Bool {
         return !self.isClassification() &&
-            self.children.reduce(true, combine : { $0 && !$1.isClassification() })
+            self.children.reduce(true, { $0 && !$1.isClassification() })
     }
     
     /**
@@ -277,14 +277,15 @@ internal class PredictionTree {
     * @param missingFound
     * @return
     */
-    func predictProportional(arguments : [String : AnyObject],
-        var path : [String] = [],
+    func predictProportional(_ arguments : [String : AnyObject],
+        path : [String] = [],
         missingFound : Bool,
         median : Bool)
         -> (distribution : [(value : AnyObject, dist : Int)],
         minimum : Double,
         maximum : Double,
         lastNode : PredictionTree) {
+        var path = path
             
             if self.children.count == 0 {
                 return (distribution: self.distribution,
@@ -323,15 +324,15 @@ internal class PredictionTree {
                     maxs.append(ma)
                 }
                 return (finalDistribution,
-                    mins.minElement() ?? Double.NaN,
-                    maxs.maxElement() ?? Double.NaN,
+                    mins.min() ?? Double.nan,
+                    maxs.max() ?? Double.nan,
                     self)
             }
             assert(false, "PredictionTree predictProportional: Should not be here")
-            return ([], Double.NaN, Double.NaN, self)
+            return ([], Double.nan, Double.nan, self)
     }
     
-    func instanceCount(distribution : [(value : AnyObject, dist : Int)]) -> Int {
+    func instanceCount(_ distribution : [(value : AnyObject, dist : Int)]) -> Int {
         return distribution.reduce(0) { $0 + $1.dist }
     }
     
@@ -341,16 +342,16 @@ internal class PredictionTree {
     * The input fields must be keyed by Id.
     *
     */
-    func predict(arguments : [String : AnyObject],
+    func predict(_ arguments : [String : AnyObject],
         path : [String] = [],
-        strategy : MissingStrategy = MissingStrategy.Proportional)
+        strategy : MissingStrategy = MissingStrategy.proportional)
         -> (prediction: TreePrediction, path: [String]) {
         
             var p = path
             var prediction : TreePrediction?
             switch strategy {
                 
-            case MissingStrategy.LastPrediction:
+            case MissingStrategy.lastPrediction:
                 
                 for child in self.children {
                     if child.predicate.apply(arguments, fields: self.fields) {
@@ -361,15 +362,15 @@ internal class PredictionTree {
                 prediction = TreePrediction(prediction: self.output,
                     confidence: self.confidence,
                     count: self.instanceCount(self.distribution),
-                    median: self.regression ? self.median : Double.NaN,
-                    min: self.regression ? self.minimum : Double.NaN,
-                    max: self.regression ? self.maximum : Double.NaN,
+                    median: self.regression ? self.median : Double.nan,
+                    min: self.regression ? self.minimum : Double.nan,
+                    max: self.regression ? self.maximum : Double.nan,
                     path: path,
                     distribution: self.distribution,
                     distributionUnit: self.distributionUnit,
                     children: self.children)
 
-            case MissingStrategy.Proportional:
+            case MissingStrategy.proportional:
                 
                 let (finalDistribution, mi, ma, ln) = self.predictProportional(arguments,
                     path:path,
@@ -378,13 +379,13 @@ internal class PredictionTree {
                 
                 if self.regression {
                     if finalDistribution.count == 1 {
-                        if let (_, instances) = finalDistribution.first where instances == 1 {
+                        if let (_, instances) = finalDistribution.first, instances == 1 {
                             prediction = TreePrediction(prediction: self.output,
                                 confidence: self.confidence,
                                 count: self.instanceCount(self.distribution),
-                                median: self.regression ? self.median: Double.NaN,
-                                min: self.regression ? self.minimum: Double.NaN,
-                                max: self.regression ? self.maximum: Double.NaN,
+                                median: self.regression ? self.median: Double.nan,
+                                min: self.regression ? self.minimum: Double.nan,
+                                max: self.regression ? self.maximum: Double.nan,
                                 path: path,
                                 distribution: self.distribution,
                                 distributionUnit: self.distributionUnit,
@@ -393,8 +394,8 @@ internal class PredictionTree {
                         assert(false, "Got more than one instance in single-node case")
                     }
                     //-- when there are more instances, sort elements by their mean
-                    var distribution = finalDistribution.sort {
-                        if let x = $0.0 as? Double, y = $1.0 as? Double {
+                    var distribution = finalDistribution.sorted {
+                        if let x = $0.0 as? Double, let y = $1.0 as? Double {
                             return x > y
                         }
                         assert(false, "Found non-float value in distribution")
@@ -408,7 +409,7 @@ internal class PredictionTree {
                         varianceOfDistribution(distribution, mean: m),
                         instances: totalInstances)
                     
-                    prediction = TreePrediction(prediction: m,
+                    prediction = TreePrediction(prediction: m as AnyObject,
                         confidence: confidence,
                         count: totalInstances,
                         median: medianOfDistribution(distribution, instances: totalInstances),
@@ -421,14 +422,14 @@ internal class PredictionTree {
                     
                 } else {
                     
-                    let distribution = finalDistribution.sort {
+                    let distribution = finalDistribution.sorted {
                         $0.1 < $1.1
                     }
-                    prediction = TreePrediction(prediction: distribution.first!.1,
-                        confidence: wsConfidence(distribution.first!.1,
+                    prediction = TreePrediction(prediction: distribution.first!.1 as AnyObject,
+                        confidence: wsConfidence(distribution.first!.1 as AnyObject,
                             distribution: finalDistribution),
                         count: self.instanceCount(distribution),
-                        median: Double.NaN,
+                        median: Double.nan,
                         min: mi,
                         max: ma,
                         path: path,

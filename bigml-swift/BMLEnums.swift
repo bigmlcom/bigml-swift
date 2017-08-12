@@ -24,10 +24,10 @@ import Foundation
 */
 public enum PredictionMethod : Int {
     
-    case Plurality
-    case Confidence
-    case Probability
-    case Threshold
+    case plurality
+    case confidence
+    case probability
+    case threshold
 }
 
 /**
@@ -43,6 +43,6 @@ public enum PredictionMethod : Int {
 */
 public enum MissingStrategy : Int {
     
-    case LastPrediction
-    case Proportional
+    case lastPrediction
+    case proportional
 }

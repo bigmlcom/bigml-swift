@@ -36,18 +36,18 @@ import Foundation
         definition : [String : AnyObject])
 }
 
-public class BMLMinimalResource : NSObject, BMLResource {
+open class BMLMinimalResource : NSObject, BMLResource {
     
-    public var name : String
-    public var type : BMLResourceType
+    open var name : String
+    open var type : BMLResourceType
     
-    public var jsonDefinition : [String : AnyObject]
+    open var jsonDefinition : [String : AnyObject]
     
-    public dynamic var status : BMLResourceStatus
-    public dynamic var progress : Float
+    open dynamic var status : BMLResourceStatus
+    open dynamic var progress : Float
     
-    public var uuid : BMLResourceUuid
-    public var fullUuid : BMLResourceFullUuid {
+    open var uuid : BMLResourceUuid
+    open var fullUuid : BMLResourceFullUuid {
         get {
             return "\(type.stringValue())/\(uuid)"
         }
@@ -58,7 +58,7 @@ public class BMLMinimalResource : NSObject, BMLResource {
         self.name = name
         self.type = type
         self.uuid = uuid
-        self.status = BMLResourceStatus.Undefined
+        self.status = BMLResourceStatus.undefined
         self.progress = 0.0
         self.jsonDefinition = definition;
     }
@@ -73,7 +73,7 @@ public class BMLMinimalResource : NSObject, BMLResource {
         } else {
             self.uuid = ""
         }
-        self.status = BMLResourceStatus.Undefined
+        self.status = BMLResourceStatus.undefined
         self.progress = 0.0
         self.jsonDefinition = definition;
     }

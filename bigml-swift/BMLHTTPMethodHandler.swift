@@ -14,7 +14,7 @@
 
 import Foundation
 
-extension NSHTTPURLResponse {
+extension HTTPURLResponse {
     
     func isStrictlyValid() -> Bool {
         return self.statusCode >= 200 && self.statusCode <= 206
@@ -23,17 +23,17 @@ extension NSHTTPURLResponse {
 
 struct BMLHTTPMethodHandler {
     
-    private let session : NSURLSession
+    fileprivate let session : URLSession
     let method : String
     let expectedCode : Int
     let contentType : String
     
-    private static func initializeSession() -> NSURLSession {
+    fileprivate static func initializeSession() -> URLSession {
         
-        let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = [ "Content-Type": "application/json" ];
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.httpAdditionalHeaders = [ "Content-Type": "application/json" ];
         
-        return NSURLSession(configuration : configuration)
+        return URLSession(configuration : configuration)
     }
     
     init(method : String,
@@ -46,9 +46,9 @@ struct BMLHTTPMethodHandler {
             self.session = BMLHTTPMethodHandler.initializeSession()
     }
     
-    func run(url : NSURL,
-        bodyData : NSData,
-        completion : (result : [String : AnyObject], error : NSError?) -> Void) {
+    func run(_ url : URL,
+        bodyData : Data,
+        completion : @escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
             
             do {
                 try self.handleDataRequest(self.method, url: url, bodyData: bodyData) {
@@ -62,26 +62,26 @@ struct BMLHTTPMethodHandler {
                         localError = error
                         jsonObject = [:]
                     }
-                    completion(result: jsonObject, error: localError)
+                    completion(jsonObject, localError)
                 }
             } catch let err as NSError {
-                completion(result: [:], error: err)
+                completion([:], err)
             }
     }
     
-    func run(url : NSURL,
+    func run(_ url : URL,
         body : [String : Any],
-        completion : (result : [String : AnyObject], error : NSError?) -> Void) {
+        completion : @escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
             
-            let bodyData : NSData?
+            let bodyData : Data?
             if (body.count > 0) {
                 
-                bodyData = try? NSJSONSerialization.dataWithJSONObject(
-                    bridgedDictRep(body),
+                bodyData = try? JSONSerialization.data(
+                    withJSONObject: bridgedDictRep(body),
                     options: [])
                 
                 if (bodyData == nil) {
-                    completion(result: [:], error: NSError(
+                    completion([:], NSError(
                         info:"Could not convert data to JSON: \(body)",
                         code:-10201))
                     return
@@ -89,80 +89,78 @@ struct BMLHTTPMethodHandler {
             } else {
                 bodyData = nil
             }
-            self.run(url, bodyData: bodyData ?? NSData(), completion: completion)
+            self.run(url, bodyData: bodyData ?? Data(), completion: completion)
     }
     
-    private func optionsToString(options : [String : String]) {
+    fileprivate func optionsToString(_ options : [String : String]) {
         
         var result = ""
         for (_, value) in options {
             if (value.characters.count > 0) {
-                let trimmedOption = value.substringWithRange(Range<String.Index>(
-                    start: value.startIndex.advancedBy(1), end: value.endIndex.advancedBy(-1)))
+                let trimmedOption = value.substring(with: (value.characters.index(value.startIndex, offsetBy: 1) ..< value.characters.index(value.endIndex, offsetBy: -1)))
                 result = "\(result), \(trimmedOption)"
             }
         }
     }
     
-    private func dataWithRequest(request : NSURLRequest,
-        completion:(data : NSData!, error : NSError!) -> Void) {
+    fileprivate func dataWithRequest(_ request : URLRequest,
+        completion:@escaping (_ data : Data?, _ error : NSError?) -> Void) {
             
-            let task = self.session.dataTaskWithRequest(request) {
-                (data : NSData?, response : NSURLResponse?, error : NSError?) in
+            let task = self.session.dataTask(with: request, completionHandler: {
+                (data : Data?, response : URLResponse?, error : NSError?) in
                 var localError : NSError? = error;
                 if (error == nil) {
-                    if let response = response as? NSHTTPURLResponse {
+                    if let response = response as? HTTPURLResponse {
                         
                         if !response.isStrictlyValid() {
                             
                             let code = response.statusCode
                             localError = NSError(
-                                status: try? NSJSONSerialization.JSONObjectWithData(data!,
-                                    options:NSJSONReadingOptions.AllowFragments)
-                                    ?? [:],
+                                status: try! JSONSerialization.jsonObject(with: data!,
+                                    options:JSONSerialization.ReadingOptions.allowFragments) as AnyObject?,
                                 code:code)
                         }
                     } else {
-                        let url = response?.URL?.absoluteString ?? ""
+                        let url = response?.url?.absoluteString ?? ""
                         localError = NSError(info:"Bad response format for URL: \(url)",
                             code:-10001)
                     }
                 }
-                completion(data: data, error: localError)
-            }
+                completion(data, localError)
+            } as! (Data?, URLResponse?, Error?) -> Void) 
             task.resume()
     }
     
-    func request(method : String, url : NSURL, bodyData : NSData) throws
+    func request(_ method : String, url : URL, bodyData : Data) throws
         -> NSMutableURLRequest {
             
-            let request = NSMutableURLRequest(URL:url)
-            request.HTTPBody = bodyData
-            request.HTTPMethod = method;
+            let request = NSMutableURLRequest(url:url)
+            request.httpBody = bodyData
+            request.httpMethod = method;
             request.setValue(self.contentType, forHTTPHeaderField: "Content-Type")
             return request
     }
     
-    private func handleDataRequest(method : String,
-        url : NSURL,
-        bodyData : NSData,
-        handler : (data : NSData, error : NSError?) -> Void) throws
+    fileprivate func handleDataRequest(_ method : String,
+        url : URL,
+        bodyData : Data,
+        handler : @escaping (_ data : Data, _ error : NSError?) -> Void) throws
         -> Void {
             
             let request = try self.request(method, url: url, bodyData: bodyData)
-            self.dataWithRequest(request) { (data, error) in
-                handler(data: data, error: error)
+            self.dataWithRequest(request as URLRequest) { (data, error) in
+                handler(data!, error)
             }
     }
     
-    private func processedResponse(data : NSData, expectedCode : Int) throws
+    fileprivate func processedResponse(_ data : Data, expectedCode : Int) throws
         -> [String : AnyObject] {
             
             var result : [String : AnyObject] = [:]
-            if data.length > 0 {
-                let jsonObject = try NSJSONSerialization.JSONObjectWithData(
-                    data,
-                    options: NSJSONReadingOptions.AllowFragments)
+            if data.count > 0 {
+                let jsonObject = try JSONSerialization.jsonObject(
+                    with: data,
+                    options: JSONSerialization.ReadingOptions.allowFragments)
                 
                 if let jsonDict = jsonObject as? [String : AnyObject] {
                     //-- code, if present, must match expectedCode argument

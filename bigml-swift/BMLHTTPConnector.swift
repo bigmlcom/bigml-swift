@@ -26,67 +26,67 @@ struct BMLHTTPConnector {
         expectedCode: 201,
         contentType:"multipart/form-data; boundary=\(boundary)")
     
-    func get(url : NSURL,
+    func get(_ url : URL,
         body: [String : Any] = [:],
-        completion:(jsonObject : AnyObject?, error : NSError?) -> Void) {
+        completion:@escaping (_ jsonObject : AnyObject?, _ error : NSError?) -> Void) {
             
             self.getter.run(url, body: body) {
                 (result : [String : AnyObject], error : NSError?) in
-                completion(jsonObject: result, error: error)
+                completion(result as AnyObject?, error)
             }
     }
     
-    func delete(url : NSURL, completion:(error : NSError?) -> Void) {
+    func delete(_ url : URL, completion:@escaping (_ error : NSError?) -> Void) {
         
         self.deleter.run(url, body: [:]) {
             (result : [String : AnyObject], error : NSError?) in
-            completion(error: error)
+            completion(error)
         }
     }
     
-    func put(url : NSURL,
+    func put(_ url : URL,
         body : [String : Any],
-        completion:(error : NSError?) -> Void) {
+        completion:@escaping (_ error : NSError?) -> Void) {
         
             self.putter.run(url, body: body) {
                 (result : [String : AnyObject], error : NSError?) in
-                completion(error: error)
+                completion(error)
             }
     }
     
-    func post(url : NSURL,
+    func post(_ url : URL,
         body: [String : Any],
-        completion:(result : [String : AnyObject], error : NSError?) -> Void) {
+        completion:@escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
         
             self.poster.run(url, body: body, completion: completion)
     }
     
-    func upload(url : NSURL,
+    func upload(_ url : URL,
         filename: String,
         filePath: String,
         body: [String : Any],
-        completion:(result : [String : AnyObject], error : NSError?) -> Void) {
+        completion:@escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
             
             let bodyData : NSMutableData = NSMutableData()
             for (name, value) in body {
-                if let value = value as? AnyObject {
-                    let fieldData = try? NSJSONSerialization.dataWithJSONObject(value, options: [])
-                    if let fieldData = fieldData, value = NSString(data: fieldData,
-                        encoding:NSUTF8StringEncoding) {
+//                if let value = value as? Any {
+                    let fieldData = try? JSONSerialization.data(withJSONObject: value, options: [])
+                    if let fieldData = fieldData, let value = NSString(data: fieldData,
+                        encoding:String.Encoding.utf8.rawValue) {
                             bodyData.appendString("\r\n--\(BMLHTTPConnector.boundary)\r\n")
                             bodyData.appendString("Content-Disposition: form-data; name=\"\(name)\"\r\n")
                             bodyData.appendString("\r\n\(value)")
                     }  else {
                         assert(false, "Could not convert body field: \(value)")
                     }
-                }
+  //              }
             }
             bodyData.appendString("\r\n--\(BMLHTTPConnector.boundary)\r\n")
             bodyData.appendString("Content-Disposition: form-data; name=\"userfile\"; filename=\"\(filename)\"\r\n")
             bodyData.appendString("Content-Type: application/octet-stream\r\n\r\n")
-            bodyData.appendData(NSData(contentsOfFile:filePath)!)
+            bodyData.append(try! Data(contentsOf: URL(fileURLWithPath: filePath)))
             bodyData.appendString("\r\n--\(BMLHTTPConnector.boundary)--\r\n")
 
-            self.uploader.run(url, bodyData: bodyData, completion: completion)
+            self.uploader.run(url, bodyData: bodyData as Data, completion: completion)
     }    
 }

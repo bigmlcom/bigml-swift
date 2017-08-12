@@ -11,12 +11,12 @@ import bigmlSwift
 
 class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
 
-    func localAssociationRule(resId : String,
+    func localAssociationRule(_ resId : String,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
-        completion : ([[String : AnyObject]], [[String : AnyObject]]) -> ()) {
+        completion : @escaping ([[String : AnyObject]], [[String : AnyObject]]) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.Association, uuid: resId) {
+            self.connector!.getResource(BMLResourceType.association, uuid: resId) {
                 (resource, error) -> Void in
                 
                 if let resource = resource {
@@ -39,11 +39,11 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
             }
     }
     
-    func remotePrediction(fromResource : BMLResource,
+    func remotePrediction(_ fromResource : BMLResource,
         argsById : [String : AnyObject],
-        completion : ([[String : AnyObject]]) -> ()) {
+        completion : @escaping ([[String : AnyObject]]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.Prediction,
+            self.connector!.createResource(BMLResourceType.prediction,
                 name: fromResource.name,
                 options: ["input_data" : argsById],
                 from: fromResource) { (resource, error) -> Void in
@@ -64,13 +64,13 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
             }
     }
     
-    func localAssociationRuleFromDataset(predictionType : BMLResourceType,
+    func localAssociationRuleFromDataset(_ predictionType : BMLResourceType,
         dataset : BMLMinimalResource,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
-        completion : ([[String : AnyObject]], [[String : AnyObject]]) -> ()) {
+        completion : @escaping ([[String : AnyObject]], [[String : AnyObject]]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.Association,
+            self.connector!.createResource(BMLResourceType.association,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -135,7 +135,7 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testIrisAssociation") { (exp) in
             
-            self.localAssociationRuleFromDataset(BMLResourceType.Association,
+            self.localAssociationRuleFromDataset(BMLResourceType.association,
                 dataset: BigMLKitConnectorBaseTest.aDataset as! BMLMinimalResource,
                 argsByName: [
                     "sepal length": 6.02,

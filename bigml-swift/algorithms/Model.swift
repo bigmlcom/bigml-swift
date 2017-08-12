@@ -13,6 +13,19 @@
 // under the License.
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 let ML_DEFAULT_LOCALE = "en_US.UTF-8"
 
@@ -40,7 +53,7 @@ let ML_DEFAULT_LOCALE = "en_US.UTF-8"
   *   }
   *
   */
-public class Model : FieldedResource {
+open class Model : FieldedResource {
     
     var fieldImportance : [(String, Double)]
     let description : String
@@ -66,14 +79,14 @@ public class Model : FieldedResource {
                 "Some fields are missing to generate a local model.")
             let modelField = modelFields[fieldName] as? [String : AnyObject] ?? [:]
             var field = fields[fieldName] as? [String : AnyObject] ?? [:]
-            field.updateValue(modelField["summary"] ?? "", forKey:"summary")
-            field.updateValue(modelField["name"] ?? "", forKey:"name")
+            field.updateValue(modelField["summary"] ?? "" as AnyObject, forKey:"summary")
+            field.updateValue(modelField["name"] ?? "" as AnyObject, forKey:"name")
         }
         
         let objectiveField = model["objective_field"] as? String ?? ""
         let locale = jsonModel["locale"] as? String ?? ML_DEFAULT_LOCALE
         
-        self.treeInfo = ["maxBins" : 0]
+        self.treeInfo = ["maxBins" : 0 as AnyObject]
         self.model = jsonModel
         self.description = jsonModel["description"] as? String ?? ""
         
@@ -84,10 +97,10 @@ public class Model : FieldedResource {
                 }
                 return false
                 }.map {
-                    if let f = $0.first as? String, i = $0.last as? Double {
+                    if let f = $0.first as? String, let i = $0.last as? Double {
                         return (f, i)
                     }
-                    return ("", Double.NaN)
+                    return ("", Double.nan)
             }
         } else {
             self.fieldImportance = []
@@ -107,7 +120,7 @@ public class Model : FieldedResource {
         super.init(fields: fields, objectiveId: objectiveField, locale: locale, missingTokens: [])
     }
     
-    func roundedConfidence(confidence : Double, precision : Double = 0.001) -> Double {
+    func roundedConfidence(_ confidence : Double, precision : Double = 0.001) -> Double {
         return floor(confidence / precision) * precision
     }
     
@@ -156,13 +169,13 @@ public class Model : FieldedResource {
   *                 literal 'all', that will cause the entire distribution
   *                 in the node to be returned.
   */
-    public func predict(arguments : [String : AnyObject],
+    open func predict(_ arguments : [String : AnyObject],
         options : [String : Any])
         -> [String : Any] {
             
             assert(arguments.count > 0, "Prediction arguments missing")
             let byName = options["byName"] as? Bool ?? false
-            let missingStrategy = options["strategy"] as? MissingStrategy ?? MissingStrategy.LastPrediction
+            let missingStrategy = options["strategy"] as? MissingStrategy ?? MissingStrategy.lastPrediction
             let multiple = options["multiple"] as? Int ?? 0
             
             let arguments = castArguments(self.filteredInputData(arguments, byName: byName),
@@ -175,12 +188,12 @@ public class Model : FieldedResource {
             var output : [String : Any] = [:]
             let distribution = prediction.distribution
             if multiple > 0 && !self.tree.isRegression() {
-                for var i = 0; i < [multiple, distribution.count].minElement(); ++i {
+                for var i = 0; i < [multiple, distribution.count].min(); i += 1 {
                     let distributionElement = distribution[i]
                     let category = distributionElement.0
                     let confidence = wsConfidence(category, distribution: distribution)
-                    let probability = ((Double(distributionElement.1) ?? Double.NaN) /
-                        (Double(prediction.count) ?? Double.NaN))
+                    let probability = ((Double(distributionElement.1) ) /
+                        (Double(prediction.count) ))
                     output = [
                         "prediction" : category,
                         "confidence" : self.roundedConfidence(confidence),
@@ -193,12 +206,12 @@ public class Model : FieldedResource {
                 
                 output = ["prediction" : prediction.prediction]
                 
-                if let add_next = options["add_next"] as? Bool where add_next {
+                if let add_next = options["add_next"] as? Bool, add_next {
                     let children = prediction.children
                     if let firstChild = children.first {
                         let field = firstChild.predicate.field
                         if let _ = self.fields[field],
-                            field = self.fieldNameById[field] {
+                            let field = self.fieldNameById[field] {
                                 prediction.next = field
                         }
                     }
@@ -207,23 +220,23 @@ public class Model : FieldedResource {
                 if options["add_confidence"] as? Bool ?? true {
                     output["confidence"] = prediction.confidence
                 }
-                if let add_path = options["add_path"] as? Bool where add_path {
+                if let add_path = options["add_path"] as? Bool, add_path {
                     output["path"] = prediction.path
                 }
-                if let add_dist = options["add_distribution"] as? Bool where add_dist {
+                if let add_dist = options["add_distribution"] as? Bool, add_dist {
                     output["distribution"] = prediction.distribution
                 }
-                if let add_count = options["add_count"] as? Bool where add_count {
+                if let add_count = options["add_count"] as? Bool, add_count {
                     output["count"] = prediction.count
                 }
                 if self.tree.isRegression() {
-                    if let add_median = options["add_median"] as? Bool where add_median {
+                    if let add_median = options["add_median"] as? Bool, add_median {
                         output["median"] = prediction.median
                     }
-                    if let add_min = options["add_min"] as? Bool where add_min {
+                    if let add_min = options["add_min"] as? Bool, add_min {
                         output["min"] = prediction.min
                     }
-                    if let add_max = options["add_max"] as? Bool where add_max {
+                    if let add_max = options["add_max"] as? Bool, add_max {
                         output["max"] = prediction.max
                     }
                 }

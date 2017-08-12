@@ -41,7 +41,7 @@ class Centroid {
     *                               the algorithm stops computing the actual
     *                               squared distance
     */
-    func squareDistance(inputData : [String : AnyObject],
+    func squareDistance(_ inputData : [String : AnyObject],
         uniqueTerms : [String : AnyObject],
         scales : [String : Double],
         nearestDistance : Double) -> Double {
@@ -62,10 +62,10 @@ class Centroid {
                         d2 += 1.0 * scale * scale
                     }
                 } else if let value = value as? Double {
-                    d2 += pow(scale * ((inputData[key] as? Double ?? Double.NaN) - value), 2)
+                    d2 += pow(scale * ((inputData[key] as? Double ?? Double.nan) - value), 2)
                 }
                 if nearestDistance <= d2 {
-                    return Double.NaN
+                    return Double.nan
                 }
             }
             return d2
@@ -78,7 +78,7 @@ class Centroid {
     * @param {array} centroidTerms Array of terms used in the centroid field
     * @param {number} scale Scaling factor for the field
     */
-    func cosineDistance(terms : [String], centroidTerms : [String], scale : Double) -> Double {
+    func cosineDistance(_ terms : [String], centroidTerms : [String], scale : Double) -> Double {
         
         if terms.count == 0 && centroidTerms.count == 0 {
             return 0.0
@@ -90,8 +90,8 @@ class Centroid {
             terms.contains($0)
         }.count
         
-        let cosineSimilarity = (Double(inputCount) ?? Double.NaN) /
-            sqrt(Double(terms.count * centroidTerms.count) ?? Double.NaN)
+        let cosineSimilarity = (Double(inputCount) ?? Double.nan) /
+            sqrt(Double(terms.count * centroidTerms.count) ?? Double.nan)
         let similarityDistance = scale * (1 - cosineSimilarity)
         return pow(similarityDistance, 2)
     }

@@ -40,7 +40,7 @@ private let kExpansionAttributes = [
 //-- this is common to cluster: refactor some day?
 private let kOptionalFields = ["categorical", "text", "items"]
 
-public class LogisticRegression : FieldedResource {
+open class LogisticRegression : FieldedResource {
 
     //-- this is common to cluster: refactor some day?
     var tagCloud : [String : AnyObject] = [:]
@@ -68,7 +68,7 @@ public class LogisticRegression : FieldedResource {
         self.dataFieldTypes = jsonLogReg["dataset_field_types"] as?
             [String : Int] ?? [:]
         guard let status = jsonLogReg["status"] as? [String : AnyObject],
-            code = status["code"] as? Int where code == 5 else {
+            let code = status["code"] as? Int, code == 5 else {
                 assert(false, "LogisticRegression not ready yet")
         }
         let logRegInfo = jsonLogReg["logistic_regression"] as? [String : AnyObject] ?? [:]
@@ -77,9 +77,9 @@ public class LogisticRegression : FieldedResource {
             self.coefficients.updateValue(tuple.last as? [Double] ?? [], forKey:tuple.first as? String ?? "")
         }
         
-        self.bias = logRegInfo["bias"] as? Double ?? Double.NaN
-        self.c =  logRegInfo["c"] as? Double ?? Double.NaN
-        self.eps =  logRegInfo["eps"] as? Double ?? Double.NaN
+        self.bias = logRegInfo["bias"] as? Double ?? Double.nan
+        self.c =  logRegInfo["c"] as? Double ?? Double.nan
+        self.eps =  logRegInfo["eps"] as? Double ?? Double.nan
         self.normalize =  logRegInfo["normalize"] as? Bool ?? false
         self.regularization =  logRegInfo["regularization"] as? String ?? "l1"
         self.missingNumerics = logRegInfo["missing_numerics"] as? Bool ?? false
@@ -89,7 +89,7 @@ public class LogisticRegression : FieldedResource {
         //-- this is the same as in cluster... refactor someday?
         for (fieldId, field) in fields {
             if let field = field as? [String : AnyObject],
-                optype = field["optype"] as? String {
+                let optype = field["optype"] as? String {
                     
                     if optype == "text" {
                         
@@ -98,16 +98,16 @@ public class LogisticRegression : FieldedResource {
                                 self.termForms[fieldId] = termForms
                         }
                         if let tagCloud = field["summary"]?["tag_cloud"] {
-                            self.tagCloud[fieldId] = tagCloud
+                            self.tagCloud[fieldId] = tagCloud as AnyObject?
                         }
                         if let termAnalysis = field["term_analysis"] as?
                             [String : [String : [String : AnyObject]]] {
-                            self.termAnalysis[fieldId] = termAnalysis
+                            self.termAnalysis[fieldId] = termAnalysis as [String : AnyObject]?
                         }
                         
                     } else if optype == "items" {
                         
-                        self.items[fieldId] = field["summary"]?["items"] ?? [:]
+                        self.items[fieldId] = field["summary"]?["items"] as AnyObject?? ?? [:] as AnyObject
                         self.itemAnalysis = field["item_analysis"] as?
                             [String : [String : AnyObject]] ?? [:]
                         
@@ -135,7 +135,7 @@ public class LogisticRegression : FieldedResource {
       * can be done locally.
       * This should also be included in the refactoring of cluster/logistic common parts
       */
-    func getUniqueTerms(arguments : [String : AnyObject]) -> [String : [(AnyObject, Int)]] {
+    func getUniqueTerms(_ arguments : [String : AnyObject]) -> [String : [(AnyObject, Int)]] {
      
         var uTerms = uniqueTerms(arguments,
             termForms: self.termForms,
@@ -158,12 +158,11 @@ public class LogisticRegression : FieldedResource {
      * In case that missingNumerics is false, checks that all numeric
      * fields are present in input data.
      */
-    func areAllNumericFieldsThere(arguments : [String : AnyObject]) -> (Bool, String) {
+    func areAllNumericFieldsThere(_ arguments : [String : AnyObject]) -> (Bool, String) {
      
         if !self.missingNumerics {
             for (fieldId, field) in self.fields {
-                if let optype = field["optype"] as? String
-                    where (!kOptionalFields.contains(optype)
+                if let optype = field["optype"] as? String, (!kOptionalFields.contains(optype)
                         && !arguments.keys.contains(fieldId)) {
                             return (false, fieldId)
                 }
@@ -174,7 +173,7 @@ public class LogisticRegression : FieldedResource {
     /**
     * Returns the class prediction and the probability distribution
     */
-    public func predict(arguments : [String : AnyObject], options : [String : Any])
+    open func predict(_ arguments : [String : AnyObject], options : [String : Any])
         -> [String : Any] {
 
             let byName = options["byName"] as? Bool ?? true
@@ -182,15 +181,15 @@ public class LogisticRegression : FieldedResource {
             let filteredArguments = castArguments(self.filteredInputData(
                 arguments,
                 byName: byName),
-                fields: self.fields).map{ ($0.0, $0.1 as? Double ?? Double.NaN) }
+                fields: self.fields).map{ ($0.0, $0.1 as? Double ?? Double.nan) }
             
-            let check = self.areAllNumericFieldsThere(filteredArguments)
+            let check = self.areAllNumericFieldsThere(filteredArguments as [String : AnyObject])
             assert(check.0,
                 "Failed to predict. " +
                     "Arguments must contain values for all numeric fields. " +
                 "Missing field: \(check.1)")
             
-            let uniqueTerms = self.getUniqueTerms(filteredArguments)
+            let uniqueTerms = self.getUniqueTerms(filteredArguments as [String : AnyObject])
             var probabilities = [String : Double]()
             var total = 0.0
             for category in (self.categories[self.objectiveId!] ?? []) {
@@ -204,10 +203,10 @@ public class LogisticRegression : FieldedResource {
             for category in probabilities.keys {
                 probabilities.updateValue(probabilities[category]! / total, forKey: category)
             }
-            let predictions = probabilities.sort{ $0.1 < $1.1 }
+            let predictions = probabilities.sorted{ $0.1 < $1.1 }
             return [
                 "prediction" : predictions.last?.0 ?? "",
-                "probability" : predictions.last?.1 ?? Double.NaN,
+                "probability" : predictions.last?.1 ?? Double.nan,
                 "distribution" : predictions.map{ (category : $0.0, probability : $0.1) }
             ]
     }
@@ -215,7 +214,7 @@ public class LogisticRegression : FieldedResource {
     /**
      * Computes the probability for a concrete category
      */
-    func categoryProbability(arguments : [String : Double],
+    func categoryProbability(_ arguments : [String : Double],
         uniqueTerms : [String : [(AnyObject, Int)]],
         coefficients : [Double])
         -> Double {
@@ -223,21 +222,20 @@ public class LogisticRegression : FieldedResource {
             var probability = 0.0
             for (fieldId, argument) in arguments {
                 let shift = self.coefficient_shifts[fieldId] ?? -1
-                probability += (coefficients[shift] ?? Double.NaN) * argument
+                probability += (coefficients[shift] ) * argument
             }
             for (fieldId, uTerms) in uniqueTerms {
                 let shift = self.coefficient_shifts[fieldId] ?? -1
                 for (term, occurrences) in uTerms {
                     var index = 0
                     if let tCloud = self.tagCloud[fieldId] as? [String] {
-                        index = tCloud.indexOf(term as! String) ?? -1
+                        index = tCloud.index(of: term as! String) ?? -1
                     } else if let cat = self.categories[fieldId] {
-                        index = cat.indexOf(term as! String) ?? -1
+                        index = cat.index(of: term as! String) ?? -1
                     } else if let items = self.items[fieldId] as? [String] {
-                        index = items.indexOf(term as! String) ?? -1
+                        index = items.index(of: term as! String) ?? -1
                     }
-                    probability += (coefficients[shift + index] ?? Double.NaN) *
-                    (Double(occurrences) ?? Double.NaN)
+                    probability += (coefficients[shift + index]) * Double(occurrences)
                 }
             }
             
@@ -250,24 +248,22 @@ public class LogisticRegression : FieldedResource {
             for (fieldId, tCloud) in self.tagCloud {
                 let shift = self.coefficient_shifts[fieldId] ?? -1
                 if !uniqueTerms.keys.contains(fieldId) {
-                    probability += coefficients[shift + (tCloud as? [AnyObject] ?? []).count] ??
-                    Double.NaN
+                    probability += coefficients[shift + (tCloud as? [AnyObject] ?? []).count] 
                 }
             }
             for (fieldId, items) in self.items {
                 let shift = self.coefficient_shifts[fieldId] ?? -1
                 if !uniqueTerms.keys.contains(fieldId) {
-                    probability += coefficients[shift + (items as? [AnyObject] ?? []).count] ??
-                        Double.NaN
+                    probability += coefficients[shift + (items as? [AnyObject] ?? []).count] 
                 }
             }
             for (fieldId, cat) in self.categories {
                 if fieldId != self.objectiveId! && !uniqueTerms.keys.contains(fieldId) {
                     let shift = self.coefficient_shifts[fieldId] ?? -1
-                    probability += coefficients[shift + cat.count] ?? Double.NaN
+                    probability += coefficients[shift + cat.count] 
                 }
             }
-            probability += (coefficients[coefficients.count - 1] ?? Double.NaN)
+            probability += (coefficients[coefficients.count - 1] )
             probability = 1 / (1 + exp(-probability))
             return probability
     }
@@ -277,7 +273,7 @@ public class LogisticRegression : FieldedResource {
      */
     func mapCoefficients() {
         
-        let fieldIds = self.fields.sort{
+        let fieldIds = self.fields.sorted{
             (($0.1 as? [String : AnyObject] ?? [:])["column_number"] as? Int ?? 0) <
             (($1.1 as? [String : AnyObject] ?? [:])["column_number"] as? Int ?? 0)}
         
@@ -289,7 +285,7 @@ public class LogisticRegression : FieldedResource {
                 //-- text/class plus a missing terms coefficient plus a bias
                 //-- coefficient
                 if let expandedOptype = kExpansionAttributes[optype],
-                    summary = field["summary"] as? [String : AnyObject] {
+                    let summary = field["summary"] as? [String : AnyObject] {
                         length = (summary[expandedOptype] as? Int ?? 0) + 1
                 } else {
                     length = self.missingNumerics ? 2 : 1

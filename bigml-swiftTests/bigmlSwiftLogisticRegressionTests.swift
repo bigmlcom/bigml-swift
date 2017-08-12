@@ -18,22 +18,22 @@ import bigmlSwift
 
 class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
     
-    func logisticRegression(file : String) -> [String : AnyObject] {
+    func logisticRegression(_ file : String) -> [String : AnyObject] {
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource(file, ofType:"logistic")
-        let data = NSData(contentsOfFile:path!)!
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: file, ofType:"logistic")
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
         
-        return (try! NSJSONSerialization.JSONObjectWithData(data,
-            options: NSJSONReadingOptions.AllowFragments) as? [String : AnyObject] ?? [:])
+        return (try! JSONSerialization.jsonObject(with: data,
+            options: JSONSerialization.ReadingOptions.allowFragments) as? [String : AnyObject] ?? [:])
     }
     
-    func localPrediction(resId : String,
+    func localPrediction(_ resId : String,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
-        completion : ([String : Any], [String : Any]) -> ()) {
+        completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.LogisticRegression, uuid: resId) {
+            self.connector!.getResource(BMLResourceType.logisticRegression, uuid: resId) {
                 (resource, error) -> Void in
                 
                 if let resource = resource {
@@ -56,11 +56,11 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
             }
     }
     
-    func remotePrediction(fromResource : BMLResource,
+    func remotePrediction(_ fromResource : BMLResource,
         argsById : [String : AnyObject],
-        completion : ([String : Any]) -> ()) {
+        completion : @escaping ([String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.Prediction,
+            self.connector!.createResource(BMLResourceType.prediction,
                 name: fromResource.name,
                 options: ["input_data" : argsById],
                 from: fromResource) { (resource, error) -> Void in
@@ -81,13 +81,13 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
             }
     }
 
-    func localPredictionFromDataset(predictionType : BMLResourceType,
+    func localPredictionFromDataset(_ predictionType : BMLResourceType,
         dataset : BMLMinimalResource,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
-        completion : ([String : Any], [String : Any]) -> ()) {
+        completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.LogisticRegression,
+            self.connector!.createResource(BMLResourceType.logisticRegression,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -146,7 +146,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testIrisLogisticRegression") { (exp) in
             
-            self.localPredictionFromDataset(BMLResourceType.LogisticRegression,
+            self.localPredictionFromDataset(BMLResourceType.logisticRegression,
                 dataset: BigMLKitConnectorBaseTest.aDataset as! BMLMinimalResource,
                 argsByName: [
                     "sepal length": 6.02,

@@ -14,7 +14,7 @@
 
 import Foundation
 
-func plural(string : String, multiplicity : Int) -> String {
+func plural(_ string : String, multiplicity : Int) -> String {
     
     if (multiplicity == 1) {
         return string
@@ -35,7 +35,7 @@ class Predicate {
     var term : String?
     var missing : Bool
     
-    init (op : String, field : String, value : AnyObject, term : String? = .None) {
+    init (op : String, field : String, value : AnyObject, term : String? = .none) {
         
         self.op = op
         self.field = field
@@ -44,18 +44,18 @@ class Predicate {
         self.missing = false
         if self.op =~? "\\*$" {
             self.missing = true
-            self.op = self.op.substringToIndex(self.op.startIndex.advancedBy(self.op.characters.count-1))
+            self.op = self.op.substring(to: self.op.characters.index(self.op.startIndex, offsetBy: self.op.characters.count-1))
         }
     }
     
     /**
      * Returns a boolean showing if a term is considered as a full_term
      */
-    func isFullTerm(fields : [String : AnyObject]) -> Bool {
+    func isFullTerm(_ fields : [String : AnyObject]) -> Bool {
         
         if let term = self.term,
-            fieldDict = fields[self.field] as? [String : AnyObject],
-            optype = fieldDict["optype"] as? String where optype != "items" {
+            let fieldDict = fields[self.field] as? [String : AnyObject],
+            let optype = fieldDict["optype"] as? String, optype != "items" {
                 
                 if let options = fieldDict["term_analysis"] as? [String : AnyObject] {
 
@@ -74,14 +74,14 @@ class Predicate {
     /**
      * Builds rule string from a predicate
     */
-    func rule(fields : [String : AnyObject], label : String = "name") -> String {
+    func rule(_ fields : [String : AnyObject], label : String = "name") -> String {
         
         if let fieldDict = fields[self.field] as? [String : AnyObject] {
             
             let name = fieldDict[label] as? String ?? ""
             let fullTerm = self.isFullTerm(fields)
             let relationMissing = self.missing ? " or missing " : ""
-            if let term = self.term, value = self.value as? Int {
+            if let term = self.term, let value = self.value as? Int {
                 var relationSuffix = ""
                 let relationLiteral : String
                 if ((self.op == "<" && value <= 1) || (self.op == "<=" && value == 0)) {
@@ -122,7 +122,7 @@ class Predicate {
       * The terms in forms_list can either be tokens or full terms. The
       * matching for tokens is contains and for full terms is equals.
       */
-    static func termCount(text : String,
+    static func termCount(_ text : String,
         forms : [String],
         options : [String : AnyObject] = [:])
         -> Int {
@@ -142,15 +142,15 @@ class Predicate {
         return self.tokenTermCount(text, forms: forms, caseSensitive: caseSensitive)
     }
     
-    static func fullTermCount(text : String, fullTerm : String, caseSensitive : Bool) -> Int {
+    static func fullTermCount(_ text : String, fullTerm : String, caseSensitive : Bool) -> Int {
         return (caseSensitive ?
             ((text == fullTerm) ? 1 : 0) :
-            ((text.caseInsensitiveCompare(fullTerm) == NSComparisonResult.OrderedSame) ? 1 : 0));
+            ((text.caseInsensitiveCompare(fullTerm) == ComparisonResult.orderedSame) ? 1 : 0));
     }
 
-    static func tokenTermCount(text : String, forms : [String], caseSensitive : Bool) -> Int {
+    static func tokenTermCount(_ text : String, forms : [String], caseSensitive : Bool) -> Int {
 
-        let fre = forms.joinWithSeparator("(\\b|_)")
+        let fre = forms.joined(separator: "(\\b|_)")
         let re = "(\\b|_)\(fre)(\\b|_)"
         return text =~~ re
     }
@@ -160,7 +160,7 @@ class Predicate {
      *
      * The matching considers the separator or the separating regular expression.
      */
-    static func itemMatchCount(text : String, item : String, options : [String : Any]) -> Int {
+    static func itemMatchCount(_ text : String, item : String, options : [String : Any]) -> Int {
         
         let separator = options["separator"] as? String ?? ""
         let regexp = options["separator_regexp"] as? String ?? separator
@@ -172,7 +172,7 @@ class Predicate {
      *
      * The matching considers the separator or the separating regular expression
      */
-    static func itemCount(text : String,
+    static func itemCount(_ text : String,
         item : String,
         options : [String : AnyObject] = [:])
         -> Int {
@@ -182,16 +182,16 @@ class Predicate {
         return (text =~~ "(^|\(sep))\(item)(\(sep)|$))")
     }
     
-    func eval(predicate : String, args : [String : AnyObject]) -> Bool {
+    func eval(_ predicate : String, args : [String : AnyObject]) -> Bool {
         let p = NSPredicate(format:predicate)
-        return p.evaluateWithObject(args)
+        return p.evaluate(with: args)
     }
     
     /**
      * Applies the operators defined in the predicate as strings to
      * the provided input data.
      */
-    func apply(input : [String : AnyObject], fields : [String : AnyObject]) -> Bool {
+    func apply(_ input : [String : AnyObject], fields : [String : AnyObject]) -> Bool {
         
         if (self.op == "TRUE") {
             return true
@@ -212,16 +212,16 @@ class Predicate {
                 args: [ "ls" : input[self.field]!, "rs" : self.value])
         }
         if let term = self.term,
-            text = input[self.field] as? String,
-            field = fields[self.field] as? [String : AnyObject],
-            optype = field["optype"] as? String {
+            let text = input[self.field] as? String,
+            let field = fields[self.field] as? [String : AnyObject],
+            let optype = field["optype"] as? String {
                 
                 if optype == "text" {
                     
                     var termForms : [String] = []
                     if let summary = fields["summary"] as? [String : AnyObject],
-                        allForms = summary["term_forms"] as? [String : AnyObject],
-                        letTermForms = allForms[term] as? [String] {
+                        let allForms = summary["term_forms"] as? [String : AnyObject],
+                        let letTermForms = allForms[term] as? [String] {
                      
                             termForms = letTermForms
                     }
@@ -229,14 +229,14 @@ class Predicate {
                     let options = field["term_analysis"] as? [String : AnyObject] ?? [:]
                     
                     return self.eval("ls \(self.op) rs",
-                        args: ["ls" : Predicate.termCount(text, forms: terms, options: options),
+                        args: ["ls" : Predicate.termCount(text, forms: terms, options: options) as AnyObject,
                                "rs" : self.value])
                     
                 } else if optype == "items" {
                     
                     let options = field["items_analysis"] as? [String : AnyObject] ?? [:]
                     return self.eval("ls \(self.op) rs",
-                        args: ["ls" : Predicate.itemCount(text, item: term, options: options),
+                        args: ["ls" : Predicate.itemCount(text, item: term, options: options) as AnyObject,
                             "rs" : self.value])
                 } else {
                     assert(false, "Should not be here: Predicate.apply()")
@@ -259,10 +259,10 @@ class Predicates {
         self.predicates = predicates.map() {
             
             if let _ = $0 as? String {
-                return Predicate(op: "TRUE", field: "", value: 1, term: "")
+                return Predicate(op: "TRUE", field: "", value: 1 as AnyObject, term: "")
             }
             if let p = $0 as? [String : AnyObject] {
-                if let op = p["op"] as? String, field = p["field"] as? String, value : AnyObject = p["value"] {
+                if let op = p["op"] as? String, let field = p["field"] as? String, let value : AnyObject = p["value"] {
                     if let term = p["term"] as? String {
                         return Predicate(op: op, field: field, value: value, term: term)
                     } else {
@@ -271,19 +271,19 @@ class Predicates {
                 }
             }
             assert(false, "Could not create predicate")
-            return Predicate(op: "", field: "", value: "")
+            return Predicate(op: "", field: "", value: "" as AnyObject)
         }
     }
     
-    func rule(fields : [String : AnyObject], label : String = "name") -> String {
+    func rule(_ fields : [String : AnyObject], label : String = "name") -> String {
         
         let strings = self.predicates.filter({ $0.op != "TRUE" }).map() {
             return $0.rule(fields, label: label)
         }
-        return strings.joinWithSeparator(" and ")
+        return strings.joined(separator: " and ")
     }
     
-    func apply(input : [String : AnyObject], fields : [String : AnyObject]) -> Bool {
+    func apply(_ input : [String : AnyObject], fields : [String : AnyObject]) -> Bool {
         
         return predicates.reduce(true) {
             let result = $1.apply(input, fields: fields)

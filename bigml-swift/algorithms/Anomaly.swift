@@ -35,9 +35,9 @@ class AnomalyTree {
         
         self.anomaly = anomaly
         self.fields = anomaly.fields
-        self.predicates = Predicates(predicates: ["True"])
+        self.predicates = Predicates(predicates: ["True" as AnyObject])
         if let predicates = tree["predicates"] as? [[String : AnyObject]] {
-            self.predicates = Predicates(predicates: predicates)
+            self.predicates = Predicates(predicates: predicates as [AnyObject])
         }
         if let id = tree["id"] as? String {
             self.id = id
@@ -61,14 +61,14 @@ class AnomalyTree {
     *
     * @return
     */
-    func depth(input : [String : AnyObject], path : [String] = [], depth : Int = 0) -> (Int, [String]) {
+    func depth(_ input : [String : AnyObject], path : [String] = [], depth : Int = 0) -> (Int, [String]) {
         
         var depth = depth
         if depth == 0 {
             if !self.predicates.apply(input, fields: self.fields) {
                 return (depth, path)
             }
-            depth++
+            depth += 1
         }
         var path = path
         for child in self.children {
@@ -84,33 +84,33 @@ class AnomalyTree {
     }
 }
 
-public class Anomaly : FieldedResource {
+open class Anomaly : FieldedResource {
     
     let sampleSize : Double?
     let inputFields : [String]?
     var meanDepth : Double?
-    var expectedMeanDepth : Double? = .None
+    var expectedMeanDepth : Double? = .none
     var iforest : [AnomalyTree?]?
     internal var stopped : Bool = false
     var anomalyCount : Int = 0
     
     public init(anomaly : BMLResource) {
         
-        assert(anomaly.type == BMLResourceType.Anomaly, "Wrong resource passed in -- anomaly expected")
+        assert(anomaly.type == BMLResourceType.anomaly, "Wrong resource passed in -- anomaly expected")
         //        println("RESOURCE \(anomaly.jsonDefinition)")
         if let sampleSize = anomaly.jsonDefinition["sample_size"] as? Double,
-            inputFields = anomaly.jsonDefinition["input_fields"] as? [String] {
+            let inputFields = anomaly.jsonDefinition["input_fields"] as? [String] {
                 
                 self.sampleSize = sampleSize
                 self.inputFields = inputFields
                 
         } else {
             
-            self.sampleSize = .None
-            self.inputFields = .None
+            self.sampleSize = .none
+            self.inputFields = .none
         }
         if let model = anomaly.jsonDefinition["model"] as? [String : AnyObject],
-            fields = model["fields"] as? [String : AnyObject] {
+            let fields = model["fields"] as? [String : AnyObject] {
                 
                 if let _ = model["top_anomalies"] as? [AnyObject] {
                     
@@ -118,10 +118,10 @@ public class Anomaly : FieldedResource {
                     
                     self.meanDepth = model["mean_depth"] as? Double
                     if let status = anomaly.jsonDefinition["status"] as? [String : AnyObject],
-                        intCode = status["code"] as? Int {
+                        let intCode = status["code"] as? Int {
                             
                             let code = BMLResourceStatus(integerLiteral: intCode)
-                            if (code == BMLResourceStatus.Ended) {
+                            if (code == BMLResourceStatus.ended) {
                                 if let sampleSize = self.sampleSize, let meanDepth = self.meanDepth {
                                     let defaultDepth = 2 * (DEPTH_FACTOR + log(sampleSize - 1) - ((sampleSize - 1) / sampleSize))
                                     self.expectedMeanDepth = min(meanDepth, defaultDepth)
@@ -131,10 +131,10 @@ public class Anomaly : FieldedResource {
                                 if let iforest = model["trees"] as? [AnyObject] {
                                     self.iforest = iforest.map {
                                         if let tree = $0 as? [String : AnyObject],
-                                            root = tree["root"] as? [String : AnyObject] {
+                                            let root = tree["root"] as? [String : AnyObject] {
                                                 return AnomalyTree(tree: root, anomaly: self)
                                         } else {
-                                            return .None
+                                            return .none
                                         }
                                     }
                                 }
@@ -152,7 +152,7 @@ public class Anomaly : FieldedResource {
         }
     }
     
-    public func score(input : [String : AnyObject], byName : Bool = true) -> Double {
+    open func score(_ input : [String : AnyObject], byName : Bool = true) -> Double {
         
         self.stopped = false
         assert(self.iforest != nil, "Could not find forest info. The anomaly was possibly not completely created")
@@ -171,15 +171,15 @@ public class Anomaly : FieldedResource {
         return 0
     }
     
-    public func stop() {
+    open func stop() {
         self.stopped = true
     }
     
-    public func unstop() {
+    open func unstop() {
         self.stopped = false
     }
     
-    public func isStopped() -> Bool {
+    open func isStopped() -> Bool {
         return self.stopped
     }
 }

@@ -18,12 +18,12 @@ import bigmlSwift
 
 class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
     
-    func localCentroidFromCluster(modelId : String,
+    func localCentroidFromCluster(_ modelId : String,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
         completion : (CentroidInfo, CentroidInfo) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.Cluster, uuid: modelId) {
+            self.connector!.getResource(BMLResourceType.cluster, uuid: modelId) {
                 (resource, error) -> Void in
                 
                 if let model = resource {
@@ -39,17 +39,17 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
                     completion(prediction1, prediction2)
                     
                 } else {
-                    completion(CentroidInfo(0, "", Double.NaN), CentroidInfo(0, "", Double.NaN))
+                    completion(CentroidInfo(0, "", Double.nan), CentroidInfo(0, "", Double.nan))
                 }
             }
     }
     
-    func localCentroidFromDataset(dataset : BMLMinimalResource,
+    func localCentroidFromDataset(_ dataset : BMLMinimalResource,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
         completion : (CentroidInfo, CentroidInfo) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.Cluster,
+            self.connector!.createResource(BMLResourceType.cluster,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -65,7 +65,7 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
                             argsById: argsById) {
                                 (prediction1 : CentroidInfo, prediction2 : CentroidInfo) in
                                 
-                                self.connector!.deleteResource(BMLResourceType.Cluster, uuid: resource.uuid) {
+                                self.connector!.deleteResource(BMLResourceType.cluster, uuid: resource.uuid) {
                                     (error) -> Void in
                                     XCTAssert(error == nil, "Pass")
                                     completion(prediction1, prediction2)
@@ -73,7 +73,7 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
                         }
                         
                     } else {
-                        completion(CentroidInfo(0, "", Double.NaN), CentroidInfo(0, "", Double.NaN))
+                        completion(CentroidInfo(0, "", Double.nan), CentroidInfo(0, "", Double.nan))
                     }
             }
     }

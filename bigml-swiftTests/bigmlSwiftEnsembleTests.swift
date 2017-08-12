@@ -18,38 +18,38 @@ import bigmlSwift
 
 class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
     
-    func ensemble(file : String) -> [String : AnyObject] {
+    func ensemble(_ file : String) -> [String : AnyObject] {
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource(file, ofType:"ensemble")
-        let data = NSData(contentsOfFile:path!)!
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: file, ofType:"ensemble")
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
         
-        return (try! NSJSONSerialization.JSONObjectWithData(data,
-            options: NSJSONReadingOptions.AllowFragments) as? [String : AnyObject] ?? [:])
+        return (try! JSONSerialization.jsonObject(with: data,
+            options: JSONSerialization.ReadingOptions.allowFragments) as? [String : AnyObject] ?? [:])
     }
     
-    func ensembleModels(ensemble : [String : AnyObject]) -> [[String : AnyObject]] {
+    func ensembleModels(_ ensemble : [String : AnyObject]) -> [[String : AnyObject]] {
         
         var models : [[String : AnyObject]] = []
-        let semaphore = dispatch_semaphore_create(0)
+        let semaphore = DispatchSemaphore(value: 0)
         self.ensembleModels(ensemble) { ms in
             models = ms
-            dispatch_semaphore_signal(semaphore)
+            semaphore.signal()
         }
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        semaphore.wait(timeout: DispatchTime.distantFuture)
         
         return models
     }
 
-    func ensembleModels(ensemble : [String : AnyObject],
-        completion : [[String : AnyObject]] -> ())
+    func ensembleModels(_ ensemble : [String : AnyObject],
+        completion : @escaping ([[String : AnyObject]]) -> ())
         -> [[String : AnyObject]] {
         
         var models : [[String : AnyObject]] = []
         let m = (ensemble["models"] as? [String] ?? [])
         var remaining = m.count
-        for model in (m.map{ $0.componentsSeparatedByString("/").last! }) {
-            self.connector!.getResource(BMLResourceType.Model, uuid: model){
+        for model in (m.map{ $0.components(separatedBy: "/").last! }) {
+            self.connector!.getResource(BMLResourceType.model, uuid: model){
                 (resource, error) -> Void in
                 assert(error == nil, "Could not get model \(model)")
                 models.append(resource?.jsonDefinition ?? [:])
@@ -62,12 +62,12 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
         return models
     }
 
-    func localPredictionFromEnsemble(resId : String,
+    func localPredictionFromEnsemble(_ resId : String,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
-        completion : ([String : Any], [String : Any]) -> ()) {
+        completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.Ensemble, uuid: resId) {
+            self.connector!.getResource(BMLResourceType.ensemble, uuid: resId) {
                 (resource, error) -> Void in
                 
                 if let ensemble = resource {
@@ -93,12 +93,12 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
             }
     }
     
-    func localPredictionFromDataset(dataset : BMLMinimalResource,
+    func localPredictionFromDataset(_ dataset : BMLMinimalResource,
         argsByName : [String : AnyObject],
         argsById : [String : AnyObject],
-        completion : ([String : Any], [String : Any]) -> ()) {
+        completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.Ensemble,
+            self.connector!.createResource(BMLResourceType.ensemble,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -115,7 +115,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
                             argsById: argsById) { (prediction1 : [String : Any],
                                 prediction2 : [String : Any]) in
                                 
-                                self.connector!.deleteResource(BMLResourceType.Ensemble,
+                                self.connector!.deleteResource(BMLResourceType.ensemble,
                                     uuid: resource.uuid) {
                                     (error) -> Void in
                                     XCTAssert(error == nil, "Pass")

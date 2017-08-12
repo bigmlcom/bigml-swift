@@ -15,21 +15,21 @@ import Foundation
  * https://bigml.com/developers/associations
  */
 
-public class AssociationItem : CustomStringConvertible {
+open class AssociationItem : CustomStringConvertible {
  
     let index : Int
     let fieldInfo : [String : AnyObject]
     let complementIndex : Int
 
-    public let complement : Bool
-    public let count : Int
-    public let itemDescription : String
-    public let fieldId : String
-    public let name : String
-    public let binEnd : Double
-    public let binStart : Double
+    open let complement : Bool
+    open let count : Int
+    open let itemDescription : String
+    open let fieldId : String
+    open let name : String
+    open let binEnd : Double
+    open let binStart : Double
     
-    public var description : String {
+    open var description : String {
         
         get {
             return ["bin_end" : self.binEnd,
@@ -54,15 +54,15 @@ public class AssociationItem : CustomStringConvertible {
             self.fieldId = itemInfo["field_id"] as? String ?? ""
             self.fieldInfo = fields[self.fieldId] as? [String : AnyObject] ?? [:]
             self.name = itemInfo["name"] as? String ?? ""
-            self.binEnd = itemInfo["bin_end"] as? Double ?? Double.NaN
-            self.binStart = itemInfo["bin_start"] as? Double ?? Double.NaN
+            self.binEnd = itemInfo["bin_end"] as? Double ?? Double.nan
+            self.binStart = itemInfo["bin_start"] as? Double ?? Double.nan
     }
     
     /**
      * Checks whether the value is in a range for numeric fields or
      * matches a category for categorical fields
      */
-    func doesMatch(value : AnyObject) -> Bool {
+    func doesMatch(_ value : AnyObject) -> Bool {
 
         var result = false
         if let fieldType = self.fieldInfo["optype"] as? String {
@@ -83,7 +83,7 @@ public class AssociationItem : CustomStringConvertible {
             case "text":
                 //-- This block is equivalent to one in Predicate.apply() -- refactor?
                 if let summary = self.fieldInfo["summary"] as? [String : AnyObject],
-                    allForms = summary["term_forms"] as? [String : [String]] {
+                    let allForms = summary["term_forms"] as? [String : [String]] {
                         if let value = value as? String {
                             let termForms = allForms[self.name] ?? []
                             let terms = [self.name] + termForms

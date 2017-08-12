@@ -18,43 +18,43 @@ import Foundation
 The following values must match those at https://bigml.com/developers/status_codes
 Not all values are necessarily to be represented.
 **/
-@objc public enum BMLResourceStatus : Int, IntegerLiteralConvertible {
+@objc public enum BMLResourceStatus : Int, ExpressibleByIntegerLiteral {
     
-    case Undefined = 1000
-    case Waiting = 0
-    case Queued = 1
-    case Started = 2
-    case InProgress = 3
-    case Summarized = 4
-    case Ended = 5
-    case Failed = -1
-    case Unknown = -2
-    case Runnable = -3
+    case undefined = 1000
+    case waiting = 0
+    case queued = 1
+    case started = 2
+    case inProgress = 3
+    case summarized = 4
+    case ended = 5
+    case failed = -1
+    case unknown = -2
+    case runnable = -3
     
     public init(integerLiteral value: IntegerLiteralType) {
         switch(value) {
         case 1000:
-            self = .Undefined
+            self = .undefined
         case 0:
-            self = .Waiting
+            self = .waiting
         case 1:
-            self = .Queued
+            self = .queued
         case 2:
-            self = .Started
+            self = .started
         case 3:
-            self = .InProgress
+            self = .inProgress
         case 4:
-            self = .Summarized
+            self = .summarized
         case 5:
-            self = .Ended
+            self = .ended
         case -1:
-            self = .Failed
+            self = .failed
         case -2:
-            self = .Unknown
+            self = .unknown
         case -3:
-            self = .Runnable
+            self = .runnable
         default:
-            self = .Undefined
+            self = .undefined
         }
     }
 }

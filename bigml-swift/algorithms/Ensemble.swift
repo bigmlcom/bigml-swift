@@ -14,18 +14,18 @@
 
 import Foundation
 
-public class Ensemble {
+open class Ensemble {
     
-    public var isReadyToPredict : Bool
+    open var isReadyToPredict : Bool
     
-    private var distributions : [[String : AnyObject]]
-    private var fields : [String : AnyObject]
-    private var multiModels : [MultiModel]
+    fileprivate var distributions : [[String : AnyObject]]
+    fileprivate var fields : [String : AnyObject]
+    fileprivate var multiModels : [MultiModel]
     
-    static private func multiModels(models : [[String : AnyObject]], maxModels : Int)
+    static fileprivate func multiModels(_ models : [[String : AnyObject]], maxModels : Int)
         -> [MultiModel] {
             
-            return 0.stride(to: models.count, by: maxModels)
+            return stride(from: 0, to: models.count, by: maxModels)
                 .map { MultiModel(models:Array(models[$0..<$0.advancedBy(maxModels, limit: models.count)])) }
     }
     
@@ -42,7 +42,7 @@ public class Ensemble {
             self.distributions = distributions
     }
     
-    static func fieldsFromModels(models : [[String : AnyObject]]) -> [String : AnyObject] {
+    static func fieldsFromModels(_ models : [[String : AnyObject]]) -> [String : AnyObject] {
         
         var fields : [String : AnyObject] = [:]
         for model in models {
@@ -79,15 +79,15 @@ public class Ensemble {
     *        node as individual prediction for the specified
     *        combination method.
     */
-    public func predict(arguments : [String : AnyObject],
+    open func predict(_ arguments : [String : AnyObject],
         options : [String : Any])
         -> [String : Any] {
         
         assert(self.isReadyToPredict)
         
-        let method = options["method"] as? PredictionMethod ?? PredictionMethod.Plurality
+        let method = options["method"] as? PredictionMethod ?? PredictionMethod.plurality
         let missingStrategy = options["strategy"] as? MissingStrategy ??
-            MissingStrategy.LastPrediction
+            MissingStrategy.lastPrediction
         let byName = options["byName"] as? Bool ?? true
         let confidence = options["confidence"] as? Bool ?? true
         let distribution = options["distribution"] as? Bool ?? false
@@ -119,7 +119,7 @@ public class Ensemble {
             options: options)
     }
     
-    public func fieldImportance() -> [String : Double] {
+    open func fieldImportance() -> [String : Double] {
         
         var fieldImportance : [String : Double] = [:]
         var fieldNames : [String : String] = [:]
@@ -134,7 +134,7 @@ public class Ensemble {
                     fieldNames.updateValue(self.fields[fieldId]?["name"] as? String ?? "",
                         forKey: fieldId)
                 }
-                let imp = info[1] as? Double ?? Double.NaN
+                let imp = info[1] as? Double ?? Double.nan
                 fieldImportance.updateValue(fieldImportance[fieldId]! + imp, forKey: fieldId)
             }
         }

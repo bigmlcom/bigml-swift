@@ -23,11 +23,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasource") { (exp) in
             
-            let filePath = NSBundle.pathForResource("wines.csv")
+            let filePath = Bundle.pathForResource("wines.csv")
             let resource = BMLMinimalResource(name:"testCreateDatasource",
-                type:BMLResourceType.File,
+                type:BMLResourceType.file,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.Source,
+            self.connector!.createResource(BMLResourceType.source,
                 name: "testCreateDatasource",
                 options: [:],
                 from: resource) { (resource, error) -> Void in
@@ -42,7 +42,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateRemoteDatasource") { (exp) in
             
-            self.connector!.createResource(BMLResourceType.Source,
+            self.connector!.createResource(BMLResourceType.source,
                 name: "testCreateRemoteDatasource",
                 options: ["remote" : "s3://bigml-public/csv/iris.csv"]) {
                     (resource, error) -> Void in
@@ -56,7 +56,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func test0Create3Anomaly() {
         
         self.runTest("testCreateAnomaly") { (exp) in
-            self.connector!.createResource(BMLResourceType.Anomaly,
+            self.connector!.createResource(BMLResourceType.anomaly,
                 name: "testCreateAnomaly",
                 options: [:],
                 from: BigMLKitConnectorBaseTest.aDataset!) { (resource, error) -> Void in
@@ -70,11 +70,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasourceWithOptions1") { (exp) in
             
-            let filePath = NSBundle.pathForResource("iris.csv")
+            let filePath = Bundle.pathForResource("iris.csv")
             let resource = BMLMinimalResource(name:"testCreateDatasourceWithOptions1",
-                type:BMLResourceType.File,
+                type:BMLResourceType.file,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.Source,
+            self.connector!.createResource(BMLResourceType.source,
                 name: "testCreateDatasourceWithOptions1",
                 options: ["source_parser" : ["header" : false, "missing_tokens" : ["x"]],
                     "term_analysis" : ["enabled" : false]],
@@ -92,11 +92,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasourceWithOptions2") { (exp) in
             
-            let filePath = NSBundle.pathForResource("spam.csv")
+            let filePath = Bundle.pathForResource("spam.csv")
             let resource = BMLMinimalResource(name:"testCreateDatasourceWithOptions2",
-                type:BMLResourceType.File,
+                type:BMLResourceType.file,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.Source,
+            self.connector!.createResource(BMLResourceType.source,
                 name: "testCreateDatasourceWithOptions2",
                 options: ["term_analysis" : ["case_sensitive" : true,
                     "enabled" : true, "stem_words" : false]],
@@ -114,11 +114,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasourceWithOptions3") { (exp) in
             
-            let filePath = NSBundle.pathForResource("spam.csv")
+            let filePath = Bundle.pathForResource("spam.csv")
             let resource = BMLMinimalResource(name:"testCreateDatasourceWithOptions3",
-                type:BMLResourceType.File,
+                type:BMLResourceType.file,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.Source,
+            self.connector!.createResource(BMLResourceType.source,
                 name: "testCreateDatasourceWithOptions3",
                 options: [:],
                 from: resource) { (resource, error) -> Void in
@@ -157,11 +157,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasourceFail") { (exp) in
             
-            let filePath = NSBundle.pathForResource("iris.csv")
+            let filePath = Bundle.pathForResource("iris.csv")
             let resource = BMLMinimalResource(name:"testCreateDatasourceFail",
-                type:BMLResourceType.File,
+                type:BMLResourceType.file,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.Dataset,
+            self.connector!.createResource(BMLResourceType.dataset,
                 name: "testCreateDatasourceFail",
                 options: [:],
                 from: resource) {
@@ -175,7 +175,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func test1Create1DatasetWithOptions() {
         
         self.runTest("testCreateDatasetWithOptions") { (exp) in
-            self.connector!.createResource(BMLResourceType.Dataset,
+            self.connector!.createResource(BMLResourceType.dataset,
                 name: "testCreateDatasetWithOptions",
                 options: ["size" : 400,
                     "fields" : ["000001" : ["name" : "field_1"]]],
@@ -192,14 +192,14 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func test1Clone1DatasetWithOptions() {
         
         self.runTest("testCloneDatasetWithOptions") { (exp) in
-            self.connector!.createResource(BMLResourceType.Dataset,
+            self.connector!.createResource(BMLResourceType.dataset,
                 name: "testCloneDatasetWithOptions",
                 options: ["size" : 400,
                     "fields" : ["000001" : ["name" : "field_1"]]],
                 from: BigMLKitConnectorBaseTest.aSource!) {
                     (resource, error) -> Void in
                     
-                    self.connector!.createResource(BMLResourceType.Dataset,
+                    self.connector!.createResource(BMLResourceType.dataset,
                         name: "clonedDataset",
                         options: ["sample_rate" : 0.8],
                         from: resource!) { (resource, error) -> Void in
@@ -217,7 +217,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func test1Create1DatasetWithOptionsFail() {
         
         self.runTest("testCreateDatasetWithOptionsFail") { (exp) in
-            self.connector!.createResource(BMLResourceType.Dataset,
+            self.connector!.createResource(BMLResourceType.dataset,
                 name: "testCreateDatasetWithOptionsFail",
                 options: ["size" : "400",
                     "fields" : ["000001" : ["name" : "field_1"]]],
@@ -235,8 +235,8 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasetFromCSVFail") { (exp) in
             let resource = BMLMinimalResource(name: "testCreateDatasetFromCSVFail",
-                type: BMLResourceType.File, uuid:NSBundle.pathForResource("iris.csv")!)
-            self.connector!.createResource(BMLResourceType.Dataset,
+                type: BMLResourceType.file, uuid:Bundle.pathForResource("iris.csv")!)
+            self.connector!.createResource(BMLResourceType.dataset,
                 name: "testCreateDatasetFromCSVFail",
                 options: [:],
                 from: resource) { (resource, error) -> Void in
@@ -251,11 +251,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateDatasetFromCluster") { (exp) in
 
-            self.connector!.createResource(BMLResourceType.Cluster,
+            self.connector!.createResource(BMLResourceType.cluster,
                 name: "testCreateDatasetFromCluster",
                 from: BigMLKitConnectorBaseTest.aDataset!) { (resource, error) -> Void in
                     
-                    self.connector!.createResource(BMLResourceType.Dataset,
+                    self.connector!.createResource(BMLResourceType.dataset,
                         name: "testCreateDatasetFromCluster",
                         from: resource!) { (resource, error) -> Void in
                             
@@ -270,9 +270,9 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateProject") { (exp) in
             let resource = BMLMinimalResource(name:"testCreateProject",
-                type:BMLResourceType.Project,
+                type:BMLResourceType.project,
                 uuid:"")
-            self.connector!.createResource(BMLResourceType.Project,
+            self.connector!.createResource(BMLResourceType.project,
                 name: "testCreateProject",
                 options: ["description" : "This is a test project", "tags" : ["a", "b", "c"]],
                 from: resource) { (resource, error) -> Void in
@@ -290,17 +290,17 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreateProject") { (exp) in
             let resource = BMLMinimalResource(name:"testCreateProject",
-                type:BMLResourceType.Project, uuid:"")
-            self.connector!.createResource(BMLResourceType.Project,
+                type:BMLResourceType.project, uuid:"")
+            self.connector!.createResource(BMLResourceType.project,
                 name: "testCreateProject",
                 options: ["description" : "This is a test project", "tags" : ["a", "b", "c"]],
                 from: resource) { (resource, error) -> Void in
                     if let resource = resource {
-                        self.connector!.updateResource(BMLResourceType.Project,
+                        self.connector!.updateResource(BMLResourceType.project,
                             uuid: resource.uuid,
                             values: ["name" : "testUpdateProject"]) { (error) -> Void in
                                 if (error == nil) {
-                                    self.connector!.getResource(BMLResourceType.Project,
+                                    self.connector!.getResource(BMLResourceType.project,
                                         uuid: resource.uuid) {
                                             (resource, error) -> Void in
                                             XCTAssert(error != nil &&
@@ -323,15 +323,15 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testDeleteProject() {
         
         self.runTest("testDeleteProject") { (exp) in
-            self.connector!.listResources(BMLResourceType.Project,
+            self.connector!.listResources(BMLResourceType.project,
                 filters: ["limit" : 5]) {
                     (resources, error) -> Void in
-                    self.connector!.deleteResource(BMLResourceType.Project,
+                    self.connector!.deleteResource(BMLResourceType.project,
                         uuid: resources[0].uuid) {
                             (error) -> Void in
                             
                             if (error == nil) {
-                                self.connector!.getResource(BMLResourceType.Project,
+                                self.connector!.getResource(BMLResourceType.project,
                                     uuid: resources[0].uuid) {
                                         (resource, error) -> Void in
                                         
@@ -350,7 +350,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testListDataset() {
         
         self.runTest("testListDataset") { (exp) in
-            self.connector!.listResources(BMLResourceType.Dataset,
+            self.connector!.listResources(BMLResourceType.dataset,
                 filters: ["limit" : 5]) {
                     (resources, error) -> Void in
                     XCTAssert(resources.count == 5 && error == nil)
@@ -374,14 +374,14 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testDeleteDataset() {
         
         self.runTest("testDeleteDataset") { (exp) in
-            self.connector!.listResources(BMLResourceType.Dataset,
+            self.connector!.listResources(BMLResourceType.dataset,
                 filters: ["limit" : 5]) {
                     (resources, error) -> Void in
-                    self.connector!.deleteResource(BMLResourceType.Dataset,
+                    self.connector!.deleteResource(BMLResourceType.dataset,
                         uuid: resources[0].uuid) {
                             (error) -> Void in
                             if (error == nil) {
-                                self.connector!.getResource(BMLResourceType.Source,
+                                self.connector!.getResource(BMLResourceType.source,
                                     uuid: resources[0].uuid) {
                                         (resource, error) -> Void in
                                         XCTAssert(error != nil)
@@ -398,7 +398,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testDeleteDatasetFail() {
         
         self.runTest("testDeleteDatasetFail") { (exp) in
-            self.connector!.deleteResource(BMLResourceType.Source,
+            self.connector!.deleteResource(BMLResourceType.source,
                 uuid: "testDeleteDatasetFail") {
                     (error) -> Void in
                     if let error = error {
@@ -413,14 +413,14 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testUpdateDataset() {
         
         self.runTest("testUpdateDataset") { (exp) in
-            self.connector!.listResources(BMLResourceType.Dataset,
+            self.connector!.listResources(BMLResourceType.dataset,
                 filters: ["limit" : 5]) {
                     (resources, error) -> Void in
-                    self.connector!.updateResource(BMLResourceType.Dataset,
+                    self.connector!.updateResource(BMLResourceType.dataset,
                         uuid: resources[0].uuid,
                         values: ["name" : "testUpdateDataset"]) { (error) -> Void in
                             if (error == nil) {
-                                self.connector!.getResource(BMLResourceType.Source,
+                                self.connector!.getResource(BMLResourceType.source,
                                     uuid: resources[0].uuid) {
                                         (resource, error) -> Void in
                                         XCTAssert(error == nil &&
@@ -438,10 +438,10 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testUpdateDatasetFail() {
         
         self.runTest("testUpdateDatasetFail") { (exp) in
-            self.connector!.listResources(BMLResourceType.Dataset,
+            self.connector!.listResources(BMLResourceType.dataset,
                 filters: ["limit" : 5]) {
                     (resources, error) -> Void in
-                    self.connector!.updateResource(BMLResourceType.Dataset,
+                    self.connector!.updateResource(BMLResourceType.dataset,
                         uuid: resources[0].uuid,
                         values: [:]) { (error) -> Void in
                             
@@ -455,7 +455,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     func testGetDatasetFail() {
         
         self.runTest("testGetDatasetFail") { (exp) in
-            self.connector!.getResource(BMLResourceType.Source,
+            self.connector!.getResource(BMLResourceType.source,
                 uuid: "no-uuid") {
                     (resource, error) -> Void in
                     XCTAssert(error != nil && resource == nil)
@@ -469,7 +469,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         self.runTest("testRunScoreTest") { (exp) in
             
             
-            self.connector!.createResource(BMLResourceType.Anomaly,
+            self.connector!.createResource(BMLResourceType.anomaly,
                 name: "testCreateAnomaly",
                 options: [:],
                 from: BigMLKitConnectorBaseTest.altDataset!) {
@@ -496,11 +496,11 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testCreatePrediction") { (exp) in
             
-            self.connector!.createResource(BMLResourceType.Model,
+            self.connector!.createResource(BMLResourceType.model,
                 name: "testCreatePrediction",
                 from: BigMLKitConnectorBaseTest.aDataset!) { (resource, error) -> Void in
 
-                    self.connector!.createResource(BMLResourceType.Prediction,
+                    self.connector!.createResource(BMLResourceType.prediction,
                         name: "testCreatePrediction",
                         options: ["input_data" : ["sepal length" : 5,
                             "sepal width" : 2.5]],

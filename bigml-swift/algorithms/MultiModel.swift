@@ -23,7 +23,7 @@ class MultiModel {
         self.models = models
     }
     
-    func generateVotes(arguments : [String : AnyObject],
+    func generateVotes(_ arguments : [String : AnyObject],
         byName : Bool,
         missingStrategy : MissingStrategy,
         median : Bool) -> MultiVote {

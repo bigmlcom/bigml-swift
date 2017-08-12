@@ -20,7 +20,7 @@ let DEFAULT_MISSING_TOKENS = [
 "#VALUE!", "#NULL!", "NaN", "#N/A", "#NUM!", "?"
 ]
 
-private func makeFieldNamesUnique(fields : [String : AnyObject], objectiveFieldId : String?)
+private func makeFieldNamesUnique(_ fields : [String : AnyObject], objectiveFieldId : String?)
     -> ([String : AnyObject], [String], [String], [String : String], [String : String]) {
         
         var fieldNames : [String] = []
@@ -35,50 +35,50 @@ private func makeFieldNamesUnique(fields : [String : AnyObject], objectiveFieldI
         }
         
         if let objectiveFieldId = objectiveFieldId,
-            field = fields[objectiveFieldId] as? [String : AnyObject],
-            fieldName = field["name"] as? String {
+            let field = fields[objectiveFieldId] as? [String : AnyObject],
+            let fieldName = field["name"] as? String {
                 addFieldId(objectiveFieldId, fieldName)
         }
         
         var fields2 = fields
         
         for fieldId in fields.keys {
-            if fieldIds.indexOf(fieldId) == nil {
+            if fieldIds.index(of: fieldId) == nil {
                 fieldIds.append(fieldId)
                 if let field = fields[fieldId] as? [String : AnyObject],
-                    fieldName = field["name"] as? String {
+                    let fieldName = field["name"] as? String {
                         
                         var uniqueName = fieldName
-                        if fieldNames.indexOf(fieldName) != nil {
+                        if fieldNames.index(of: fieldName) != nil {
                             if let col_number = field["column_number"] {
                                 uniqueName = "\(uniqueName)\(col_number)"
-                                if fieldNames.indexOf(fieldName) != nil {
+                                if fieldNames.index(of: fieldName) != nil {
                                     uniqueName = "\(uniqueName)\(fieldId)"
                                 }
                             }
                         }
                         addFieldId(fieldId, uniqueName)
                         var field = fields2[fieldId] as! [String : AnyObject]
-                        field.updateValue(fieldName, forKey: "name")
+                        field.updateValue(fieldName as AnyObject, forKey: "name")
                 }
             }
         }
         return (fields2, fieldNames, fieldIds, fieldNameById, fieldIdByName)
 }
 
-private func invertedFieldMap(fields : [String : AnyObject]) -> [String : String] {
+private func invertedFieldMap(_ fields : [String : AnyObject]) -> [String : String] {
     
     var fieldMap : [String : String] = [:]
     for (key, value) in fields {
         if let value = value as? [String : AnyObject],
-            name = value["name"] as? String {
+            let name = value["name"] as? String {
             fieldMap[name] = key
         }
     }
     return fieldMap
 }
 
-public class FieldedResource {
+open class FieldedResource {
     
     internal let fields : [String : AnyObject]
     internal let objectiveId : String?
@@ -92,8 +92,8 @@ public class FieldedResource {
     internal let fieldNameById : [String : String]
     
     init(fields : [String : AnyObject],
-        objectiveId : String? = .None,
-        locale : String? = .None,
+        objectiveId : String? = .none,
+        locale : String? = .none,
         missingTokens : [String]? = DEFAULT_MISSING_TOKENS) {
             
             self.objectiveId = objectiveId
@@ -107,23 +107,23 @@ public class FieldedResource {
                 self.fieldIdByName) = makeFieldNamesUnique(fields, objectiveFieldId: objectiveId)
     }
     
-    func normalizedValue(value : AnyObject) -> AnyObject? {
+    func normalizedValue(_ value : AnyObject) -> AnyObject? {
         
-        if let value = value as? String, missingTokens = missingTokens {
+        if let value = value as? String, let missingTokens = missingTokens {
             if missingTokens.contains(value) {
-                return .None
+                return .none
             }
         }
         return value
     }
     
-    func filteredInputData(input : [String : AnyObject],
+    func filteredInputData(_ input : [String : AnyObject],
         byName : Bool = true) -> [String : AnyObject] {
         
         var output : [String : AnyObject] = [:]
         for (key, value) in input {
             if let value : AnyObject = self.normalizedValue(value) {
-                if self.objectiveId == .None || key != self.objectiveId {
+                if self.objectiveId == .none || key != self.objectiveId {
                     if let key = byName ? self.inverseFieldMap[key] : key {
                         output[key] = value
                     }

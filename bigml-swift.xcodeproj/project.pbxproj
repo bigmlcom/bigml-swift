@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4967162E1F3F9FBF008E9B17 /* baseball.ensemble in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DE1C5271A400FCB6F5 /* baseball.ensemble */; };
+		4967162F1F3F9FBF008E9B17 /* diab.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DF1C5271A400FCB6F5 /* diab.csv */; };
+		496716301F3F9FBF008E9B17 /* iris-sp-chars.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E01C5271A400FCB6F5 /* iris-sp-chars.csv */; };
+		496716311F3F9FBF008E9B17 /* iris.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E11C5271A400FCB6F5 /* iris.csv */; };
+		496716321F3F9FBF008E9B17 /* iris.ensemble in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E21C5271A400FCB6F5 /* iris.ensemble */; };
+		496716331F3F9FBF008E9B17 /* iris.logistic in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E31C5271A400FCB6F5 /* iris.logistic */; };
+		496716341F3F9FBF008E9B17 /* iris.model in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E41C5271A400FCB6F5 /* iris.model */; };
+		496716351F3F9FBF008E9B17 /* movies.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E51C5271A400FCB6F5 /* movies.csv */; };
+		496716361F3F9FBF008E9B17 /* salaries.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E61C5271A400FCB6F5 /* salaries.csv */; };
+		496716371F3F9FBF008E9B17 /* spam-text.cluster in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E71C5271A400FCB6F5 /* spam-text.cluster */; };
+		496716381F3F9FBF008E9B17 /* spam.cluster in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E81C5271A400FCB6F5 /* spam.cluster */; };
+		496716391F3F9FBF008E9B17 /* spam.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E91C5271A400FCB6F5 /* spam.csv */; };
+		4967163A1F3F9FBF008E9B17 /* spam.model in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EA1C5271A400FCB6F5 /* spam.model */; };
+		4967163B1F3F9FBF008E9B17 /* testAnomaly.json in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EB1C5271A400FCB6F5 /* testAnomaly.json */; };
+		4967163C1F3F9FBF008E9B17 /* testCluster.json in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EC1C5271A400FCB6F5 /* testCluster.json */; };
+		4967163D1F3F9FBF008E9B17 /* wines.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69ED1C5271A400FCB6F5 /* wines.csv */; };
+		4967163E1F3F9FBF008E9B17 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DB1C52716E00FCB6F5 /* credentials.plist */; };
 		497C69A11C52709000FCB6F5 /* Anomaly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69871C52709000FCB6F5 /* Anomaly.swift */; };
 		497C69A21C52709000FCB6F5 /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69881C52709000FCB6F5 /* Association.swift */; };
 		497C69A31C52709000FCB6F5 /* AssociationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69891C52709000FCB6F5 /* AssociationItem.swift */; };
@@ -32,25 +49,7 @@
 		497C69B81C52709000FCB6F5 /* ResourceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699E1C52709000FCB6F5 /* ResourceStatus.swift */; };
 		497C69B91C52709000FCB6F5 /* ResourceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699F1C52709000FCB6F5 /* ResourceTypes.swift */; };
 		497C69BA1C52709000FCB6F5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69A01C52709000FCB6F5 /* Utils.swift */; };
-		497C69DC1C52716E00FCB6F5 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DB1C52716E00FCB6F5 /* credentials.plist */; };
-		497C69EE1C5271A400FCB6F5 /* baseball.ensemble in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DE1C5271A400FCB6F5 /* baseball.ensemble */; };
-		497C69EF1C5271A400FCB6F5 /* diab.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69DF1C5271A400FCB6F5 /* diab.csv */; };
-		497C69F01C5271A400FCB6F5 /* iris-sp-chars.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E01C5271A400FCB6F5 /* iris-sp-chars.csv */; };
-		497C69F11C5271A400FCB6F5 /* iris.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E11C5271A400FCB6F5 /* iris.csv */; };
-		497C69F21C5271A400FCB6F5 /* iris.ensemble in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E21C5271A400FCB6F5 /* iris.ensemble */; };
-		497C69F31C5271A400FCB6F5 /* iris.logistic in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E31C5271A400FCB6F5 /* iris.logistic */; };
-		497C69F41C5271A400FCB6F5 /* iris.model in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E41C5271A400FCB6F5 /* iris.model */; };
-		497C69F51C5271A400FCB6F5 /* movies.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E51C5271A400FCB6F5 /* movies.csv */; };
-		497C69F61C5271A400FCB6F5 /* salaries.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E61C5271A400FCB6F5 /* salaries.csv */; };
-		497C69F71C5271A400FCB6F5 /* spam-text.cluster in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E71C5271A400FCB6F5 /* spam-text.cluster */; };
-		497C69F81C5271A400FCB6F5 /* spam.cluster in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E81C5271A400FCB6F5 /* spam.cluster */; };
-		497C69F91C5271A400FCB6F5 /* spam.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69E91C5271A400FCB6F5 /* spam.csv */; };
-		497C69FA1C5271A400FCB6F5 /* spam.model in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EA1C5271A400FCB6F5 /* spam.model */; };
-		497C69FB1C5271A400FCB6F5 /* testAnomaly.json in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EB1C5271A400FCB6F5 /* testAnomaly.json */; };
-		497C69FC1C5271A400FCB6F5 /* testCluster.json in Resources */ = {isa = PBXBuildFile; fileRef = 497C69EC1C5271A400FCB6F5 /* testCluster.json */; };
-		497C69FD1C5271A400FCB6F5 /* wines.csv in Resources */ = {isa = PBXBuildFile; fileRef = 497C69ED1C5271A400FCB6F5 /* wines.csv */; };
 		497C6A3B1C52775100FCB6F5 /* bigmlSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C5AA6E1AEF943800B81AA6 /* bigmlSwift.framework */; };
-		497C6A421C52777C00FCB6F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C6A411C52777C00FCB6F5 /* Info.plist */; };
 		497C6A431C52779800FCB6F5 /* bigmlSwiftPredicateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A061C5271C400FCB6F5 /* bigmlSwiftPredicateTests.swift */; };
 		497C6A441C5277A400FCB6F5 /* bigmlSwiftAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69FE1C5271C400FCB6F5 /* bigmlSwiftAPITests.swift */; };
 		497C6A461C5277B300FCB6F5 /* bigmlSwiftAssociationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69FF1C5271C400FCB6F5 /* bigmlSwiftAssociationTests.swift */; };
@@ -60,7 +59,6 @@
 		497C6A4A1C5277B300FCB6F5 /* bigmlSwiftEnsembleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A031C5271C400FCB6F5 /* bigmlSwiftEnsembleTests.swift */; };
 		497C6A4B1C5277B300FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A041C5271C400FCB6F5 /* bigmlSwiftLogisticRegressionTests.swift */; };
 		497C6A4D1C5277B300FCB6F5 /* bigmlSwiftPredictionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C6A071C5271C400FCB6F5 /* bigmlSwiftPredictionTests.swift */; };
-		497C6A4F1C5278EE00FCB6F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497C6A4E1C5278EE00FCB6F5 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -328,14 +326,16 @@
 			attributes = {
 				LastSwiftMigration = 0720;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "BigML Inc.";
 				TargetAttributes = {
 					497C6A351C52775000FCB6F5 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 					};
 					49C5AA6D1AEF943800B81AA6 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -362,7 +362,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497C6A421C52777C00FCB6F5 /* Info.plist in Resources */,
+				4967162E1F3F9FBF008E9B17 /* baseball.ensemble in Resources */,
+				4967162F1F3F9FBF008E9B17 /* diab.csv in Resources */,
+				496716301F3F9FBF008E9B17 /* iris-sp-chars.csv in Resources */,
+				496716311F3F9FBF008E9B17 /* iris.csv in Resources */,
+				496716321F3F9FBF008E9B17 /* iris.ensemble in Resources */,
+				496716331F3F9FBF008E9B17 /* iris.logistic in Resources */,
+				496716341F3F9FBF008E9B17 /* iris.model in Resources */,
+				496716351F3F9FBF008E9B17 /* movies.csv in Resources */,
+				496716361F3F9FBF008E9B17 /* salaries.csv in Resources */,
+				496716371F3F9FBF008E9B17 /* spam-text.cluster in Resources */,
+				496716381F3F9FBF008E9B17 /* spam.cluster in Resources */,
+				496716391F3F9FBF008E9B17 /* spam.csv in Resources */,
+				4967163A1F3F9FBF008E9B17 /* spam.model in Resources */,
+				4967163B1F3F9FBF008E9B17 /* testAnomaly.json in Resources */,
+				4967163C1F3F9FBF008E9B17 /* testCluster.json in Resources */,
+				4967163D1F3F9FBF008E9B17 /* wines.csv in Resources */,
+				4967163E1F3F9FBF008E9B17 /* credentials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,24 +386,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497C69FA1C5271A400FCB6F5 /* spam.model in Resources */,
-				497C69FC1C5271A400FCB6F5 /* testCluster.json in Resources */,
-				497C69F71C5271A400FCB6F5 /* spam-text.cluster in Resources */,
-				497C69F31C5271A400FCB6F5 /* iris.logistic in Resources */,
-				497C69F51C5271A400FCB6F5 /* movies.csv in Resources */,
-				497C69F81C5271A400FCB6F5 /* spam.cluster in Resources */,
-				497C69F41C5271A400FCB6F5 /* iris.model in Resources */,
-				497C69EE1C5271A400FCB6F5 /* baseball.ensemble in Resources */,
-				497C69DC1C52716E00FCB6F5 /* credentials.plist in Resources */,
-				497C6A4F1C5278EE00FCB6F5 /* Info.plist in Resources */,
-				497C69F91C5271A400FCB6F5 /* spam.csv in Resources */,
-				497C69FB1C5271A400FCB6F5 /* testAnomaly.json in Resources */,
-				497C69F21C5271A400FCB6F5 /* iris.ensemble in Resources */,
-				497C69F01C5271A400FCB6F5 /* iris-sp-chars.csv in Resources */,
-				497C69FD1C5271A400FCB6F5 /* wines.csv in Resources */,
-				497C69EF1C5271A400FCB6F5 /* diab.csv in Resources */,
-				497C69F61C5271A400FCB6F5 /* salaries.csv in Resources */,
-				497C69F11C5271A400FCB6F5 /* iris.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +459,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.bigml-swiftTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -472,6 +471,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.bigml-swiftTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -488,8 +488,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -537,8 +539,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -558,6 +562,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -569,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -581,6 +587,7 @@
 				PRODUCT_NAME = bigmlSwift;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -588,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -599,6 +607,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bigml.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = bigmlSwift;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -26,7 +26,7 @@ internal struct TreePrediction {
     let distribution : [(value : AnyObject, dist : Int)]
     let distributionUnit : String
     let children : [PredictionTree]
-    var probability : Double = Double.NaN
+    var probability : Double = Double.nan
     var next : String = ""
     
     init(prediction : AnyObject,

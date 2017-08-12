@@ -25,16 +25,16 @@ class MultiVote {
     
     var predictions : [[String : Any]]
     
-    static private let combinationWeightsForMethod = [
-        PredictionMethod.Plurality : kNullCategory,
-        PredictionMethod.Confidence : "confidence",
-        PredictionMethod.Probability : "probability",
-        PredictionMethod.Threshold : kNullCategory]
+    static fileprivate let combinationWeightsForMethod = [
+        PredictionMethod.plurality : kNullCategory,
+        PredictionMethod.confidence : "confidence",
+        PredictionMethod.probability : "probability",
+        PredictionMethod.threshold : kNullCategory]
     
-    static private let weightLabelForMethod = ["plurality", "confidence", "probability", "threshold"]
-    static private let weightKeys = [[], ["confidence"], ["distribution", "count"], []]
+    static fileprivate let weightLabelForMethod = ["plurality", "confidence", "probability", "threshold"]
+    static fileprivate let weightKeys = [[], ["confidence"], ["distribution", "count"], []]
     
-    private static func weightLabel(method : PredictionMethod) -> String {
+    fileprivate static func weightLabel(_ method : PredictionMethod) -> String {
         assert(combinationWeightsForMethod[method] != nil)
         return combinationWeightsForMethod[method] ?? kNullCategory
     }
@@ -56,7 +56,8 @@ class MultiVote {
         if !ordered {
             var count = 0
             for var p in self.predictions {
-                p.updateValue(count++, forKey: "order")
+                count += 1;
+                p.updateValue(count, forKey: "order")
             }
         }
     }
@@ -90,20 +91,21 @@ class MultiVote {
     *
     * @param votes
     */
-    func extend(votes : MultiVote) -> MultiVote {
+    func extend(_ votes : MultiVote) -> MultiVote {
         
         assert(votes.predictions.count > 0, "MultiVote extendWithMultiVote: contract unfulfilled")
         if (votes.predictions.count > 0) {
             var order = self.nextOrder()
             for var p in votes.predictions {
-                p.updateValue(order++, forKey: "order")
+                order += 1
+                p.updateValue(order, forKey: "order")
                 self.predictions.append(p)
             }
         }
         return self
     }
     
-    func areKeysValid(keys : [String]) -> Bool {
+    func areKeysValid(_ keys : [String]) -> Bool {
         
         for key in keys {
             for p in self.predictions {
@@ -120,7 +122,7 @@ class MultiVote {
     *
     * @param keys {array} keys Array of key strings
     */
-    func weightKeys(method : PredictionMethod) -> [String] {
+    func weightKeys(_ method : PredictionMethod) -> [String] {
         
         let keys = MultiVote.weightKeys[method.rawValue]
         return self.areKeysValid(keys) ? keys : []
@@ -143,7 +145,7 @@ class MultiVote {
     /**
     * Returns a distribution formed by grouping the distributions of each predicted node.
     */
-    func groupedDistributionPrediction(prediction : [String : Any])
+    func groupedDistributionPrediction(_ prediction : [String : Any])
         -> [String : Any] {
             
             var distributionUnit = "counts"
@@ -168,20 +170,20 @@ class MultiVote {
     * builds e^-[scaled error] and returns the normalization factor to
     * fit them between [0, 1]
     */
-    func normalizedError(range : Double, topRange : Double, rangeMin : Double) -> Double {
+    func normalizedError(_ range : Double, topRange : Double, rangeMin : Double) -> Double {
         
         var normalizedError = 0.0
         if range > 0.0 {
             for i in 0...self.predictions.count-1 {
-                let delta = rangeMin - (self.predictions[i]["confidence"] as? Double ?? Double.NaN)
+                let delta = rangeMin - (self.predictions[i]["confidence"] as? Double ?? Double.nan)
                 self.predictions[i].updateValue(exp(delta / range * topRange), forKey: "errorWeight")
-                normalizedError += (self.predictions[i]["errorWeight"] as? Double ?? Double.NaN)
+                normalizedError += (self.predictions[i]["errorWeight"] as? Double ?? Double.nan)
             }
         } else {
             for i in 0...self.predictions.count-1 {
                 self.predictions[i].updateValue(1.0, forKey: "errorWeight")
             }
-            normalizedError = Double(self.predictions.count) ?? Double.NaN
+            normalizedError = Double(self.predictions.count) 
         }
         return normalizedError
     }
@@ -194,7 +196,7 @@ class MultiVote {
     * @return {number} The normalization factor as the sum of the normalized
     *         error weights.
     */
-    func normalizedError(topRange : Double) -> Double {
+    func normalizedError(_ topRange : Double) -> Double {
         
         var error = 0.0
         var errorRange = 0.0
@@ -203,7 +205,7 @@ class MultiVote {
         
         for p in self.predictions {
             assert(p["confidence"] != nil)
-            error = p["confidence"] as? Double ?? Double.NaN
+            error = p["confidence"] as? Double ?? Double.nan
             maxError = max(error, maxError)
             minError = min(error, minError)
         }
@@ -218,7 +220,7 @@ class MultiVote {
     *         combined error is an average of the errors in the MultiVote
     *         predictions.
     */
-    func weightedError(confidence : Bool,
+    func weightedError(_ confidence : Bool,
         distribution : Bool,
         count : Bool,
         median : Bool,
@@ -239,30 +241,30 @@ class MultiVote {
             
             var newPrediction : [String : Any] = [:]
             if (normalizationFactor == 0.0) {
-                newPrediction.updateValue(Double.NaN, forKey: "prediction")
+                newPrediction.updateValue(Double.nan, forKey: "prediction")
                 newPrediction.updateValue(0.0, forKey: "confidence")
             }
             
             for p in self.predictions {
                 
-                result += (p["prediction"] as? Double ?? Double.NaN) *
-                    (p["errorWeight"] as? Double ?? Double.NaN)
+                result += (p["prediction"] as? Double ?? Double.nan) *
+                    (p["errorWeight"] as? Double ?? Double.nan)
                 if median {
-                    medianResult += (p["median"] as? Double ?? Double.NaN) *
-                        (p["errorWeight"] as? Double ?? Double.NaN)
+                    medianResult += (p["median"] as? Double ?? Double.nan) *
+                        (p["errorWeight"] as? Double ?? Double.nan)
                 }
                 if count {
                     instances += p["count"] as? Int ?? 0
                 }
-                if addMin && min > (p["min"] as? Double ?? Double.NaN) {
-                    min = (p["min"] as? Double ?? Double.NaN)
+                if addMin && min > (p["min"] as? Double ?? Double.nan) {
+                    min = (p["min"] as? Double ?? Double.nan)
                 }
-                if addMax && max < (p["max"] as? Double ?? Double.NaN) {
-                    max = (p["max"] as? Double ?? Double.NaN)
+                if addMax && max < (p["max"] as? Double ?? Double.nan) {
+                    max = (p["max"] as? Double ?? Double.nan)
                 }
                 if (confidence) {
-                    combinedError += (p["confidence"] as? Double ?? Double.NaN) *
-                        (p["errorWeight"] as? Double ?? Double.NaN)
+                    combinedError += (p["confidence"] as? Double ?? Double.nan) *
+                        (p["errorWeight"] as? Double ?? Double.nan)
                 }
             }
             newPrediction.updateValue(result/normalizationFactor, forKey: "prediction")
@@ -292,7 +294,7 @@ class MultiVote {
     * returned
     *
     */
-    func average(confidence : Bool,
+    func average(_ confidence : Bool,
         distribution : Bool,
         count : Bool,
         median : Bool,
@@ -308,31 +310,31 @@ class MultiVote {
             var instances = 0
             
             for p in self.predictions {
-                result += (p["prediction"] as? Double ?? Double.NaN)
+                result += (p["prediction"] as? Double ?? Double.nan)
                 if median {
-                    medianResult += (p["median"] as? Double ?? Double.NaN)
+                    medianResult += (p["median"] as? Double ?? Double.nan)
                 }
                 if confidence {
-                    confidenceValue += (p["confidence"] as? Double ?? Double.NaN)
+                    confidenceValue += (p["confidence"] as? Double ?? Double.nan)
                 }
                 if count {
                     instances += (p["count"] as? Int ?? 0)
                 }
                 if addMin {
-                    min += (p["min"] as? Double ?? Double.NaN)
+                    min += (p["min"] as? Double ?? Double.nan)
                 }
                 if addMax {
-                    max += (p["max"] as? Double ?? Double.NaN)
+                    max += (p["max"] as? Double ?? Double.nan)
                 }
             }
             if total > 0 {
-                result /= Double(total) ?? Double.NaN
-                confidenceValue /= Double(total) ?? Double.NaN
-                medianResult /= Double(total) ?? Double.NaN
+                result /= Double(total) 
+                confidenceValue /= Double(total) 
+                medianResult /= Double(total) 
             } else {
-                result = Double.NaN
+                result = Double.nan
                 confidenceValue = 0.0
-                medianResult = Double.NaN
+                medianResult = Double.nan
             }
             
             var output : [String : Any] = ["prediction" : result]
@@ -367,7 +369,7 @@ class MultiVote {
     * @param category the positive category
     * @return MultiVote instance
     */
-    func singleOutCategory(category : String, threshold : Int) -> MultiVote {
+    func singleOutCategory(_ category : String, threshold : Int) -> MultiVote {
         
         assert(threshold > 0 && category != "",
             "MultiVote singleOutCategory contract unfulfilled")
@@ -376,7 +378,7 @@ class MultiVote {
         var categoryPredictions : [[String : Any]] = []
         var restOfPredictions : [[String : Any]] = []
         for p in self.predictions {
-            if let prediction = p["prediction"] as? String where category == prediction {
+            if let prediction = p["prediction"] as? String, category == prediction {
                 categoryPredictions.append(p)
             } else {
                 restOfPredictions.append(p)
@@ -395,7 +397,7 @@ class MultiVote {
     * @param weightLabel {string} weightLabel Label of the value in the prediction object
     *        that will be used to weight confidence
     */
-    func weightedConfidence(combinedPrediction : AnyObject,
+    func weightedConfidence(_ combinedPrediction : AnyObject,
         weightLabel : String) -> [String : Any] {
             
             var finalConfidence = 0.0
@@ -406,7 +408,7 @@ class MultiVote {
                 if let prediction = $0["prediction"] as? String {
                     return prediction == combinedPrediction as? String ?? ""
                 } else if let prediction = $0["prediction"] as? Double {
-                    return prediction == (combinedPrediction as? Double ?? Double.NaN)
+                    return prediction == (combinedPrediction as? Double ?? Double.nan)
                 } else if let prediction = $0["prediction"] as? Int {
                     return prediction == combinedPrediction as? Int ?? Int.max
                 }
@@ -420,9 +422,9 @@ class MultiVote {
             }
             for p in predictions {
                 if (weightLabel != kNullCategory) {
-                    weight = p[weightLabel] as? Double ?? Double.NaN
+                    weight = p[weightLabel] as? Double ?? Double.nan
                 }
-                finalConfidence += weight * (p["confidence"] as? Double ?? Double.NaN)
+                finalConfidence += weight * (p["confidence"] as? Double ?? Double.nan)
                 totalWeight += weight
             }
             if totalWeight > 0 {
@@ -440,7 +442,7 @@ class MultiVote {
     * @param weightLabel {string} weightLabel Label of the value in the prediction object
     *        whose sum will be used as count in the distribution
     */
-    func combinedDistribution(weightLabel : String = "probability") -> (AnyObject, AnyObject) {
+    func combinedDistribution(_ weightLabel : String = "probability") -> (AnyObject, AnyObject) {
         
         var total = 0
         var distribution : [String : AnyObject] = [:]
@@ -448,15 +450,15 @@ class MultiVote {
             assert(p[weightLabel] != nil, "MultiVote combinedDistribution contract unfulfilled")
             if let predictionName = p["prediction"] as? String {
                 if distribution[predictionName] == nil {
-                    distribution.updateValue(0.0, forKey: predictionName)
+                    distribution.updateValue(0.0 as AnyObject, forKey: predictionName)
                 }
-                distribution.updateValue(distribution[predictionName] as? Double ?? Double.NaN *
-                    (distribution[weightLabel] as? Double ?? Double.NaN),
+                distribution.updateValue(distribution[predictionName] as? Double as AnyObject? ?? Double.nan *
+                    (distribution[weightLabel] as? Double ?? Double.nan),
                     forKey: predictionName)
                 total += p["count"] as? Int ?? 0
             }
         }
-        return (distribution, total)
+        return (distribution as AnyObject, total as AnyObject)
     }
     
     /**
@@ -471,7 +473,7 @@ class MultiVote {
     * average of the confidences of the votes for the combined
     * prediction) will also be given.
     */
-    func combineCategorical(weightLabel : String, confidence : Bool) -> [String : Any] {
+    func combineCategorical(_ weightLabel : String, confidence : Bool) -> [String : Any] {
         
         var weight = 1.0
         var mode : [String : (count : Double, order : Int)] = [:]
@@ -486,7 +488,7 @@ class MultiVote {
                     "MultiVote combineCategorical: Not enough data to use the selected method.")
                 
                 if (p[weightLabel] != nil) {
-                    weight = p[weightLabel] as? Double ?? Double.NaN
+                    weight = p[weightLabel] as? Double ?? Double.nan
                 }
             }
             category = p["prediction"] as? String ?? kNullCategory
@@ -500,7 +502,7 @@ class MultiVote {
             mode.updateValue(categoryHash, forKey: category)
         }
         
-        let predictionName = mode.sort{
+        let predictionName = mode.sorted{
             
             let w0 = $0.1.count
             let w1 = $1.1.count
@@ -514,12 +516,12 @@ class MultiVote {
         
         if (confidence) {
             if (self.predictions.first?["confidence"] != nil) {
-                return self.weightedConfidence(predictionName, weightLabel:weightLabel)
+                return self.weightedConfidence(predictionName as AnyObject, weightLabel:weightLabel)
             }
             let distributionInfo = self.combinedDistribution(weightLabel)
             let count = distributionInfo.1 as? Int ?? -1
             let distribution = distributionInfo.0 as? [(value : AnyObject, dist : Int)] ?? []
-            let combinedConfidence = wsConfidence(predictionName,
+            let combinedConfidence = wsConfidence(predictionName as AnyObject,
                 distribution: distribution,
                 n: count)
             result.updateValue(combinedConfidence, forKey: "confidence")
@@ -542,8 +544,8 @@ class MultiVote {
                 let instances = v as? Int ?? 0
                 predictions.append([
                     "prediction" : k,
-                    "probability" : (Double(instances) ?? Double.NaN) /
-                        (Double(total) ?? Double.NaN),
+                    "probability" : (Double(instances) ) /
+                        (Double(total) ),
                     "count" : instances,
                     "order" : p["order"] ?? 0])
             }
@@ -562,7 +564,7 @@ class MultiVote {
     *                       of votes for the combined prediction) will also be given.
     * @return {{"prediction": prediction, "confidence": combinedConfidence}}
     */
-    func combine(method : PredictionMethod,
+    func combine(_ method : PredictionMethod,
         confidence : Bool,
         distribution : Bool,
         count : Bool,
@@ -577,7 +579,7 @@ class MultiVote {
                         p["confidence"] = 0
                     }
                 }
-                if (method == PredictionMethod.Confidence) {
+                if (method == PredictionMethod.confidence) {
                     return self.weightedError(confidence,
                         distribution: distribution,
                         count: count,
@@ -594,11 +596,11 @@ class MultiVote {
             }
             
             var votes : MultiVote = self
-            if method == PredictionMethod.Threshold {
+            if method == PredictionMethod.threshold {
                 let threshold = options["threshold-k"] as? Int ?? 0
                 let category = options["threshold-category"] as? String ?? ""
                 votes = self.singleOutCategory(category, threshold: threshold)
-            } else if method == PredictionMethod.Probability {
+            } else if method == PredictionMethod.probability {
                 votes = MultiVote(predictions: self.probabilityWeight())
             }
             return votes.combineCategorical(MultiVote.weightLabel(method),
@@ -624,20 +626,20 @@ class MultiVote {
     * @param predictionInfo the prediction to be appended
     * @return the this instance
     */
-    func append(predictionInfo : [String : AnyObject]) {
+    func append(_ predictionInfo : [String : AnyObject]) {
         
         assert(predictionInfo.count > 0 && predictionInfo["prediction"] != nil,
             "Failed to append prediction")
         
         var dict = predictionInfo
         let order = self.nextOrder()
-        dict.updateValue(order, forKey: "order")
+        dict.updateValue(order as AnyObject, forKey: "order")
         self.predictions.append(dict)
     }
     
     func addMedian() {
         for var p in self.predictions {
-            p.updateValue(p["median"] ?? Double.NaN, forKey: "prediction")
+            p.updateValue(p["median"] ?? Double.nan, forKey: "prediction")
         }
     }
 }

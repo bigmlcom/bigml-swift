@@ -30,7 +30,7 @@ offline.
 
 private let kOptionalFields = ["categorical", "text", "items"]
 
-public class Cluster : FieldedResource {
+open class Cluster : FieldedResource {
     
     var tagCloud : [String : AnyObject] = [:]
     var termForms : [String : [String : [String]]] = [:]
@@ -44,7 +44,7 @@ public class Cluster : FieldedResource {
     var clusterDescription : String
     var ready : Bool
     
-    static func predict(jsonCluster : [String : AnyObject],
+    static func predict(_ jsonCluster : [String : AnyObject],
         arguments : [String : AnyObject],
         options : [String : Any]) -> CentroidInfo {
         
@@ -59,7 +59,7 @@ public class Cluster : FieldedResource {
                     return (key, arguments[name]!)
                 }
                 assert(false, "Cluster.predict(...), map got corrupted?")
-                return (key, "")
+                return (key, "" as AnyObject)
             }
             
             return Cluster(jsonCluster: jsonCluster).centroid(inputData,
@@ -69,8 +69,8 @@ public class Cluster : FieldedResource {
     required public init(jsonCluster : [String : AnyObject]) {
         
         if let clusters = jsonCluster["clusters"]?["clusters"] as? [[String : AnyObject]],
-            status = jsonCluster["status"] as? [String : AnyObject],
-            code = status["code"] as? Int where code == 5 {
+            let status = jsonCluster["status"] as? [String : AnyObject],
+            let code = status["code"] as? Int, code == 5 {
                 self.centroids = clusters.map{
                     Centroid(cluster: $0)
                 }
@@ -88,7 +88,7 @@ public class Cluster : FieldedResource {
         }
         for (fieldId, field) in fields {
             if let field = field as? [String : AnyObject],
-                optype = field["optype"] as? String {
+                let optype = field["optype"] as? String {
             
                     if optype == "text" {
                         if let termForms = field["summary"]?["term_forms"] as?
@@ -96,14 +96,14 @@ public class Cluster : FieldedResource {
                             self.termForms[fieldId] = termForms
                         }
                         if let tagCloud = field["summary"]?["tag_cloud"] {
-                            self.tagCloud[fieldId] = tagCloud
+                            self.tagCloud[fieldId] = tagCloud as AnyObject?
                         }
                         if let termAnalysis = field["term_analysis"] as?
                             [String : [String : AnyObject]] {
-                            self.termAnalysis[fieldId] = termAnalysis
+                            self.termAnalysis[fieldId] = termAnalysis as [String : AnyObject]?
                         }
                     } else if optype == "items" {
-                        self.items[fieldId] = field["summary"]?["items"] ?? [:]
+                        self.items[fieldId] = field["summary"]?["items"] as AnyObject?? ?? [:]
                         self.itemAnalysis = field["item_analysis"] as?
                             [String : [String : AnyObject]] ?? [:]
                     }
@@ -117,12 +117,11 @@ public class Cluster : FieldedResource {
     /**
       * Returns the id of the nearest centroid
       */
-    public func centroid(arguments : [String : AnyObject], byName : Bool) -> CentroidInfo {
+    open func centroid(_ arguments : [String : AnyObject], byName : Bool) -> CentroidInfo {
         
         var filteredArguments = self.filteredInputData(arguments, byName: byName)
         for (fieldId, field) in self.fields {
-            if let optype = field["optype"] as? String
-                where !kOptionalFields.contains(optype) && !arguments.keys.contains(fieldId) {
+            if let optype = field["optype"] as? String, !kOptionalFields.contains(optype) && !arguments.keys.contains(fieldId) {
                     assert(filteredArguments.keys.contains(fieldId),
                         "Failed to predict a centroid. Arguments must contain values for all numeric fields.")
             }
@@ -138,7 +137,7 @@ public class Cluster : FieldedResource {
         return nearest(filteredArguments, uniqueTerms: uTerms)
     }
     
-    func nearest(arguments : [String : AnyObject], uniqueTerms : [String : [(AnyObject, Int)]])
+    func nearest(_ arguments : [String : AnyObject], uniqueTerms : [String : [(AnyObject, Int)]])
         -> CentroidInfo {
 
             var uTerms = [String : [String]]()
@@ -150,7 +149,7 @@ public class Cluster : FieldedResource {
                 centroidDistance: Double.infinity);
             for centroid in self.centroids {
                 let squareDistance = centroid.squareDistance(arguments,
-                    uniqueTerms: uTerms,
+                    uniqueTerms: uTerms as [String : AnyObject],
                     scales: self.scales,
                     nearestDistance: nearestCentroid.centroidDistance)
                 if !squareDistance.isNaN {

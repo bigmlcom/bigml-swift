@@ -77,7 +77,7 @@ private let kNoItems = ["numeric", "categorical"]
 /**
  * Returns the string that describes the values of metrics for a rule
  */
-func metricString(rule : AssociationRule, reverse : Bool = false) -> String {
+func metricString(_ rule : AssociationRule, reverse : Bool = false) -> String {
     
     return kAssociationMetrics.map {
         metric -> String in
@@ -90,7 +90,7 @@ func metricString(rule : AssociationRule, reverse : Bool = false) -> String {
         } else {
             return "\(kMetricLiterals[metric])=\(metricValue)"
         }
-        }.joinWithSeparator(";")
+        }.joined(separator: ";")
 }
 
 /**
@@ -99,7 +99,7 @@ func metricString(rule : AssociationRule, reverse : Bool = false) -> String {
  * Uses a BigML remote association resource to build a local version
  * that can be used to extract associations information.
  */
-public class Association : FieldedResource {
+open class Association : FieldedResource {
     
     let resourceId : String
     let complement : Bool
@@ -134,7 +134,8 @@ public class Association : FieldedResource {
         var index = 0
         self.items = (associations?["items"] as? [[String : AnyObject]] ?? []).map {
             (item : [String : AnyObject]) -> AssociationItem in
-            AssociationItem(index: index++,
+            index += 1
+            AssociationItem(index: index,
                 itemInfo: item,
                 fields: fields)
         }
@@ -160,7 +161,7 @@ public class Association : FieldedResource {
     /**
      *
      */
-    func getItems(field : String? = nil,
+    func getItems(_ field : String? = nil,
         names : [String]? = nil,
         inputMap : [String : AnyObject]? = nil,
         filterFunction : ((AssociationItem) -> Bool)? = nil) -> [AssociationItem] {
@@ -204,12 +205,12 @@ public class Association : FieldedResource {
             }
     }
     
-    func tagsFromRhs(rhs : [Int]) -> String {
-        return rhs.map { String($0) }.joinWithSeparator("-")
+    func tagsFromRhs(_ rhs : [Int]) -> String {
+        return rhs.map { String($0) }.joined(separator: "-")
     }
     
-    func rhsFromTag(tag : String) -> [Int] {
-        return tag.componentsSeparatedByString("-").map{ Int($0)! }
+    func rhsFromTag(_ tag : String) -> [Int] {
+        return tag.components(separatedBy: "-").map{ Int($0)! }
     }
     
     /**
@@ -239,7 +240,7 @@ public class Association : FieldedResource {
      * @param byName boolean If true, arguments is keyed by field
      *   name, field id is used otherwise.
      */
-    public func associationSet(arguments : [String : AnyObject],
+    open func associationSet(_ arguments : [String : AnyObject],
         options : [String : Any])
         -> [[String : AnyObject]] {
 
@@ -264,20 +265,19 @@ public class Association : FieldedResource {
                 }
                 var cosine = itemIndexes.reduce(0.0) { rule.lhs.contains($1) ? $0 + 1.0 : $0 }
                 if cosine > 0.0 {
-                    cosine /= sqrt(Double(itemIndexes.count) ?? Double.NaN) *
-                        sqrt(Double(rule.lhs.count) ?? Double.NaN)
+                    cosine /= sqrt(Double(itemIndexes.count)) * sqrt(Double(rule.lhs.count))
                     let rhsTag = self.tagsFromRhs(rule.rhs)
                     if !predictions.keys.contains(rhsTag) {
-                        predictions[rhsTag] = ["score" : 0.0]
+                        predictions[rhsTag] = ["score" : 0.0 as AnyObject]
                     }
-                    predictions[rhsTag]!["score"] = (predictions[rhsTag]!["score"] as? Double ?? Double.NaN) + cosine *
-                        (rule.valueForMetric(kSearchStrategyAttributes[scoreBy]!) as? Double ?? Double.NaN)
+                    predictions[rhsTag]!["score"] = (predictions[rhsTag]!["score"] as? Double ?? Double.nan) + cosine *
+                        (rule.valueForMetric(kSearchStrategyAttributes[scoreBy]!) as? Double ?? Double.nan)
                 }
             }
             //-- choose the best k predictions
             let k = options["k"] as? Int ?? predictions.keys.count - 1
-            let p = predictions.sort {
-                ($0.1["score"] as? Double ?? Double.NaN) > ($1.1["score"] as? Double ?? Double.NaN) }[0...k]
+            let p = predictions.sorted {
+                ($0.1["score"] as? Double ?? Double.nan) > ($1.1["score"] as? Double ?? Double.nan) }[0...k]
             
             var result = [[String : AnyObject]]()
             for (rhsTag, var prediction) in p {
