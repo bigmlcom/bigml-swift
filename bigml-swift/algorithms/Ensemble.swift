@@ -25,8 +25,9 @@ open class Ensemble {
     static fileprivate func multiModels(_ models : [[String : AnyObject]], maxModels : Int)
         -> [MultiModel] {
             
-            return stride(from: 0, to: models.count, by: maxModels)
-                .map { MultiModel(models:Array(models[$0..<$0.advancedBy(maxModels, limit: models.count)])) }
+            return stride(from: 0, to: models.count - maxModels, by: maxModels).map { s in
+                MultiModel(models:Array(models[s..<s+models.count]))
+            }
     }
     
     public required init(models : [[String : AnyObject]],
