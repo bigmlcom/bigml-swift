@@ -309,15 +309,15 @@ func wsConfidence(_ prediction : AnyObject,
         
         var p = Double.nan
         if let v = findInDistribution(distribution, element: prediction) {
-            p = Double(v.dist) ?? Double.nan
+            p = Double(v.dist)
         }
         assert (!p.isNaN && p > 0)
         
-        let norm = Double(distribution.reduce(0) { $0 + $1.dist }) ?? Double.nan
+        let norm = Double(distribution.reduce(0) { $0 + $1.dist })
         if norm != 1.0 {
             p /= norm
         }
-        let n = Double(n) ?? Double.nan
+        let n = Double(n)
         let z2 = z * z
         let wsFactor = z2 / n
         let wsSqrt = sqrt((p * (1 - p) + wsFactor / 4) / n)
@@ -465,27 +465,27 @@ class BMLRegex {
     }
 }
 
-infix operator =~ { associativity left precedence 160 }
+infix operator =~ : MultiplicationPrecedence
 func =~ (input: String, pattern: String) -> [NSTextCheckingResult] {
     return BMLRegex(pattern).matches(input)
 }
 
-infix operator =~% { associativity left precedence 160 }
+infix operator =~% : MultiplicationPrecedence
 func =~% (input: String, pattern: String) -> [String] {
     return BMLRegex(pattern).split(input)
 }
 
-infix operator =~? { associativity left precedence 160 }
+infix operator =~? : MultiplicationPrecedence
 func =~? (input: String, pattern: String) -> Bool {
     return BMLRegex(pattern).test(input)
 }
 
-infix operator =~~ { associativity left precedence 160 }
+infix operator =~~ : MultiplicationPrecedence
 func =~~ (input: String, pattern: String) -> Int {
     return BMLRegex(pattern).matchCount(input)
 }
 
-infix operator %% { associativity left precedence 160 }
+infix operator %% : MultiplicationPrecedence
 func %%<T: Equatable> (input: Array<T>, exp: (T) -> Bool) -> Bool {
     for t in input {
         if exp(t) {
@@ -524,7 +524,7 @@ func parseItems(_ text : String, regexp : String) -> [String] {
 func uniqueTerms(_ terms : [String],
     forms : [String : [String]],
     tagCloud : [String])
-    -> [(String, Int)] {
+    -> [(AnyObject, Int)] {
         
         var extendForms : [String : String] = [:]
         for (term, formList) in forms {
@@ -547,7 +547,7 @@ func uniqueTerms(_ terms : [String],
                 termSet.updateValue(termSet[term]! + 1, forKey: term)
             }
         }
-        return termSet.map{ ($0.0, $0.1) }
+        return termSet.map{ ($0.0 as AnyObject, $0.1) }
 }
 
 /**
@@ -585,7 +585,7 @@ func uniqueTerms(_ arguments : [String : AnyObject],
         for (fieldId, analysis) in itemAnalysis {
             if let inputDataField = arguments[fieldId] as? String {
                 let separator = analysis["separator"] as? String ?? " "
-                let regexp = analysis["separator_regexp"] as? String ?? separator ?? " "
+                let regexp = analysis["separator_regexp"] as? String ?? separator
                 let terms : [String] = parseItems(inputDataField, regexp: regexp)
                 uTerms[fieldId] = uniqueTerms(terms,
                     forms: [:],
