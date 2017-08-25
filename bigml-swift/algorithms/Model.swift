@@ -188,8 +188,7 @@ open class Model : FieldedResource {
             var output : [String : Any] = [:]
             let distribution = prediction.distribution
             if multiple > 0 && !self.tree.isRegression() {
-                for var i = 0; i < [multiple, distribution.count].min(); i += 1 {
-                    let distributionElement = distribution[i]
+                for var distributionElement in distribution[0...[multiple, distribution.count].min()!] {
                     let category = distributionElement.0
                     let confidence = wsConfidence(category, distribution: distribution)
                     let probability = ((Double(distributionElement.1) ) /

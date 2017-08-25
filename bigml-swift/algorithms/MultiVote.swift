@@ -446,14 +446,17 @@ class MultiVote {
         
         var total = 0
         var distribution : [String : AnyObject] = [:]
+        let weightedValue : (String) -> Double =  { predictionName in
+            return (distribution[predictionName] as? Double ?? Double.nan *
+                (distribution[weightLabel] as? Double ?? Double.nan))
+        }
         for p in self.predictions {
             assert(p[weightLabel] != nil, "MultiVote combinedDistribution contract unfulfilled")
             if let predictionName = p["prediction"] as? String {
                 if distribution[predictionName] == nil {
                     distribution.updateValue(0.0 as AnyObject, forKey: predictionName)
                 }
-                distribution.updateValue(distribution[predictionName] as? Double as AnyObject? ?? Double.nan *
-                    (distribution[weightLabel] as? Double ?? Double.nan),
+                distribution.updateValue(weightedValue(predictionName) as AnyObject,
                     forKey: predictionName)
                 total += p["count"] as? Int ?? 0
             }

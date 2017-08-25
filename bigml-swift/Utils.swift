@@ -336,14 +336,14 @@ func wsConfidence(_ prediction : AnyObject,
 func compareDoubles(_ d1 : Double, d2 : Double, eps : Double = 0.01) -> Bool {
     return ((d1 - eps) < d2) && ((d1 + eps) > d2)
 }
-
+/*
 extension String {
     
     func rangeFromNSRange(_ nsRange : NSRange) -> Range<String.Index>? {
-        let from16 = utf16.startIndex.advancedBy(nsRange.location, limit: utf16.endIndex)
-        let to16 = from16.advancedBy(nsRange.length, limit: utf16.endIndex)
-        if let from = String.Index(from16, within: self),
-            let to = String.Index(to16, within: self) {
+        let from16 = utf16.index(nsRange.location, offsetBy: utf16.endIndex)
+        let to16 = utf16.index(nsRange.length, offsetBy: utf16.endIndex)
+        if let from = String.Index(nsRange.location, within: self),
+            let to = String.Index(nsRange.location, within: self) {
                 return from ..< to
         }
         return nil
@@ -353,10 +353,10 @@ extension String {
         let utf16view = self.utf16
         let from = String.UTF16View.Index(range.lowerBound, within: utf16view)
         let to = String.UTF16View.Index(range.upperBound, within: utf16view)
-        return NSMakeRange(utf16view.startIndex.distanceTo(from), from.distanceTo(to))
+        return NSMakeRange(distance(from: from, to: utf16view.startIndex), from.distanceTo(to))
     }
 }
-
+*/
 extension NSError {
     
     struct BMLExtendedError {
