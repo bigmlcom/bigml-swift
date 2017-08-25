@@ -135,7 +135,7 @@ open class Association : FieldedResource {
         self.items = (associations?["items"] as? [[String : AnyObject]] ?? []).map {
             (item : [String : AnyObject]) -> AssociationItem in
             index += 1
-            AssociationItem(index: index,
+            return AssociationItem(index: index,
                 itemInfo: item,
                 fields: fields)
         }
@@ -271,7 +271,7 @@ open class Association : FieldedResource {
                         predictions[rhsTag] = ["score" : 0.0 as AnyObject]
                     }
                     predictions[rhsTag]!["score"] = (predictions[rhsTag]!["score"] as? Double ?? Double.nan) + cosine *
-                        (rule.valueForMetric(kSearchStrategyAttributes[scoreBy]!) as? Double ?? Double.nan)
+                        (rule.valueForMetric(kSearchStrategyAttributes[scoreBy]!) as? Double ?? Double.nan) as AnyObject
                 }
             }
             //-- choose the best k predictions

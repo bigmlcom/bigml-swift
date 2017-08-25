@@ -90,8 +90,8 @@ class Centroid {
             terms.contains($0)
         }.count
         
-        let cosineSimilarity = (Double(inputCount) ?? Double.nan) /
-            sqrt(Double(terms.count * centroidTerms.count) ?? Double.nan)
+        let cosineSimilarity = Double(inputCount) /
+            sqrt(Double(terms.count * centroidTerms.count))
         let similarityDistance = scale * (1 - cosineSimilarity)
         return pow(similarityDistance, 2)
     }

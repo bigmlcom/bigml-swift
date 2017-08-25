@@ -35,7 +35,7 @@ open class Cluster : FieldedResource {
     var tagCloud : [String : AnyObject] = [:]
     var termForms : [String : [String : [String]]] = [:]
     var termAnalysis : [String : [String : AnyObject]] = [:]
-    var items : [String : AnyObject] = [:]
+    var items : [String : Any] = [:]
     var itemAnalysis : [String : [String : AnyObject]] = [:]
     
     var centroids : [Centroid]
@@ -103,7 +103,7 @@ open class Cluster : FieldedResource {
                             self.termAnalysis[fieldId] = termAnalysis as [String : AnyObject]?
                         }
                     } else if optype == "items" {
-                        self.items[fieldId] = field["summary"]?["items"] as AnyObject?? ?? [:]
+                        self.items[fieldId] = field["summary"]?["items"]! as AnyObject? ?? [:]
                         self.itemAnalysis = field["item_analysis"] as?
                             [String : [String : AnyObject]] ?? [:]
                     }
@@ -131,7 +131,7 @@ open class Cluster : FieldedResource {
             termForms: self.termForms,
             termAnalysis: self.termAnalysis,
             tagCloud: self.tagCloud,
-            items: self.items,
+            items: self.items as [String : AnyObject],
             itemAnalysis: self.itemAnalysis)
         
         return nearest(filteredArguments, uniqueTerms: uTerms)
