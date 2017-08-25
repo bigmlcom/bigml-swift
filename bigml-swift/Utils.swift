@@ -26,11 +26,7 @@ func bridgedDictRep(_ dict : [String : Any]) -> [String : AnyObject] {
     
     var result = [String: AnyObject]()
     for (key, value) in dict {
-        if let v = value as? AnyObject {
-            result[key] = v
-        } else {
-            assert(false, "Could not convert to ObjC: \(value)")
-        }
+        result[key] = value as AnyObject
     }
     return result
 }
@@ -94,13 +90,15 @@ func mergeDoubleDistributions(_ distribution1 : [(value : AnyObject, dist : Int)
         }
         let d2 = distribution.sorted(){ $0.0 < $1.0 }
         
-        for var i = 0, j = 0; i < d1.count; i += 1 {
+        var i = 0, j = 0
+        while i < d1.count {
             while (j < d2.count && (d1[i].0 as? Double ?? Double.nan) > d2[j].0) {
                 j += 1
             }
             if (j < d2.count && (d1[i].0 as? Double ?? Double.nan) == d2[j].0) {
                 d1[i].1 += d2[j].1
             }
+            i += 1
         }
         return d1
 }
@@ -140,7 +138,7 @@ func mergeBins(_ distribution : [(value : AnyObject, dist : Int)], limit : Int)
     }
     var indexToMerge = 2
     var shortest = DBL_MAX
-    for i in 1 ..< length += 1 {
+    for i in 1 ..< (length + 1) {
         let distance = (distribution[i].0 as? Double ?? Double.nan) -
             (distribution[i-1].0 as? Double ?? Double.nan)
         if distance < shortest {
@@ -151,10 +149,10 @@ func mergeBins(_ distribution : [(value : AnyObject, dist : Int)], limit : Int)
     var newDistribution = Array<(value : AnyObject, dist : Int)>(distribution[0...indexToMerge-1])
     let left = distribution[indexToMerge - 1]
     let right = distribution[indexToMerge]
-    let f1 = (left.0 as? Double ?? Double.nan) * (Double(left.1) ?? Double.nan) +
-        (right.0 as? Double ?? Double.nan) * (Double(right.1) ?? Double.nan)
+    let f1 = (left.0 as? Double ?? Double.nan) * Double(left.1) +
+        (right.0 as? Double ?? Double.nan) * Double(right.1)
     let f2 = left.1 * right.1
-    newDistribution.append((f1 / (Double(f2) ?? Double.nan), f2))
+    newDistribution.append(((f1 / Double(f2)) as AnyObject, f2))
     if (indexToMerge < length - 1) {
         newDistribution += distribution[indexToMerge + 1 ... distribution.count - 1]
     }
@@ -170,9 +168,9 @@ func mergeBins(_ distribution : [(value : AnyObject, dist : Int)], limit : Int)
 func meanOfDistribution(_ distribution : [(value: Double, dist: Int)]) -> Double {
     
     let (acc, count) = distribution.reduce((0.0, 0)) {
-        ($1.0 * (Double($1.1) ?? Double.nan), $0.1 + $1.1)
+        ($1.0 * Double($1.1), $0.1 + $1.1)
     }
-    return acc / (Double(count) ?? Double.nan)
+    return acc / Double(count)
 }
 
 func meanOfDistribution(_ distribution : [(value: AnyObject, dist: Int)]) -> Double {
@@ -211,7 +209,7 @@ func regressionError(_ variance : Double, instances : Int, rz : Double = DEFAULT
     if instances > 0 {
         let ppf = chi2ppf(erf(rz), instances)
         if ppf != 0 {
-            let instances = Double(instances) ?? Double.nan
+            let instances = Double(instances)
             let error = variance * (instances - 1) / ppf * pow(sqrt(instances) + rz, 2);
             return sqrt(error / instances);
         }
@@ -223,9 +221,9 @@ func varianceOfDistribution(_ distribution : [(value: Double, dist: Int)], mean 
     -> Double {
     
     let (acc, count) = distribution.reduce((0.0, 0)) {
-        (($1.0 - mean) * ($1.0 - mean) * (Double($1.1) ?? Double.nan), $0.1 + $1.1)
+        (($1.0 - mean) * ($1.0 - mean) * Double($1.1), $0.1 + $1.1)
     }
-    return acc / (Double(count) ?? Double.nan)
+    return acc / Double(count)
 }
 
 func varianceOfDistribution(_ distribution : [(value: AnyObject, dist: Int)], mean : Double)
@@ -526,7 +524,7 @@ func parseItems(_ text : String, regexp : String) -> [String] {
 func uniqueTerms(_ terms : [String],
     forms : [String : [String]],
     tagCloud : [String])
-    -> [(AnyObject, Int)] {
+    -> [(String, Int)] {
         
         var extendForms : [String : String] = [:]
         for (term, formList) in forms {
