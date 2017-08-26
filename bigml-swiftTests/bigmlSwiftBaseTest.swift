@@ -45,12 +45,12 @@ class BigMLKitTestCredentials {
 
 class BigMLKitConnectorBaseTest: XCTestCase {
     
-    private static let __once: () = {        
-        let connector = BigMLKitConnectorBaseTest()
-        BigMLKitConnectorBaseTest.aSource = connector.createDatasource("iris.csv")
-        BigMLKitConnectorBaseTest.aDataset = connector.createDataset("iris.csv")
-        BigMLKitConnectorBaseTest.altDataset = connector.createDataset("wines.csv")
-    }()
+    private func __once() {
+
+        BigMLKitConnectorBaseTest.aSource = self.createDatasource("iris.csv")
+        BigMLKitConnectorBaseTest.aDataset = self.createDataset("iris.csv")
+        BigMLKitConnectorBaseTest.altDataset = self.createDataset("wines.csv")
+    }
     
     static var token : Int = 0
     static var aSource : BMLResource? = nil

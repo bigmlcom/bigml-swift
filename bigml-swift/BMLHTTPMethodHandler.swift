@@ -107,8 +107,8 @@ struct BMLHTTPMethodHandler {
         completion:@escaping (_ data : Data?, _ error : NSError?) -> Void) {
             
             let task = self.session.dataTask(with: request, completionHandler: {
-                (data : Data?, response : URLResponse?, error : NSError?) in
-                var localError : NSError? = error;
+                (data : Data?, response : URLResponse?, error : Error?) in
+                var localError : Error? = error;
                 if (error == nil) {
                     if let response = response as? HTTPURLResponse {
                         
@@ -126,8 +126,8 @@ struct BMLHTTPMethodHandler {
                             code:-10001)
                     }
                 }
-                completion(data, localError)
-            } as! (Data?, URLResponse?, Error?) -> Void) 
+                completion(data, localError as? NSError)
+            })
             task.resume()
     }
     
