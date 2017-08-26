@@ -156,7 +156,7 @@ class BigMLKitConnectorBaseTest: XCTestCase {
             apiKey:BigMLKitTestCredentials.apiKey(),
             mode:BMLMode.production)
         
-        _ = BigMLKitConnectorBaseTest.__once
+        self.__once()
     }
     
     func runTest(_ name : String, test : (XCTestExpectation) -> Void) {
