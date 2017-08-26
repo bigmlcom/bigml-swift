@@ -59,38 +59,38 @@ open class Model : FieldedResource {
     let description : String
     
     let tree : PredictionTree
-    var idsMap : [Int : AnyObject]
-    var treeInfo : [String : AnyObject]
+    var idsMap : [Int : Any]
+    var treeInfo : [String : Any]
     
-    let model : [String : AnyObject]
+    let model : [String : Any]
     
-    required public init(jsonModel : [String : AnyObject]) {
+    required public init(jsonModel : [String : Any]) {
         
-        let status = jsonModel["status"] as? [String : AnyObject] ?? [:]
+        let status = jsonModel["status"] as? [String : Any] ?? [:]
         assert(status["code"] as? Int == 5, "Model is not ready")
         
         var fields : [String : AnyObject]
-        let model = jsonModel["model"] as? [String : AnyObject] ?? [:]
+        let model = jsonModel["model"] as? [String : Any] ?? [:]
         fields = model["model_fields"] as? [String : AnyObject] ?? [:]
-        let modelFields = model["fields"] as? [String : AnyObject] ?? [:]
+        let modelFields = model["fields"] as? [String : Any] ?? [:]
         
         for fieldName in fields.keys {
             assert(modelFields[fieldName] != nil,
                 "Some fields are missing to generate a local model.")
-            let modelField = modelFields[fieldName] as? [String : AnyObject] ?? [:]
-            var field = fields[fieldName] as? [String : AnyObject] ?? [:]
-            field.updateValue(modelField["summary"] ?? "" as AnyObject, forKey:"summary")
-            field.updateValue(modelField["name"] ?? "" as AnyObject, forKey:"name")
+            let modelField = modelFields[fieldName] as? [String : Any] ?? [:]
+            var field = fields[fieldName] as? [String : Any] ?? [:]
+            field.updateValue(modelField["summary"] ?? "" as Any, forKey:"summary")
+            field.updateValue(modelField["name"] ?? "" as Any, forKey:"name")
         }
         
         let objectiveField = model["objective_field"] as? String ?? ""
         let locale = jsonModel["locale"] as? String ?? ML_DEFAULT_LOCALE
         
-        self.treeInfo = ["maxBins" : 0 as AnyObject]
+        self.treeInfo = ["maxBins" : 0 as Any]
         self.model = jsonModel
         self.description = jsonModel["description"] as? String ?? ""
         
-        if let modelFieldImportance = model["importance"] as? [[AnyObject]] {
+        if let modelFieldImportance = model["importance"] as? [[Any]] {
             self.fieldImportance = modelFieldImportance.filter{
                 if  let x = $0.first as? String {
                     return fields.keys.contains(x)
@@ -106,12 +106,12 @@ open class Model : FieldedResource {
             self.fieldImportance = []
         }
         
-        let distribution = model["distribution"] as? [String : AnyObject] ?? [:]
+        let distribution = model["distribution"] as? [String : Any] ?? [:]
         self.idsMap = [:]
-        self.tree = PredictionTree(tree: model["root"] as? [String : AnyObject] ?? [:],
+        self.tree = PredictionTree(tree: model["root"] as? [String : Any] ?? [:],
             fields: fields,
             objectiveFields: [objectiveField],
-            rootDistribution: distribution["training"] as? [String : AnyObject] ?? [:],
+            rootDistribution: distribution["training"] as? [String : Any] ?? [:],
             parentId:-1,
             idsMap: &idsMap,
             isSubtree: true,
@@ -169,7 +169,7 @@ open class Model : FieldedResource {
   *                 literal 'all', that will cause the entire distribution
   *                 in the node to be returned.
   */
-    open func predict(_ arguments : [String : AnyObject],
+    open func predict(_ arguments : [String : Any],
         options : [String : Any])
         -> [String : Any] {
             

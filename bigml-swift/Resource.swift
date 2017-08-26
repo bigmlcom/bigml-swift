@@ -21,7 +21,7 @@ import Foundation
     var uuid : BMLResourceUuid { get }
     var fullUuid : BMLResourceFullUuid { get }
     
-    var jsonDefinition : [String : AnyObject] { get set }
+    var jsonDefinition : [String : Any] { get set }
     
     var status : BMLResourceStatus { get set }
     var progress : Float { get set }
@@ -29,11 +29,11 @@ import Foundation
     init(name: String,
         type: BMLResourceType,
         uuid: BMLResourceUuid,
-        definition : [String : AnyObject])
+        definition : [String : Any])
     
     init(name: String,
         fullUuid: BMLResourceFullUuid,
-        definition : [String : AnyObject])
+        definition : [String : Any])
 }
 
 open class BMLMinimalResource : NSObject, BMLResource {
@@ -41,7 +41,7 @@ open class BMLMinimalResource : NSObject, BMLResource {
     open var name : String
     open var type : BMLResourceType
     
-    open var jsonDefinition : [String : AnyObject]
+    open var jsonDefinition : [String : Any]
     
     open dynamic var status : BMLResourceStatus
     open dynamic var progress : Float
@@ -53,7 +53,7 @@ open class BMLMinimalResource : NSObject, BMLResource {
         }
     }
     
-    public required init(name: String, type: BMLResourceType, uuid: String, definition : [String : AnyObject] = [:]) {
+    public required init(name: String, type: BMLResourceType, uuid: String, definition : [String : Any] = [:]) {
         
         self.name = name
         self.type = type
@@ -63,7 +63,7 @@ open class BMLMinimalResource : NSObject, BMLResource {
         self.jsonDefinition = definition;
     }
 
-    public required init(name : String, fullUuid : String, definition : [String : AnyObject]) {
+    public required init(name : String, fullUuid : String, definition : [String : Any]) {
         
         let components = fullUuid.characters.split {$0 == "/"}.map { String($0) }
         self.name = name

@@ -103,8 +103,8 @@ open class Association : FieldedResource {
     
     let resourceId : String
     let complement : Bool
-    let discretization : [String : AnyObject]
-    let fieldDiscretizations : [String : AnyObject]
+    let discretization : [String : Any]
+    let fieldDiscretizations : [String : Any]
     let items : [AssociationItem]
     let k : Int
     let maxLhs : Int
@@ -122,18 +122,18 @@ open class Association : FieldedResource {
         
         self.resourceId = jsonAssociation["id"] as? String ?? ""
 
-        let associations = jsonAssociation["associations"] as? [String : AnyObject]
+        let associations = jsonAssociation["associations"] as? [String : Any]
         let status = jsonAssociation["status"]?["code"] as? Int ?? -1
         assert(status == 5, "Association is not complete yet.")
 
         let fields = associations?["fields"] as? [String : AnyObject] ?? [:]
         self.complement = associations?["complement"] as? Bool ?? false
-        self.discretization = associations?["complement"] as? [String : AnyObject] ?? [:]
+        self.discretization = associations?["complement"] as? [String : Any] ?? [:]
         self.fieldDiscretizations = associations?["field_discretizations"]
-            as? [String : AnyObject] ?? [:]
+            as? [String : Any] ?? [:]
         var index = 0
-        self.items = (associations?["items"] as? [[String : AnyObject]] ?? []).map {
-            (item : [String : AnyObject]) -> AssociationItem in
+        self.items = (associations?["items"] as? [[String : Any]] ?? []).map {
+            (item : [String : Any]) -> AssociationItem in
             index += 1
             return AssociationItem(index: index,
                 itemInfo: item,
@@ -150,7 +150,7 @@ open class Association : FieldedResource {
         self.prune = associations?["prune"] as? Bool ?? true
         self.searchStrategy = kSearchStrategyCodes[
             associations?["search_strategy"] as? String ?? kDefaultSearchStrategy]!
-        self.rules = (associations?["rules"] as? [[String : AnyObject]] ?? []).map {
+        self.rules = (associations?["rules"] as? [[String : Any]] ?? []).map {
             AssociationRule(ruleInfo: $0)
         }
 
@@ -163,7 +163,7 @@ open class Association : FieldedResource {
      */
     func getItems(_ field : String? = nil,
         names : [String]? = nil,
-        inputMap : [String : AnyObject]? = nil,
+        inputMap : [String : Any]? = nil,
         filterFunction : ((AssociationItem) -> Bool)? = nil) -> [AssociationItem] {
             
             let filterFunctionFilter = { (item : AssociationItem) -> Bool in
@@ -240,14 +240,14 @@ open class Association : FieldedResource {
      * @param byName boolean If true, arguments is keyed by field
      *   name, field id is used otherwise.
      */
-    open func associationSet(_ arguments : [String : AnyObject],
+    open func associationSet(_ arguments : [String : Any],
         options : [String : Any])
-        -> [[String : AnyObject]] {
+        -> [[String : Any]] {
 
             let scoreBy = options["scoreBy"] as? Int ?? self.searchStrategy
             let byName = options["byName"] as? Bool ?? false
 
-            var predictions = [String : [String : AnyObject]]()
+            var predictions = [String : [String : Any]]()
             let arguments = self.filteredInputData(arguments, byName: byName)
             let itemIndexes = self.getItems(inputMap: arguments).map { $0.index }
             for rule in self.rules {
@@ -268,10 +268,10 @@ open class Association : FieldedResource {
                     cosine /= sqrt(Double(itemIndexes.count)) * sqrt(Double(rule.lhs.count))
                     let rhsTag = self.tagsFromRhs(rule.rhs)
                     if !predictions.keys.contains(rhsTag) {
-                        predictions[rhsTag] = ["score" : 0.0 as AnyObject]
+                        predictions[rhsTag] = ["score" : 0.0 as Any]
                     }
                     predictions[rhsTag]!["score"] = (predictions[rhsTag]!["score"] as? Double ?? Double.nan) + cosine *
-                        (rule.valueForMetric(kSearchStrategyAttributes[scoreBy]!) as? Double ?? Double.nan) as AnyObject
+                        (rule.valueForMetric(kSearchStrategyAttributes[scoreBy]!) as? Double ?? Double.nan) as Any
                 }
             }
             //-- choose the best k predictions
@@ -279,7 +279,7 @@ open class Association : FieldedResource {
             let p = predictions.sorted {
                 ($0.1["score"] as? Double ?? Double.nan) > ($1.1["score"] as? Double ?? Double.nan) }[0...k]
             
-            var result = [[String : AnyObject]]()
+            var result = [[String : Any]]()
             for (rhsTag, var prediction) in p {
                 let rhs = self.rhsFromTag(rhsTag)
                 prediction.updateValue(self.items[rhs[0]], forKey: "item")

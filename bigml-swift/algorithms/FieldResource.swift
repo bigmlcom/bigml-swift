@@ -35,17 +35,16 @@ private func makeFieldNamesUnique(_ fields : [String : AnyObject], objectiveFiel
         }
         
         if let objectiveFieldId = objectiveFieldId,
-            let field = fields[objectiveFieldId] as? [String : AnyObject],
+            let field = fields[objectiveFieldId] as? [String : Any],
             let fieldName = field["name"] as? String {
                 addFieldId(objectiveFieldId, fieldName)
         }
         
         var fields2 = fields
-        
         for fieldId in fields.keys {
             if fieldIds.index(of: fieldId) == nil {
                 fieldIds.append(fieldId)
-                if let field = fields[fieldId] as? [String : AnyObject],
+                if let field = fields[fieldId] as? [String : Any],
                     let fieldName = field["name"] as? String {
                         
                         var uniqueName = fieldName
@@ -58,19 +57,19 @@ private func makeFieldNamesUnique(_ fields : [String : AnyObject], objectiveFiel
                             }
                         }
                         addFieldId(fieldId, uniqueName)
-                        var field = fields2[fieldId] as! [String : AnyObject]
-                        field.updateValue(fieldName as AnyObject, forKey: "name")
+                        var field = fields2[fieldId] as! [String : Any]
+                        field.updateValue(fieldName as Any, forKey: "name")
                 }
             }
         }
         return (fields2, fieldNames, fieldIds, fieldNameById, fieldIdByName)
 }
 
-private func invertedFieldMap(_ fields : [String : AnyObject]) -> [String : String] {
+private func invertedFieldMap(_ fields : [String : Any]) -> [String : String] {
     
     var fieldMap : [String : String] = [:]
     for (key, value) in fields {
-        if let value = value as? [String : AnyObject],
+        if let value = value as? [String : Any],
             let name = value["name"] as? String {
             fieldMap[name] = key
         }
@@ -107,7 +106,7 @@ open class FieldedResource {
                 self.fieldIdByName) = makeFieldNamesUnique(fields, objectiveFieldId: objectiveId)
     }
     
-    func normalizedValue(_ value : AnyObject) -> AnyObject? {
+    func normalizedValue(_ value : Any) -> Any? {
         
         if let value = value as? String, let missingTokens = missingTokens {
             if missingTokens.contains(value) {
@@ -117,12 +116,12 @@ open class FieldedResource {
         return value
     }
     
-    func filteredInputData(_ input : [String : AnyObject],
-        byName : Bool = true) -> [String : AnyObject] {
+    func filteredInputData(_ input : [String : Any],
+        byName : Bool = true) -> [String : Any] {
         
-        var output : [String : AnyObject] = [:]
+        var output : [String : Any] = [:]
         for (key, value) in input {
-            if let value : AnyObject = self.normalizedValue(value) {
+            if let value : Any = self.normalizedValue(value) {
                 if self.objectiveId == .none || key != self.objectiveId {
                     if let key = byName ? self.inverseFieldMap[key] : key {
                         output[key] = value

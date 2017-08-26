@@ -149,10 +149,10 @@ class MultiVote {
         -> [String : Any] {
             
             var distributionUnit = "counts"
-            var groupedDistribution :[(value : AnyObject, dist : Int)] = []
+            var groupedDistribution :[(value : Any, dist : Int)] = []
             for p in self.predictions {
                 groupedDistribution = mergeDistributions(groupedDistribution,
-                    distribution: p["distribution"] as? [(value : AnyObject, dist : Int)] ?? [])
+                    distribution: p["distribution"] as? [(value : Any, dist : Int)] ?? [])
                 if distributionUnit == "counts" && groupedDistribution.count > kBinsLimit {
                     distributionUnit = "bins"
                 }
@@ -397,7 +397,7 @@ class MultiVote {
     * @param weightLabel {string} weightLabel Label of the value in the prediction object
     *        that will be used to weight confidence
     */
-    func weightedConfidence(_ combinedPrediction : AnyObject,
+    func weightedConfidence(_ combinedPrediction : Any,
         weightLabel : String) -> [String : Any] {
             
             var finalConfidence = 0.0
@@ -442,10 +442,10 @@ class MultiVote {
     * @param weightLabel {string} weightLabel Label of the value in the prediction object
     *        whose sum will be used as count in the distribution
     */
-    func combinedDistribution(_ weightLabel : String = "probability") -> (AnyObject, AnyObject) {
+    func combinedDistribution(_ weightLabel : String = "probability") -> (Any, Any) {
         
         var total = 0
-        var distribution : [String : AnyObject] = [:]
+        var distribution : [String : Any] = [:]
         let weightedValue : (String) -> Double =  { predictionName in
             return (distribution[predictionName] as? Double ?? Double.nan *
                 (distribution[weightLabel] as? Double ?? Double.nan))
@@ -454,14 +454,14 @@ class MultiVote {
             assert(p[weightLabel] != nil, "MultiVote combinedDistribution contract unfulfilled")
             if let predictionName = p["prediction"] as? String {
                 if distribution[predictionName] == nil {
-                    distribution.updateValue(0.0 as AnyObject, forKey: predictionName)
+                    distribution.updateValue(0.0 as Any, forKey: predictionName)
                 }
-                distribution.updateValue(weightedValue(predictionName) as AnyObject,
+                distribution.updateValue(weightedValue(predictionName) as Any,
                     forKey: predictionName)
                 total += p["count"] as? Int ?? 0
             }
         }
-        return (distribution as AnyObject, total as AnyObject)
+        return (distribution as Any, total as Any)
     }
     
     /**
@@ -519,12 +519,12 @@ class MultiVote {
         
         if (confidence) {
             if (self.predictions.first?["confidence"] != nil) {
-                return self.weightedConfidence(predictionName as AnyObject, weightLabel:weightLabel)
+                return self.weightedConfidence(predictionName as Any, weightLabel:weightLabel)
             }
             let distributionInfo = self.combinedDistribution(weightLabel)
             let count = distributionInfo.1 as? Int ?? -1
-            let distribution = distributionInfo.0 as? [(value : AnyObject, dist : Int)] ?? []
-            let combinedConfidence = wsConfidence(predictionName as AnyObject,
+            let distribution = distributionInfo.0 as? [(value : Any, dist : Int)] ?? []
+            let combinedConfidence = wsConfidence(predictionName as Any,
                 distribution: distribution,
                 n: count)
             result.updateValue(combinedConfidence, forKey: "confidence")
@@ -542,7 +542,7 @@ class MultiVote {
             let total = p["count"] as? Int ?? 0
             assert(total > 0, "Wrong total in probabilityWeight")
             
-            let distribution = p["distribution"] as? [String : AnyObject] ?? [:]
+            let distribution = p["distribution"] as? [String : Any] ?? [:]
             for (k, v) in distribution {
                 let instances = v as? Int ?? 0
                 predictions.append([
@@ -629,14 +629,14 @@ class MultiVote {
     * @param predictionInfo the prediction to be appended
     * @return the this instance
     */
-    func append(_ predictionInfo : [String : AnyObject]) {
+    func append(_ predictionInfo : [String : Any]) {
         
         assert(predictionInfo.count > 0 && predictionInfo["prediction"] != nil,
             "Failed to append prediction")
         
         var dict = predictionInfo
         let order = self.nextOrder()
-        dict.updateValue(order as AnyObject, forKey: "order")
+        dict.updateValue(order as Any, forKey: "order")
         self.predictions.append(dict)
     }
     

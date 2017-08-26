@@ -16,14 +16,14 @@ import Foundation
 
 class MultiModel {
     
-    let models : [[String : AnyObject]]
+    let models : [[String : Any]]
     
-    required init(models : [[String : AnyObject]]) {
+    required init(models : [[String : Any]]) {
         
         self.models = models
     }
     
-    func generateVotes(_ arguments : [String : AnyObject],
+    func generateVotes(_ arguments : [String : Any],
         byName : Bool,
         missingStrategy : MissingStrategy,
         median : Bool) -> MultiVote {

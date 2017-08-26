@@ -18,7 +18,7 @@ import Foundation
 open class AssociationItem : CustomStringConvertible {
  
     let index : Int
-    let fieldInfo : [String : AnyObject]
+    let fieldInfo : [String : Any]
     let complementIndex : Int
 
     open let complement : Bool
@@ -43,8 +43,8 @@ open class AssociationItem : CustomStringConvertible {
     }
     
     public required init(index : Int,
-        itemInfo : [String : AnyObject],
-        fields : [String : AnyObject]) {
+        itemInfo : [String : Any],
+        fields : [String : Any]) {
         
             self.index = index
             self.complement = itemInfo["complement"] as? Bool ?? false
@@ -52,7 +52,7 @@ open class AssociationItem : CustomStringConvertible {
             self.count = itemInfo["count"] as? Int ?? 0
             self.itemDescription =  itemInfo["description"] as? String ?? ""
             self.fieldId = itemInfo["field_id"] as? String ?? ""
-            self.fieldInfo = fields[self.fieldId] as? [String : AnyObject] ?? [:]
+            self.fieldInfo = fields[self.fieldId] as? [String : Any] ?? [:]
             self.name = itemInfo["name"] as? String ?? ""
             self.binEnd = itemInfo["bin_end"] as? Double ?? Double.nan
             self.binStart = itemInfo["bin_start"] as? Double ?? Double.nan
@@ -62,7 +62,7 @@ open class AssociationItem : CustomStringConvertible {
      * Checks whether the value is in a range for numeric fields or
      * matches a category for categorical fields
      */
-    func doesMatch(_ value : AnyObject) -> Bool {
+    func doesMatch(_ value : Any) -> Bool {
 
         var result = false
         if let fieldType = self.fieldInfo["optype"] as? String {
@@ -82,13 +82,13 @@ open class AssociationItem : CustomStringConvertible {
                 }
             case "text":
                 //-- This block is equivalent to one in Predicate.apply() -- refactor?
-                if let summary = self.fieldInfo["summary"] as? [String : AnyObject],
+                if let summary = self.fieldInfo["summary"] as? [String : Any],
                     let allForms = summary["term_forms"] as? [String : [String]] {
                         if let value = value as? String {
                             let termForms = allForms[self.name] ?? []
                             let terms = [self.name] + termForms
                             let options = self.fieldInfo["term_analysis"]
-                                as? [String : AnyObject] ?? [:]
+                                as? [String : Any] ?? [:]
                             result = Predicate.termCount(value, forms: terms, options: options) > 0
                         } else {
                             assert(false,
@@ -98,7 +98,7 @@ open class AssociationItem : CustomStringConvertible {
             case "categorical":
                 result = (self.name == value as! String)
             case "items":
-                let options = self.fieldInfo["term_analysis"] as? [String : AnyObject] ?? [:]
+                let options = self.fieldInfo["term_analysis"] as? [String : Any] ?? [:]
                 result = Predicate.itemCount(value as? String ?? "", item: self.name, options: options) > 0
             default:
                 return false

@@ -25,24 +25,24 @@ let DEPTH_FACTOR : Double = 0.5772156649
 */
 class AnomalyTree {
     
-    internal let fields : [String : AnyObject]
+    internal let fields : [String : Any]
     let anomaly : Anomaly
     var predicates : Predicates
     var id : String = ""
     var children : [AnomalyTree] = []
     
-    init(tree : [String : AnyObject], anomaly : Anomaly) {
+    init(tree : [String : Any], anomaly : Anomaly) {
         
         self.anomaly = anomaly
         self.fields = anomaly.fields
-        self.predicates = Predicates(predicates: ["True" as AnyObject])
-        if let predicates = tree["predicates"] as? [[String : AnyObject]] {
-            self.predicates = Predicates(predicates: predicates as [AnyObject])
+        self.predicates = Predicates(predicates: ["True" as Any])
+        if let predicates = tree["predicates"] as? [[String : Any]] {
+            self.predicates = Predicates(predicates: predicates as [Any])
         }
         if let id = tree["id"] as? String {
             self.id = id
         }
-        if let children = tree["children"] as? [[String : AnyObject]] {
+        if let children = tree["children"] as? [[String : Any]] {
             self.children = children.map {
                 AnomalyTree(tree: $0, anomaly: anomaly)
             }
@@ -61,7 +61,7 @@ class AnomalyTree {
     *
     * @return
     */
-    func depth(_ input : [String : AnyObject], path : [String] = [], depth : Int = 0) -> (Int, [String]) {
+    func depth(_ input : [String : Any], path : [String] = [], depth : Int = 0) -> (Int, [String]) {
         
         var depth = depth
         if depth == 0 {
@@ -109,15 +109,15 @@ open class Anomaly : FieldedResource {
             self.sampleSize = .none
             self.inputFields = .none
         }
-        if let model = anomaly.jsonDefinition["model"] as? [String : AnyObject],
+        if let model = anomaly.jsonDefinition["model"] as? [String : Any],
             let fields = model["fields"] as? [String : AnyObject] {
                 
-                if let _ = model["top_anomalies"] as? [AnyObject] {
+                if let _ = model["top_anomalies"] as? [Any] {
                     
                     super.init(fields: fields)
                     
                     self.meanDepth = model["mean_depth"] as? Double
-                    if let status = anomaly.jsonDefinition["status"] as? [String : AnyObject],
+                    if let status = anomaly.jsonDefinition["status"] as? [String : Any],
                         let intCode = status["code"] as? Int {
                             
                             let code = BMLResourceStatus(integerLiteral: intCode)
@@ -128,10 +128,10 @@ open class Anomaly : FieldedResource {
                                 } else {
                                     assert(false, "Could not create anomaly instance");
                                 }
-                                if let iforest = model["trees"] as? [AnyObject] {
+                                if let iforest = model["trees"] as? [Any] {
                                     self.iforest = iforest.map {
-                                        if let tree = $0 as? [String : AnyObject],
-                                            let root = tree["root"] as? [String : AnyObject] {
+                                        if let tree = $0 as? [String : Any],
+                                            let root = tree["root"] as? [String : Any] {
                                                 return AnomalyTree(tree: root, anomaly: self)
                                         } else {
                                             return .none
@@ -152,7 +152,7 @@ open class Anomaly : FieldedResource {
         }
     }
     
-    open func score(_ input : [String : AnyObject], byName : Bool = true) -> Double {
+    open func score(_ input : [String : Any], byName : Bool = true) -> Double {
         
         self.stopped = false
         assert(self.iforest != nil, "Could not find forest info. The anomaly was possibly not completely created")

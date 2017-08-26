@@ -177,7 +177,7 @@ import Foundation
         return self.type.stringValue()
     }
     
-    open func copyWithZone(_ zone: NSZone?) -> AnyObject {
+    open func copyWithZone(_ zone: NSZone?) -> Any {
         return BMLResourceTypeIdentifier(rawType: self.type)
     }
 }

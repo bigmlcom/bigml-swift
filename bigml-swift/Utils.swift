@@ -22,11 +22,11 @@ func delay(_ delay : Double, closure : @escaping ()->()) {
         deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }
 
-func bridgedDictRep(_ dict : [String : Any]) -> [String : AnyObject] {
+func bridgedDictRep(_ dict : [String : Any]) -> [String : Any] {
     
-    var result = [String: AnyObject]()
+    var result = [String: Any]()
     for (key, value) in dict {
-        result[key] = value as AnyObject
+        result[key] = value as Any
     }
     return result
 }
@@ -79,9 +79,9 @@ func < (lhs: AnyKey, rhs: AnyKey) -> Bool {
 * @param dist2
 * @return
 */
-func mergeDoubleDistributions(_ distribution1 : [(value : AnyObject, dist : Int)],
+func mergeDoubleDistributions(_ distribution1 : [(value : Any, dist : Int)],
     distribution : [(value : Double, dist : Int)])
-    -> [(value : AnyObject, dist : Int)] {
+    -> [(value : Any, dist : Int)] {
         
         var d1 = distribution1.sorted(){
             let a0 = $0.0 as? Double ?? Double.nan
@@ -103,9 +103,9 @@ func mergeDoubleDistributions(_ distribution1 : [(value : AnyObject, dist : Int)
         return d1
 }
 
-func mergeDistributions(_ distribution1 : [(value : AnyObject, dist : Int)],
-    distribution : [(value : AnyObject, dist : Int)])
-    -> [(value : AnyObject, dist : Int)] {
+func mergeDistributions(_ distribution1 : [(value : Any, dist : Int)],
+    distribution : [(value : Any, dist : Int)])
+    -> [(value : Any, dist : Int)] {
         
         if distribution.count == 0 {
             return distribution1
@@ -129,8 +129,8 @@ func mergeDistributions(_ distribution1 : [(value : AnyObject, dist : Int)],
 * Two methods are provided: a generic one which is only required for compilation,
 * and a Double-tailored version. The generic version simply asserts.
 */
-func mergeBins(_ distribution : [(value : AnyObject, dist : Int)], limit : Int)
-    -> [(value : AnyObject, dist : Int)] {
+func mergeBins(_ distribution : [(value : Any, dist : Int)], limit : Int)
+    -> [(value : Any, dist : Int)] {
     
     let length = distribution.count
     if (limit < 1 || length <= limit || length < 2) {
@@ -146,13 +146,13 @@ func mergeBins(_ distribution : [(value : AnyObject, dist : Int)], limit : Int)
             indexToMerge = i
         }
     }
-    var newDistribution = Array<(value : AnyObject, dist : Int)>(distribution[0...indexToMerge-1])
+    var newDistribution = Array<(value : Any, dist : Int)>(distribution[0...indexToMerge-1])
     let left = distribution[indexToMerge - 1]
     let right = distribution[indexToMerge]
     let f1 = (left.0 as? Double ?? Double.nan) * Double(left.1) +
         (right.0 as? Double ?? Double.nan) * Double(right.1)
     let f2 = left.1 * right.1
-    newDistribution.append(((f1 / Double(f2)) as AnyObject, f2))
+    newDistribution.append(((f1 / Double(f2)) as Any, f2))
     if (indexToMerge < length - 1) {
         newDistribution += distribution[indexToMerge + 1 ... distribution.count - 1]
     }
@@ -165,7 +165,7 @@ func mergeBins(_ distribution : [(value : AnyObject, dist : Int)], limit : Int)
 * @param distribution
 * @return
 */
-func meanOfDistribution(_ distribution : [(value: Double, dist: Int)]) -> Double {
+func meanOfDistributionD(_ distribution : [(value: Double, dist: Int)]) -> Double {
     
     let (acc, count) = distribution.reduce((0.0, 0)) {
         ($1.0 * Double($1.1), $0.1 + $1.1)
@@ -173,9 +173,9 @@ func meanOfDistribution(_ distribution : [(value: Double, dist: Int)]) -> Double
     return acc / Double(count)
 }
 
-func meanOfDistribution(_ distribution : [(value: AnyObject, dist: Int)]) -> Double {
+func meanOfDistribution(_ distribution : [(value: Any, dist: Int)]) -> Double {
     
-    return meanOfDistribution(
+    return meanOfDistributionD(
         distribution.map { ($0.0 as? Double ?? Double.nan, $0.1) })
 }
 
@@ -217,7 +217,7 @@ func regressionError(_ variance : Double, instances : Int, rz : Double = DEFAULT
     return Double.nan
 }
 
-func varianceOfDistribution(_ distribution : [(value: Double, dist: Int)], mean : Double)
+func varianceOfDistributionD(_ distribution : [(value: Double, dist: Int)], mean : Double)
     -> Double {
     
     let (acc, count) = distribution.reduce((0.0, 0)) {
@@ -226,15 +226,15 @@ func varianceOfDistribution(_ distribution : [(value: Double, dist: Int)], mean 
     return acc / Double(count)
 }
 
-func varianceOfDistribution(_ distribution : [(value: AnyObject, dist: Int)], mean : Double)
+func varianceOfDistribution(_ distribution : [(value: Any, dist: Int)], mean : Double)
     -> Double {
     
-        return varianceOfDistribution(
+        return varianceOfDistributionD(
             distribution.map { ($0.0 as? Double ?? Double.nan, $0.1) },
             mean: mean)
 }
 
-func medianOfDistribution(_ distribution : [(value: Double, dist: Int)], instances : Int) -> Double {
+func medianOfDistributionD(_ distribution : [(value: Double, dist: Int)], instances : Int) -> Double {
  
     var count = 0
     var previousPoint = Double.nan
@@ -252,14 +252,14 @@ func medianOfDistribution(_ distribution : [(value: Double, dist: Int)], instanc
     return Double.nan
 }
 
-func medianOfDistribution(_ distribution : [(value: AnyObject, dist: Int)], instances : Int) -> Double {
+func medianOfDistribution(_ distribution : [(value: Any, dist: Int)], instances : Int) -> Double {
 
-    return medianOfDistribution(
+    return medianOfDistributionD(
         distribution.map { ($0.0 as? Double ?? Double.nan, $0.1) },
         instances: instances)
 }
 
-func strippedValue(_ value : String, field : [String : AnyObject]) -> String {
+func strippedValue(_ value : String, field : [String : Any]) -> String {
     
     var newValue = value
     if let prefix = field["prefix"] as? String {
@@ -277,22 +277,22 @@ func strippedValue(_ value : String, field : [String : AnyObject]) -> String {
     return newValue
 }
 
-func castArguments(_ arguments : [String : AnyObject], fields : [String : AnyObject])
-    -> [String : AnyObject] {
+func castArguments(_ arguments : [String : Any], fields : [String : Any])
+    -> [String : Any] {
 
         return arguments.map { (key, value) in
-            let field = fields[key] as? [String : AnyObject] ?? [:]
+            let field = fields[key] as? [String : Any] ?? [:]
             if let opType = field["optype"] as? String {
                 if opType == "numeric" && value is String {
-                    return (key, strippedValue(value as! String, field: field) as AnyObject)
+                    return (key, strippedValue(value as! String, field: field) as Any)
                 }
             }
             return (key, value)
         }
 }
 
-func findInDistribution(_ distribution : [(value : AnyObject, dist : Int)],
-    element : AnyObject) -> (value : AnyObject, dist : Int)? {
+func findInDistribution(_ distribution : [(value : Any, dist : Int)],
+    element : Any) -> (value : Any, dist : Int)? {
         
         for distElement in distribution {
             if distElement.0 as? String == element as? String {
@@ -302,8 +302,8 @@ func findInDistribution(_ distribution : [(value : AnyObject, dist : Int)],
         return nil
 }
 
-func wsConfidence(_ prediction : AnyObject,
-    distribution : [(value : AnyObject, dist : Int)],
+func wsConfidence(_ prediction : Any,
+    distribution : [(value : Any, dist : Int)],
     n : Int,
     z : Double = 1.96) -> Double {
         
@@ -324,8 +324,8 @@ func wsConfidence(_ prediction : AnyObject,
         return (p + wsFactor / 2 - z * wsSqrt) / (1 + wsFactor)
 }
 
-func wsConfidence(_ prediction : AnyObject,
-    distribution : [(value : AnyObject, dist : Int)]) -> Double {
+func wsConfidence(_ prediction : Any,
+    distribution : [(value : Any, dist : Int)]) -> Double {
         
         return wsConfidence(prediction, distribution: distribution,
             n: distribution.reduce(0) { $0 + $1.dist })
@@ -361,15 +361,15 @@ extension NSError {
         static let DescriptionKey = "BMLExtendedErrorDescriptionKey"
     }
     
-    convenience init(status : AnyObject?, code : Int) {
+    convenience init(status : Any?, code : Int) {
         
         var info = "Could not complete operation"
-        var extraInfo : [String : AnyObject] = [:]
-        if let statusDict = status as? [String : AnyObject] {
+        var extraInfo : [String : Any] = [:]
+        if let statusDict = status as? [String : Any] {
             if let message = statusDict["message"] as? String {
                 info = message
             }
-            if let extra = statusDict["extra"] as? [String : AnyObject] {
+            if let extra = statusDict["extra"] as? [String : Any] {
                 extraInfo = extra
             }
         } else {
@@ -378,7 +378,7 @@ extension NSError {
         self.init(info: info, code: code, message: extraInfo)
     }
     
-    convenience init(info : String, code : Int, message : [String : AnyObject] = [:]) {
+    convenience init(info : String, code : Int, message : [String : Any] = [:]) {
         let userInfo = [
             NSLocalizedDescriptionKey : info,
             NSError.BMLExtendedError.DescriptionKey : message
@@ -524,7 +524,7 @@ func parseItems(_ text : String, regexp : String) -> [String] {
 func uniqueTerms(_ terms : [String],
     forms : [String : [String]],
     tagCloud : [String])
-    -> [(AnyObject, Int)] {
+    -> [(Any, Int)] {
         
         var extendForms : [String : String] = [:]
         for (term, formList) in forms {
@@ -547,22 +547,22 @@ func uniqueTerms(_ terms : [String],
                 termSet.updateValue(termSet[term]! + 1, forKey: term)
             }
         }
-        return termSet.map{ ($0.0 as AnyObject, $0.1) }
+        return termSet.map{ ($0.0 as Any, $0.1) }
 }
 
 /**
 * Parses the input data to find the list of unique terms in the
 * tag cloud
 */
-func uniqueTerms(_ arguments : [String : AnyObject],
+func uniqueTerms(_ arguments : [String : Any],
     termForms : [String : [String : [String]]],
-    termAnalysis : [String : [String : AnyObject]],
-    tagCloud : [String : AnyObject],
-    items : [String : AnyObject],
-    itemAnalysis : [String : [String : AnyObject]])
-    -> [String : [(AnyObject, Int)]] {
+    termAnalysis : [String : [String : Any]],
+    tagCloud : [String : Any],
+    items : [String : Any],
+    itemAnalysis : [String : [String : Any]])
+    -> [String : [(Any, Int)]] {
     
-        var uTerms = [String : [(AnyObject, Int)]]()
+        var uTerms = [String : [(Any, Int)]]()
         for fieldId in termForms.keys {
             if let inputDataField = arguments[fieldId] as? String {
                 let caseSensitive : Bool = termAnalysis[fieldId]?["case_sensitive"] as? Bool ?? true

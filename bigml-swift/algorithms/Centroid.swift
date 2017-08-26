@@ -16,14 +16,14 @@ import Foundation
 
 class Centroid {
     
-    let center : [String : AnyObject]
+    let center : [String : Any]
     let count : Int
     let centroidId : Int
     let name : String
     
-    required init(cluster : [String : AnyObject]) {
+    required init(cluster : [String : Any]) {
         
-        self.center = cluster["center"] as? [String : AnyObject] ?? [:]
+        self.center = cluster["center"] as? [String : Any] ?? [:]
         self.count = cluster["count"] as? Int ?? 0
         self.centroidId = cluster["id"] as? Int ?? 0
         self.name = cluster["name"] as? String ?? ""
@@ -41,8 +41,8 @@ class Centroid {
     *                               the algorithm stops computing the actual
     *                               squared distance
     */
-    func squareDistance(_ inputData : [String : AnyObject],
-        uniqueTerms : [String : AnyObject],
+    func squareDistance(_ inputData : [String : Any],
+        uniqueTerms : [String : Any],
         scales : [String : Double],
         nearestDistance : Double) -> Double {
         

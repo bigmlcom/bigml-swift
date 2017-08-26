@@ -16,7 +16,7 @@ import Foundation
 
 let BINS_LIMIT = 32
 
-func arrayToDistribution(_ array : [[AnyObject]]) -> [(value : AnyObject, dist : Int)] {
+func arrayToDistribution(_ array : [[Any]]) -> [(value : Any, dist : Int)] {
     
     return array.map{ (value: $0[0], dist: $0[1] as? Int ?? -1) }
 }
@@ -39,42 +39,42 @@ internal class PredictionTree {
     
     let isPredicate : Bool
 
-    var output : AnyObject
+    var output : Any
     var confidence : Double
     var maximum : Double
     var minimum : Double
     var median : Double = Double.nan
-    var distribution : [(value : AnyObject, dist : Int)] = []
+    var distribution : [(value : Any, dist : Int)] = []
     var distributionUnit : String = ""
     var impurity : Double = Double.nan
     var regression : Bool = false
     
-    let fields : [String : AnyObject]
+    let fields : [String : Any]
     let objectiveFields : [String]
-    let rootDistribution : [String : AnyObject]
+    let rootDistribution : [String : Any]
 
-    required init(tree : [String : AnyObject],
-        fields : [String : AnyObject],
+    required init(tree : [String : Any],
+        fields : [String : Any],
         objectiveFields : [String],
-        rootDistribution : [String : AnyObject],
+        rootDistribution : [String : Any],
         parentId : Int,
-        idsMap : inout [Int : AnyObject],
+        idsMap : inout [Int : Any],
         isSubtree : Bool,
-        treeInfo : inout [String : AnyObject]) {
+        treeInfo : inout [String : Any]) {
 
             self.fields = fields
             self.objectiveFields = objectiveFields
-            self.output = tree["output"] ?? Double.nan as AnyObject
+            self.output = tree["output"] ?? Double.nan as Any
             self.confidence = tree["confidence"] as? Double ?? Double.nan
             self.rootDistribution = rootDistribution
             self.confidence = tree["confidence"] as? Double ?? Double.nan
             self.maximum = Double.nan
             self.minimum = Double.nan
             
-            if let pDict = tree["predicate"] as? [String : AnyObject],
+            if let pDict = tree["predicate"] as? [String : Any],
                 let op = pDict["operator"] as? String,
                 let field = pDict["field"] as? String,
-                let value : AnyObject = pDict["value"] {
+                let value : Any = pDict["value"] {
                     
                     if let term = pDict["term"] as? String {
                         self.predicate = Predicate(op: op, field: field, value: value, term: term)
@@ -84,10 +84,10 @@ internal class PredictionTree {
                     self.isPredicate = false
             } else if let pPred = tree["predicate"] as? Bool {
                 self.isPredicate = pPred
-                self.predicate = Predicate(op: "TRUE", field: "", value: "" as AnyObject)
+                self.predicate = Predicate(op: "TRUE", field: "", value: "" as Any)
             } else {
                 assert(false, "PredictionTree init (1): Bad things happen")
-                self.predicate = Predicate(op: "FALSE", field: "", value: "" as AnyObject)
+                self.predicate = Predicate(op: "FALSE", field: "", value: "" as Any)
                 self.isPredicate = false
             }
             
@@ -101,7 +101,7 @@ internal class PredictionTree {
             }
             
             self.count = tree["count"] as? Int ?? 0
-            if let nodes = tree["children"] as? [[String : AnyObject]] {
+            if let nodes = tree["children"] as? [[String : Any]] {
                 var childrenArray = [PredictionTree]()
                 for node in nodes {
                     childrenArray.append(PredictionTree(tree: node,
@@ -135,20 +135,20 @@ internal class PredictionTree {
             self.regression = !(self.output is String) &&
                 self.children.reduce(true) { $0 && !($1.output is String) }
             
-            let summary : [String : AnyObject]
-            if let distributionObject = tree["distribution"] as? [(value : AnyObject, dist : Int)] {
+            let summary : [String : Any]
+            if let distributionObject = tree["distribution"] as? [(value : Any, dist : Int)] {
                 self.distribution = distributionObject
                 self.distributionUnit = ""
                 summary = [:]
             } else {
-                summary = tree["objective_summary"] as? [String : AnyObject] ?? rootDistribution
-                if let bins = summary["bins"] as? [[AnyObject]] {
+                summary = tree["objective_summary"] as? [String : Any] ?? rootDistribution
+                if let bins = summary["bins"] as? [[Any]] {
                     self.distribution = arrayToDistribution(bins)
                     self.distributionUnit = "bins"
-                } else if let counts = summary["counts"] as? [[AnyObject]] {
+                } else if let counts = summary["counts"] as? [[Any]] {
                     self.distribution = arrayToDistribution(counts)
                     self.distributionUnit = "counts"
-                } else if let categories = summary["categories"] as? [[AnyObject]] {
+                } else if let categories = summary["categories"] as? [[Any]] {
                     self.distribution = arrayToDistribution(categories)
                     self.distributionUnit = "categories"
                 } else {
@@ -158,7 +158,7 @@ internal class PredictionTree {
             }
             
             if (self.regression) {
-                treeInfo["maxBins"] = max(treeInfo["maxBins"] as? Int ?? 0, self.distribution.count) as AnyObject?
+                treeInfo["maxBins"] = max(treeInfo["maxBins"] as? Int ?? 0, self.distribution.count) as Any?
                 self.median = (summary["median"] as? Double) ??
                     medianOfDistribution(self.distribution, instances: self.count)
                 self.maximum = summary["maximum"] as? Double ??
@@ -176,14 +176,14 @@ internal class PredictionTree {
             idsMap.updateValue(self, forKey: self.nodeId)
     }
     
-    required convenience init(tree : [String : AnyObject],
-        fields : [String : AnyObject],
+    required convenience init(tree : [String : Any],
+        fields : [String : Any],
         objectiveField : String,
-        rootDistribution : [String : AnyObject],
+        rootDistribution : [String : Any],
         parentId : Int,
-        idsMap : inout [Int : AnyObject],
+        idsMap : inout [Int : Any],
         isSubtree : Bool,
-        treeInfo : inout [String : AnyObject]) {
+        treeInfo : inout [String : Any]) {
             
             self.init(tree: tree,
                 fields: fields,
@@ -247,7 +247,7 @@ internal class PredictionTree {
     /**
      * Check if there's only one branch to be followed
      */
-    func isOneBranch(_ nodes : [PredictionTree], arguments : [String : AnyObject]) -> Bool {
+    func isOneBranch(_ nodes : [PredictionTree], arguments : [String : Any]) -> Bool {
         let missing = arguments.keys.contains(splitNodes(nodes))
         return missing || self.missingBranch(nodes) || self.noneValue(nodes)
     }
@@ -277,11 +277,11 @@ internal class PredictionTree {
     * @param missingFound
     * @return
     */
-    func predictProportional(_ arguments : [String : AnyObject],
+    func predictProportional(_ arguments : [String : Any],
         path : [String] = [],
         missingFound : Bool,
         median : Bool)
-        -> (distribution : [(value : AnyObject, dist : Int)],
+        -> (distribution : [(value : Any, dist : Int)],
         minimum : Double,
         maximum : Double,
         lastNode : PredictionTree) {
@@ -308,7 +308,7 @@ internal class PredictionTree {
                 }
             } else {
                 
-                var finalDistribution : [(value : AnyObject, dist : Int)] = []
+                var finalDistribution : [(value : Any, dist : Int)] = []
                 var mins : [Double] = []
                 var maxs : [Double] = []
                 for child in self.children {
@@ -332,7 +332,7 @@ internal class PredictionTree {
             return ([], Double.nan, Double.nan, self)
     }
     
-    func instanceCount(_ distribution : [(value : AnyObject, dist : Int)]) -> Int {
+    func instanceCount(_ distribution : [(value : Any, dist : Int)]) -> Int {
         return distribution.reduce(0) { $0 + $1.dist }
     }
     
@@ -342,7 +342,7 @@ internal class PredictionTree {
     * The input fields must be keyed by Id.
     *
     */
-    func predict(_ arguments : [String : AnyObject],
+    func predict(_ arguments : [String : Any],
         path : [String] = [],
         strategy : MissingStrategy = MissingStrategy.proportional)
         -> (prediction: TreePrediction, path: [String]) {
@@ -409,7 +409,7 @@ internal class PredictionTree {
                         varianceOfDistribution(distribution, mean: m),
                         instances: totalInstances)
                     
-                    prediction = TreePrediction(prediction: m as AnyObject,
+                    prediction = TreePrediction(prediction: m as Any,
                         confidence: confidence,
                         count: totalInstances,
                         median: medianOfDistribution(distribution, instances: totalInstances),
@@ -425,8 +425,8 @@ internal class PredictionTree {
                     let distribution = finalDistribution.sorted {
                         $0.1 < $1.1
                     }
-                    prediction = TreePrediction(prediction: distribution.first!.1 as AnyObject,
-                        confidence: wsConfidence(distribution.first!.1 as AnyObject,
+                    prediction = TreePrediction(prediction: distribution.first!.1 as Any,
+                        confidence: wsConfidence(distribution.first!.1 as Any,
                             distribution: finalDistribution),
                         count: self.instanceCount(distribution),
                         median: Double.nan,

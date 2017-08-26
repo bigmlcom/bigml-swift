@@ -26,7 +26,7 @@ open class AssociationRule {
     let lift : Double
     let support : [Double]
     
-    public required init(ruleInfo : [String : AnyObject]) {
+    public required init(ruleInfo : [String : Any]) {
         
         self.ruleId = ruleInfo["id"] as? String ?? ""
         self.confidence = ruleInfo["confidence"] as? Double ?? Double.nan

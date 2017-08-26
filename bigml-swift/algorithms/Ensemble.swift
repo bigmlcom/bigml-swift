@@ -18,11 +18,11 @@ open class Ensemble {
     
     open var isReadyToPredict : Bool
     
-    fileprivate var distributions : [[String : AnyObject]]
+    fileprivate var distributions : [[String : Any]]
     fileprivate var fields : [String : AnyObject]
     fileprivate var multiModels : [MultiModel]
     
-    static fileprivate func multiModels(_ models : [[String : AnyObject]], maxModels : Int)
+    static fileprivate func multiModels(_ models : [[String : Any]], maxModels : Int)
         -> [MultiModel] {
             
             return stride(from: 0, to: models.count - maxModels, by: maxModels).map { s in
@@ -30,9 +30,9 @@ open class Ensemble {
             }
     }
     
-    public required init(models : [[String : AnyObject]],
+    public required init(models : [[String : Any]],
         maxModels : Int = Int.max,
-        distributions : [[String : AnyObject]] = []) {
+        distributions : [[String : Any]] = []) {
         
             assert(models.count > 0)
             assert(maxModels >= 0)
@@ -43,12 +43,12 @@ open class Ensemble {
             self.distributions = distributions
     }
     
-    static func fieldsFromModels(_ models : [[String : AnyObject]]) -> [String : AnyObject] {
+    static func fieldsFromModels(_ models : [[String : Any]]) -> [String : AnyObject] {
         
         var fields : [String : AnyObject] = [:]
         for model in models {
             for (fieldId, field) in model {
-                fields.updateValue(field, forKey: fieldId)
+                fields.updateValue(field as AnyObject, forKey: fieldId)
             }
         }
         return fields
@@ -80,7 +80,7 @@ open class Ensemble {
     *        node as individual prediction for the specified
     *        combination method.
     */
-    open func predict(_ arguments : [String : AnyObject],
+    open func predict(_ arguments : [String : Any],
         options : [String : Any])
         -> [String : Any] {
         
@@ -125,7 +125,7 @@ open class Ensemble {
         var fieldImportance : [String : Double] = [:]
         var fieldNames : [String : String] = [:]
         let importances = self.distributions.map {
-            $0["importance"] as? [[AnyObject]] ?? []
+            $0["importance"] as? [[Any]] ?? []
         }
         for modelInfo in importances {
             for info in modelInfo {

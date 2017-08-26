@@ -28,18 +28,18 @@ struct BMLHTTPConnector {
     
     func get(_ url : URL,
         body: [String : Any] = [:],
-        completion:@escaping (_ jsonObject : AnyObject?, _ error : NSError?) -> Void) {
+        completion:@escaping (_ jsonObject : Any?, _ error : NSError?) -> Void) {
             
             self.getter.run(url, body: body) {
-                (result : [String : AnyObject], error : NSError?) in
-                completion(result as AnyObject?, error)
+                (result : [String : Any], error : NSError?) in
+                completion(result as Any?, error)
             }
     }
     
     func delete(_ url : URL, completion:@escaping (_ error : NSError?) -> Void) {
         
         self.deleter.run(url, body: [:]) {
-            (result : [String : AnyObject], error : NSError?) in
+            (result : [String : Any], error : NSError?) in
             completion(error)
         }
     }
@@ -49,14 +49,14 @@ struct BMLHTTPConnector {
         completion:@escaping (_ error : NSError?) -> Void) {
         
             self.putter.run(url, body: body) {
-                (result : [String : AnyObject], error : NSError?) in
+                (result : [String : Any], error : NSError?) in
                 completion(error)
             }
     }
     
     func post(_ url : URL,
         body: [String : Any],
-        completion:@escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
+        completion:@escaping (_ result : [String : Any], _ error : NSError?) -> Void) {
         
             self.poster.run(url, body: body, completion: completion)
     }
@@ -65,7 +65,7 @@ struct BMLHTTPConnector {
         filename: String,
         filePath: String,
         body: [String : Any],
-        completion:@escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
+        completion:@escaping (_ result : [String : Any], _ error : NSError?) -> Void) {
             
             let bodyData : NSMutableData = NSMutableData()
             for (name, value) in body {

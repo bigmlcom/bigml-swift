@@ -48,14 +48,14 @@ struct BMLHTTPMethodHandler {
     
     func run(_ url : URL,
         bodyData : Data,
-        completion : @escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
+        completion : @escaping (_ result : [String : Any], _ error : NSError?) -> Void) {
             
             do {
                 try self.handleDataRequest(self.method, url: url, bodyData: bodyData) {
                     (data, error) in
                     
                     var localError = error;
-                    var jsonObject : [String : AnyObject]
+                    var jsonObject : [String : Any]
                     do {
                         jsonObject = try self.processedResponse(data, expectedCode: self.expectedCode)
                     } catch let error as NSError {
@@ -71,7 +71,7 @@ struct BMLHTTPMethodHandler {
     
     func run(_ url : URL,
         body : [String : Any],
-        completion : @escaping (_ result : [String : AnyObject], _ error : NSError?) -> Void) {
+        completion : @escaping (_ result : [String : Any], _ error : NSError?) -> Void) {
             
             let bodyData : Data?
             if (body.count > 0) {
@@ -117,7 +117,7 @@ struct BMLHTTPMethodHandler {
                             let code = response.statusCode
                             localError = NSError(
                                 status: try! JSONSerialization.jsonObject(with: data!,
-                                    options:JSONSerialization.ReadingOptions.allowFragments) as AnyObject?,
+                                    options:JSONSerialization.ReadingOptions.allowFragments) as Any?,
                                 code:code)
                         }
                     } else {
@@ -154,15 +154,15 @@ struct BMLHTTPMethodHandler {
     }
     
     fileprivate func processedResponse(_ data : Data, expectedCode : Int) throws
-        -> [String : AnyObject] {
+        -> [String : Any] {
             
-            var result : [String : AnyObject] = [:]
+            var result : [String : Any] = [:]
             if data.count > 0 {
                 let jsonObject = try JSONSerialization.jsonObject(
                     with: data,
                     options: JSONSerialization.ReadingOptions.allowFragments)
                 
-                if let jsonDict = jsonObject as? [String : AnyObject] {
+                if let jsonDict = jsonObject as? [String : Any] {
                     //-- code, if present, must match expectedCode argument
                     if let code = jsonDict["code"] as? Int {
                         if (code != expectedCode) {

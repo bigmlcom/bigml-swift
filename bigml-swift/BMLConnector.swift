@@ -39,7 +39,7 @@ open class BMLConnector : NSObject {
         return "https://bigml.io"
     }
     
-    func authenticatedUrl(_ uri : String, arguments : [String : AnyObject]) throws -> URL {
+    func authenticatedUrl(_ uri : String, arguments : [String : Any]) throws -> URL {
         
         var args = ""
         for (key, value) in arguments {
@@ -51,12 +51,12 @@ open class BMLConnector : NSObject {
             URL(string:"\(serverUrl)/\(modeSelector)andromeda/\(uri)?\(self.authToken)\(args)") else {
                 throw NSError(info: "Could not access server",
                     code: -10100,
-                    message:["Hint" : "Please review user credentials and server URL" as AnyObject])
+                    message:["Hint" : "Please review user credentials and server URL" as Any])
         }
         return url
     }
     
-    fileprivate func createResourceCompletionBlock(_ result : [String : AnyObject],
+    fileprivate func createResourceCompletionBlock(_ result : [String : Any],
         error : NSError?,
         completion : @escaping (_ resource : BMLResource?, _ error : NSError?) -> Void) -> Void {
             
@@ -97,7 +97,7 @@ open class BMLConnector : NSObject {
                                 filename:name,
                                 filePath:from.uuid,
                                 body: options) {
-                                    (result : [String : AnyObject], error : NSError?) in
+                                    (result : [String : Any], error : NSError?) in
                                     
                                     self.createResourceCompletionBlock(result,
                                         error: error,
@@ -123,7 +123,7 @@ open class BMLConnector : NSObject {
                     }
 
                     self.connector.post(url, body: body) {
-                        (result : [String : AnyObject], error : NSError?) in
+                        (result : [String : Any], error : NSError?) in
                         
                         self.createResourceCompletionBlock(result,
                             error: error,
@@ -147,7 +147,7 @@ open class BMLConnector : NSObject {
                 var body = options
                 body.updateValue(name, forKey: "name")
                 self.connector.post(url, body: body) {
-                    (result : [String : AnyObject], error : NSError?) in
+                    (result : [String : Any], error : NSError?) in
                     
                     self.createResourceCompletionBlock(result,
                         error: error,
@@ -173,11 +173,11 @@ open class BMLConnector : NSObject {
                     var localError = error;
                     var resources : [BMLResource] = []
                     if (error == nil) {
-                        if let jsonDict = jsonObject as? [String : AnyObject],
-                            let jsonResources = jsonDict["objects"] as? [AnyObject] {
+                        if let jsonDict = jsonObject as? [String : Any],
+                            let jsonResources = jsonDict["objects"] as? [Any] {
 
                             resources = jsonResources.map {
-                                if let resourceDict = $0 as? [String : AnyObject],
+                                if let resourceDict = $0 as? [String : Any],
                                     let resource = resourceDict["resource"] as? String {
                                     
                                     return BMLMinimalResource(
@@ -236,15 +236,15 @@ open class BMLConnector : NSObject {
     func getIntermediateResource(
         _ type : BMLResourceType,
         uuid : String,
-        completion :@escaping (_ resourceDict : [String : AnyObject], _ error : NSError?) -> Void) {
+        completion :@escaping (_ resourceDict : [String : Any], _ error : NSError?) -> Void) {
             
             do {
                 let url = try self.authenticatedUrl("\(type.stringValue())/\(uuid)", arguments:[:])
                 self.connector.get(url) { (jsonObject, error) in
                     
                     var localError = error;
-                    var resourceDict : [String : AnyObject] = [:]
-                    if let jsonDict = jsonObject as? [String : AnyObject],
+                    var resourceDict : [String : Any] = [:]
+                    if let jsonDict = jsonObject as? [String : Any],
                         let code = jsonDict["code"] as? Int {
                         resourceDict = jsonDict
                             //-- Workaround to API giving 500 for resources not created correctly
@@ -303,12 +303,12 @@ open class BMLConnector : NSObject {
                 
                 var localError = error
                 if (localError == nil) {
-                    if let statusDict = resourceDict["status"] as? [String : AnyObject],
+                    if let statusDict = resourceDict["status"] as? [String : Any],
                         let statusCodeInt = statusDict["code"] as? Int {
                         let statusCode = BMLResourceStatus(integerLiteral: statusCodeInt)
                         if (statusCode < BMLResourceStatus.waiting) {
                             if let code = statusDict["error"] as? Int {
-                                localError = NSError(status: statusDict as AnyObject?, code: code)
+                                localError = NSError(status: statusDict as Any?, code: code)
                             }
                             resource.status = BMLResourceStatus.failed
                         } else if (statusCode < BMLResourceStatus.ended) {

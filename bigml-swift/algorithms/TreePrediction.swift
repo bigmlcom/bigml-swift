@@ -16,27 +16,27 @@ import Foundation
 
 internal struct TreePrediction {
     
-    let prediction : AnyObject
+    let prediction : Any
     let confidence : Double
     let count : Int
     let median : Double
     let min : Double
     let max : Double
     let path : [String]
-    let distribution : [(value : AnyObject, dist : Int)]
+    let distribution : [(value : Any, dist : Int)]
     let distributionUnit : String
     let children : [PredictionTree]
     var probability : Double = Double.nan
     var next : String = ""
     
-    init(prediction : AnyObject,
+    init(prediction : Any,
         confidence : Double,
         count : Int,
         median : Double,
         min : Double,
         max : Double,
         path : [String],
-        distribution : [(value : AnyObject, dist : Int)],
+        distribution : [(value : Any, dist : Int)],
         distributionUnit : String,
         children : [PredictionTree]) {
             
