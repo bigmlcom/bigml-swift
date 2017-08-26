@@ -108,7 +108,7 @@ open class Ensemble {
             if (median) {
                 v.addMedian()
             }
-            multiVote.extend(v)
+            _ = multiVote.extend(v)
         }
         return multiVote.combine(method,
             confidence: confidence,
