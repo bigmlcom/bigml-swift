@@ -19,15 +19,15 @@ import bigmlSwift
 class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
     
     func localCentroidFromCluster(_ modelId : String,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
-        completion : (CentroidInfo, CentroidInfo) -> ()) {
+        argsByName : [String : Any],
+        argsById : [String : Any],
+        completion : @escaping (CentroidInfo, CentroidInfo) -> ()) {
             
             self.connector!.getResource(BMLResourceType.cluster, uuid: modelId) {
                 (resource, error) -> Void in
                 
                 if let model = resource {
-                    let pCluster = Cluster(jsonCluster: model.jsonDefinition)
+                    let pCluster = Cluster(jsonCluster: model.jsonDefinition as [String : AnyObject])
                     let prediction1 = pCluster.centroid(
                         argsByName,
                         byName: true)
@@ -45,9 +45,9 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
     }
     
     func localCentroidFromDataset(_ dataset : BMLMinimalResource,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
-        completion : (CentroidInfo, CentroidInfo) -> ()) {
+        argsByName : [String : Any],
+        argsById : [String : Any],
+        completion : @escaping (CentroidInfo, CentroidInfo) -> ()) {
             
             self.connector!.createResource(BMLResourceType.cluster,
                 name: dataset.name,

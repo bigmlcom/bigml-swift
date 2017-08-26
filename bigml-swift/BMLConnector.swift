@@ -233,7 +233,7 @@ open class BMLConnector : NSObject {
             }
     }
     
-    func getIntermediateResource(
+    open func getIntermediateResource(
         _ type : BMLResourceType,
         uuid : String,
         completion :@escaping (_ resourceDict : [String : Any], _ error : NSError?) -> Void) {

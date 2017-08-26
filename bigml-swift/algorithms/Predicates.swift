@@ -22,7 +22,7 @@ func plural(_ string : String, multiplicity : Int) -> String {
     return "\(string)s"
 }
 
-class Predicate {
+public class Predicate {
     
     static let TM_TOKENS = "tokens_only"
     static let TM_FULL_TERMS = "full_terms_only"
@@ -35,7 +35,7 @@ class Predicate {
     var term : String?
     var missing : Bool
     
-    init (op : String, field : String, value : Any, term : String? = .none) {
+    public init (op : String, field : String, value : Any, term : String? = .none) {
         
         self.op = op
         self.field = field
@@ -51,7 +51,7 @@ class Predicate {
     /**
      * Returns a boolean showing if a term is considered as a full_term
      */
-    func isFullTerm(_ fields : [String : Any]) -> Bool {
+    public func isFullTerm(_ fields : [String : Any]) -> Bool {
         
         if let term = self.term,
             let fieldDict = fields[self.field] as? [String : Any],
@@ -74,7 +74,7 @@ class Predicate {
     /**
      * Builds rule string from a predicate
     */
-    func rule(_ fields : [String : Any], label : String = "name") -> String {
+    public func rule(_ fields : [String : Any], label : String = "name") -> String {
         
         if let fieldDict = fields[self.field] as? [String : Any] {
             
@@ -191,7 +191,7 @@ class Predicate {
      * Applies the operators defined in the predicate as strings to
      * the provided input data.
      */
-    func apply(_ input : [String : Any], fields : [String : Any]) -> Bool {
+    public func apply(_ input : [String : Any], fields : [String : Any]) -> Bool {
         
         if (self.op == "TRUE") {
             return true
@@ -251,11 +251,11 @@ class Predicate {
     }
 }
 
-class Predicates {
+public class Predicates {
     
     let predicates : [Predicate]
     
-    init(predicates : [Any]) {
+    public init(predicates : [Any]) {
         self.predicates = predicates.map() {
             
             if let _ = $0 as? String {
@@ -275,7 +275,7 @@ class Predicates {
         }
     }
     
-    func rule(_ fields : [String : Any], label : String = "name") -> String {
+    public func rule(_ fields : [String : Any], label : String = "name") -> String {
         
         let strings = self.predicates.filter({ $0.op != "TRUE" }).map() {
             return $0.rule(fields, label: label)
@@ -283,7 +283,7 @@ class Predicates {
         return strings.joined(separator: " and ")
     }
     
-    func apply(_ input : [String : Any], fields : [String : Any]) -> Bool {
+    public func apply(_ input : [String : Any], fields : [String : Any]) -> Bool {
         
         return predicates.reduce(true) {
             let result = $1.apply(input, fields: fields)

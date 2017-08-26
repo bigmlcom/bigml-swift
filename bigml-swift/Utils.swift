@@ -331,7 +331,7 @@ func wsConfidence(_ prediction : Any,
             n: distribution.reduce(0) { $0 + $1.dist })
 }
 
-func compareDoubles(_ d1 : Double, d2 : Double, eps : Double = 0.01) -> Bool {
+public func compareDoubles(_ d1 : Double, d2 : Double, eps : Double = 0.01) -> Bool {
     return ((d1 - eps) < d2) && ((d1 + eps) > d2)
 }
 /*

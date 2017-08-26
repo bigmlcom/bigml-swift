@@ -19,7 +19,7 @@ import bigmlSwift
 class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
 
     func localPredictionFromModel(_ modelId : String,
-        args : [String : AnyObject],
+        args : [String : Any],
         options : [String : Any],
         completion : @escaping ([String : Any]) -> ()) {
         
@@ -39,7 +39,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
     }
     
     func localPredictionFromDataset(_ dataset : BMLResource,
-        args : [String : AnyObject],
+        args : [String : Any],
         options : [String : Any],
         completion : @escaping ([String : Any]) -> ()) {
             
@@ -74,7 +74,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
     
     func localPredictionFromCSV(_ csv : String,
         name : String,
-        args : [String : AnyObject],
+        args : [String : Any],
         options : [BMLResourceType : [String : Any]],
         completion : @escaping ([String : Any]) -> ()) {
             
@@ -118,7 +118,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         let model = try! JSONSerialization.jsonObject(with: data,
             options: JSONSerialization.ReadingOptions.allowFragments)
         
-        let prediction = Model(jsonModel: model as! [String : AnyObject]).predict([
+        let prediction = Model(jsonModel: model as! [String : Any]).predict([
             "sepal length": 6.02,
             "sepal width": 3.15,
             "petal width": 1.51,
@@ -138,7 +138,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 "Grape": "Cabernet Sauvignon",
                 "Country": "France",
                 "Rating": 90],
-            options: [BMLResourceType.Prediction : ["byName": true]]) {
+            options: [BMLResourceType.prediction : ["byName": true]]) {
                 (prediction : [String : Any]) in
                 
                 XCTAssert(
@@ -156,7 +156,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
             args: [
                 "pétal.length": 4,
                 "pétal&width": 1.5],
-            options: [BMLResourceType.Prediction : ["byName": true]]) {
+            options: [BMLResourceType.prediction : ["byName": true]]) {
                 (prediction : [String : Any]) in
                 
                 XCTAssert(
@@ -166,7 +166,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
     }
     
     func execTests(_ dataset : BMLResource,
-        tests : [(args : [String : AnyObject], p : AnyObject, c : Double)],
+        tests : [(args : [String : Any], p : Any, c : Double)],
         options : [String : Any]) {
         
         for (args, p, c) in tests {
@@ -178,8 +178,8 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                     (prediction : [String : Any]) in
                     
                     semaphore.signal()
-                    print("Message: \(p) -- ", prediction["prediction"])
-                    print("Confidence: \(c) -- ", prediction["confidence"])
+                    print("Message: \(p) -- ", prediction["prediction"] ?? "NONE")
+                    print("Confidence: \(c) -- ", prediction["confidence"] ?? "NONE")
                     if let p = p as? String {
                         XCTAssert(prediction["prediction"] as! String == p)
                     } else if let p = p as? Double {
@@ -187,20 +187,20 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                     }
                     XCTAssert(compareDoubles(prediction["confidence"] as! Double, d2: c))
             }
-            semaphore.wait(timeout: DispatchTime.distantFuture)
+            _ = semaphore.wait(timeout: DispatchTime.distantFuture)
         }
     }
     
     func runTestPrediction(_ file : String,
-        tests : [(args : [String : AnyObject], p : AnyObject, c : Double)],
+        tests : [(args : [String : Any], p : Any, c : Double)],
         options : [BMLResourceType : [String : Any]]) {
         
-            self.runTest(name) { (exp) in
+            self.runTest(name!) { (exp) in
                 
                 let dataset = self.createDataset(file, options: options)!
                 self.execTests(dataset,
                     tests: tests,
-                    options: options[BMLResourceType.Prediction] ?? [:])
+                    options: options[BMLResourceType.prediction] ?? [:])
                 
                 self.connector!.deleteResource(dataset.type,
                     uuid: dataset.uuid) {
@@ -315,10 +315,10 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
 
     func testItemsPrediction() {
         
-        self.runTest(name) { (exp) in
+        self.runTest(name!) { (exp) in
             
             let dataset = self.createDataset("movies.csv",
-                options: [BMLResourceType.Source : [
+                options: [BMLResourceType.source : [
                     "fields" : [
                         "000007" : [
                             "optype" : "items",

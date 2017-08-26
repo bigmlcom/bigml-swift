@@ -12,17 +12,16 @@ import bigmlSwift
 class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
 
     func localAssociationRule(_ resId : String,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
-        completion : @escaping ([[String : AnyObject]], [[String : AnyObject]]) -> ()) {
+        argsByName : [String : Any],
+        argsById : [String : Any],
+        completion : @escaping ([[String : Any]], [[String : Any]]) -> ()) {
             
             self.connector!.getResource(BMLResourceType.association, uuid: resId) {
                 (resource, error) -> Void in
                 
                 if let resource = resource {
                     
-                    let association = Association(jsonAssociation: resource.jsonDefinition)
-                    
+                    let association = Association(jsonAssociation: resource.jsonDefinition as [String : AnyObject])
                     let prediction1 = association.associationSet(
                         argsByName,
                         options: ["byName" : true])
@@ -40,8 +39,8 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
     }
     
     func remotePrediction(_ fromResource : BMLResource,
-        argsById : [String : AnyObject],
-        completion : @escaping ([[String : AnyObject]]) -> ()) {
+        argsById : [String : Any],
+        completion : @escaping ([[String : Any]]) -> ()) {
             
             self.connector!.createResource(BMLResourceType.prediction,
                 name: fromResource.name,
@@ -57,7 +56,7 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
                         completion([[
                             "prediction" : resource["output"]!,
                             "probabilities" : resource["probabilities"]!,
-                            "probability" : ((resource["probabilities"] as! [AnyObject]).first as! [AnyObject]).last!]])
+                            "probability" : ((resource["probabilities"] as! [Any]).first as! [Any]).last!]])
                     } else {
                         completion([])
                     }
@@ -66,9 +65,9 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
     
     func localAssociationRuleFromDataset(_ predictionType : BMLResourceType,
         dataset : BMLMinimalResource,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
-        completion : @escaping ([[String : AnyObject]], [[String : AnyObject]]) -> ()) {
+        argsByName : [String : Any],
+        argsById : [String : Any],
+        completion : @escaping ([[String : Any]], [[String : Any]]) -> ()) {
             
             self.connector!.createResource(BMLResourceType.association,
                 name: dataset.name,
@@ -84,13 +83,13 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
                         
                         self.localAssociationRule(resource.uuid,
                             argsByName: argsByName,
-                            argsById: argsById) { (prediction1 : [[String : AnyObject]],
-                                prediction2 : [[String : AnyObject]]) in
+                            argsById: argsById) { (prediction1 : [[String : Any]],
+                                prediction2 : [[String : Any]]) in
                                 
                                 completion(prediction1, prediction2)
                                 
 //                                self.remotePrediction(resource,
-//                                    argsById: argsById) { (prediction : [[String : AnyObject]]) in
+//                                    argsById: argsById) { (prediction : [[String : Any]]) in
 //                                        
 //                                        self.connector!.deleteResource(predictionType,
 //                                            uuid: resource.uuid) {
@@ -121,8 +120,8 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
                     "000000": 6.02,
                     "000001": 3.15,
                     "000003": 1.51,
-                    "000002": 4.07]) { (prediction1 : [[String : AnyObject]],
-                        prediction2 : [[String : AnyObject]]) in
+                    "000002": 4.07]) { (prediction1 : [[String : Any]],
+                        prediction2 : [[String : Any]]) in
                         
                         print("P1: \(prediction1)")
                         
@@ -146,7 +145,7 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
                     "000000": 6.02,
                     "000001": 3.15,
                     "000003": 1.51,
-                    "000002": 4.07]) { (prediction1 : [[String : AnyObject]], prediction2 : [[String : AnyObject]]) in
+                    "000002": 4.07]) { (prediction1 : [[String : Any]], prediction2 : [[String : Any]]) in
                         
                         XCTAssert((prediction1[0]["item"] as! AssociationItem).name == "Iris-versicolor" &&
                             compareDoubles(prediction1[0]["score"] as! Double, d2: 0.0864))

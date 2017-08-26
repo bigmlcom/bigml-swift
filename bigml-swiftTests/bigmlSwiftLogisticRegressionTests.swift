@@ -18,19 +18,19 @@ import bigmlSwift
 
 class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
     
-    func logisticRegression(_ file : String) -> [String : AnyObject] {
+    func logisticRegression(_ file : String) -> [String : Any] {
         
         let bundle = Bundle(for: type(of: self))
         let path = bundle.path(forResource: file, ofType:"logistic")
         let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
         
         return (try! JSONSerialization.jsonObject(with: data,
-            options: JSONSerialization.ReadingOptions.allowFragments) as? [String : AnyObject] ?? [:])
+            options: JSONSerialization.ReadingOptions.allowFragments) as? [String : Any] ?? [:])
     }
     
     func localPrediction(_ resId : String,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
+        argsByName : [String : Any],
+        argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
             self.connector!.getResource(BMLResourceType.logisticRegression, uuid: resId) {
@@ -57,7 +57,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
     }
     
     func remotePrediction(_ fromResource : BMLResource,
-        argsById : [String : AnyObject],
+        argsById : [String : Any],
         completion : @escaping ([String : Any]) -> ()) {
             
             self.connector!.createResource(BMLResourceType.prediction,
@@ -74,7 +74,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
                         completion([
                             "prediction" : resource["output"]!,
                             "probabilities" : resource["probabilities"]!,
-                            "probability" : ((resource["probabilities"] as! [AnyObject]).first as! [AnyObject]).last!])
+                            "probability" : ((resource["probabilities"] as! [Any]).first as! [Any]).last!])
                     } else {
                         completion([:])
                     }
@@ -83,8 +83,8 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
 
     func localPredictionFromDataset(_ predictionType : BMLResourceType,
         dataset : BMLMinimalResource,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
+        argsByName : [String : Any],
+        argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
             self.connector!.createResource(BMLResourceType.logisticRegression,

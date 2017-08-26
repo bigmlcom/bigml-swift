@@ -18,34 +18,34 @@ import bigmlSwift
 
 class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
     
-    func ensemble(_ file : String) -> [String : AnyObject] {
+    func ensemble(_ file : String) -> [String : Any] {
         
         let bundle = Bundle(for: type(of: self))
         let path = bundle.path(forResource: file, ofType:"ensemble")
         let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
         
         return (try! JSONSerialization.jsonObject(with: data,
-            options: JSONSerialization.ReadingOptions.allowFragments) as? [String : AnyObject] ?? [:])
+            options: JSONSerialization.ReadingOptions.allowFragments) as? [String : Any] ?? [:])
     }
     
-    func ensembleModels(_ ensemble : [String : AnyObject]) -> [[String : AnyObject]] {
+    func ensembleModels(_ ensemble : [String : Any]) -> [[String : Any]] {
         
-        var models : [[String : AnyObject]] = []
+        var models : [[String : Any]] = []
         let semaphore = DispatchSemaphore(value: 0)
-        self.ensembleModels(ensemble) { ms in
+        _ = self.ensembleModels(ensemble) { ms in
             models = ms
             semaphore.signal()
         }
-        semaphore.wait(timeout: DispatchTime.distantFuture)
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
         
         return models
     }
 
-    func ensembleModels(_ ensemble : [String : AnyObject],
-        completion : @escaping ([[String : AnyObject]]) -> ())
-        -> [[String : AnyObject]] {
+    func ensembleModels(_ ensemble : [String : Any],
+        completion : @escaping ([[String : Any]]) -> ())
+        -> [[String : Any]] {
         
-        var models : [[String : AnyObject]] = []
+        var models : [[String : Any]] = []
         let m = (ensemble["models"] as? [String] ?? [])
         var remaining = m.count
         for model in (m.map{ $0.components(separatedBy: "/").last! }) {
@@ -53,7 +53,8 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
                 (resource, error) -> Void in
                 assert(error == nil, "Could not get model \(model)")
                 models.append(resource?.jsonDefinition ?? [:])
-                if --remaining == 0 {
+                remaining -= 1
+                if remaining == 0 {
                     completion(models)
                 }
             }
@@ -63,8 +64,8 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
     }
 
     func localPredictionFromEnsemble(_ resId : String,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
+        argsByName : [String : Any],
+        argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
             self.connector!.getResource(BMLResourceType.ensemble, uuid: resId) {
@@ -72,7 +73,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
                 
                 if let ensemble = resource {
                     
-                    self.ensembleModels(ensemble.jsonDefinition) { models in
+                    _ = self.ensembleModels(ensemble.jsonDefinition) { models in
 
                         let pModel = Ensemble(models: models)
                         
@@ -94,8 +95,8 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
     }
     
     func localPredictionFromDataset(_ dataset : BMLMinimalResource,
-        argsByName : [String : AnyObject],
-        argsById : [String : AnyObject],
+        argsByName : [String : Any],
+        argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
             self.connector!.createResource(BMLResourceType.ensemble,
@@ -263,7 +264,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
             let models = self.ensembleModels(jsonEnsemble)
             let ensemble = Ensemble(models: models,
                 maxModels: Int.max,
-                distributions: jsonEnsemble["distributions"] as? [[String : AnyObject]] ?? [])
+                distributions: jsonEnsemble["distributions"] as? [[String : Any]] ?? [])
 
             XCTAssert(ensemble.fieldImportance().count == 4)
 

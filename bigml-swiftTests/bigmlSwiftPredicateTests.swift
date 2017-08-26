@@ -35,23 +35,23 @@ class BigMLKitConnectorPredicateTests: XCTestCase {
     
     func testCreateNumPredicateEval() {
         
-        var p = Predicate(op: ">", field: "F1", value: 1, term:.None)
+        var p = Predicate(op: ">", field: "F1", value: 1, term:.none)
         var res = p.apply(["F1" : 0.5], fields: ["F1" : [:]])
         XCTAssert(!res, "Pass")
 
-        p = Predicate(op: ">", field: "F1", value: 1, term:.None)
+        p = Predicate(op: ">", field: "F1", value: 1, term:.none)
         res = p.apply(["F1" : 100], fields: ["F1" : [:]])
         XCTAssert(res, "Pass")
         
-        p = Predicate(op: ">=", field: "F1", value: 1, term:.None)
+        p = Predicate(op: ">=", field: "F1", value: 1, term:.none)
         res = p.apply(["F1" : 1], fields: ["F1" : [:]])
         XCTAssert(res, "Pass")
         
-        p = Predicate(op: "<=", field: "F1", value: 1, term:.None)
+        p = Predicate(op: "<=", field: "F1", value: 1, term:.none)
         res = p.apply(["F1" : 0.5], fields: ["F1" : [:]])
         XCTAssert(res, "Pass")
         
-        p = Predicate(op: "=", field: "F1", value: 5, term:.None)
+        p = Predicate(op: "=", field: "F1", value: 5, term:.none)
         res = p.apply(["F1" : 5], fields: ["F1" : [:]])
         XCTAssert(res, "Pass")
         
@@ -73,7 +73,7 @@ class BigMLKitConnectorPredicateTests: XCTestCase {
 
     func testCreatePredicateRule() {
         
-        let test = { (term : String, fields : [String : AnyObject]) -> Bool in
+        let test = { (term : String, fields : [String : Any]) -> Bool in
          
             var p = Predicate(op: ">=", field: "F1", value: 1, term: term)
             var rule = p.rule(fields)
@@ -94,10 +94,10 @@ class BigMLKitConnectorPredicateTests: XCTestCase {
             return true
         }
         
-        test("T.T", ["F1" : ["name": "f1", "term_analysis" : [ "token_mode" : "all" ]]])
-        test("T", ["F1" : ["a" : "b", "name" : "F1"]])
-        test("A.A", ["F1" : ["a" : "b", "name" : "F1"]])
-        test("A.A", ["F2" : ["a" : "b", "name" : "F1"]])
+        _ = test("T.T", ["F1" : ["name": "f1", "term_analysis" : [ "token_mode" : "all" ]]])
+        _ = test("T", ["F1" : ["a" : "b", "name" : "F1"]])
+        _ = test("A.A", ["F1" : ["a" : "b", "name" : "F1"]])
+        _ = test("A.A", ["F2" : ["a" : "b", "name" : "F1"]])
         
         XCTAssert(true, "Pass")
     }

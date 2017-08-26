@@ -45,12 +45,12 @@ class BigMLKitTestCredentials {
 
 class BigMLKitConnectorBaseTest: XCTestCase {
     
-    private static var __once: () = {
-
-            BigMLKitConnectorBaseTest.aSource = self.createDatasource("iris.csv")
-            BigMLKitConnectorBaseTest.aDataset = self.createDataset("iris.csv")
-            BigMLKitConnectorBaseTest.altDataset = self.createDataset("wines.csv")
-        }()
+    private static let __once: () = {        
+        let connector = BigMLKitConnectorBaseTest()
+        BigMLKitConnectorBaseTest.aSource = connector.createDatasource("iris.csv")
+        BigMLKitConnectorBaseTest.aDataset = connector.createDataset("iris.csv")
+        BigMLKitConnectorBaseTest.altDataset = connector.createDataset("wines.csv")
+    }()
     
     static var token : Int = 0
     static var aSource : BMLResource? = nil
@@ -78,7 +78,7 @@ class BigMLKitConnectorBaseTest: XCTestCase {
                     result = resource
                     semaphore.signal()
             }
-            semaphore.wait(timeout: DispatchTime.distantFuture)
+            _ = semaphore.wait(timeout: DispatchTime.distantFuture)
             return result
     }
 
@@ -97,7 +97,7 @@ class BigMLKitConnectorBaseTest: XCTestCase {
                     result = resource
                     semaphore.signal()
             }
-            semaphore.wait(timeout: DispatchTime.distantFuture)
+            _ = semaphore.wait(timeout: DispatchTime.distantFuture)
             return result
     }
     
@@ -145,7 +145,7 @@ class BigMLKitConnectorBaseTest: XCTestCase {
                         }
                     }
             }
-            semaphore.wait(timeout: DispatchTime.distantFuture)
+            _ = semaphore.wait(timeout: DispatchTime.distantFuture)
             return result
     }
 
