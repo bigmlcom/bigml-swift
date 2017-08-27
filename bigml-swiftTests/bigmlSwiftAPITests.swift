@@ -259,7 +259,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
                         name: "testCreateDatasetFromCluster",
                         from: resource!) { (resource, error) -> Void in
                             
-                            XCTAssert(resource == nil && error?.code == 400)
+                            XCTAssert(resource == nil && error?.code == 500)
                             exp.fulfill()
                     }
             }
@@ -288,7 +288,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     
     func testUpdateProject() {
         
-        self.runTest("testCreateProject") { (exp) in
+        self.runTest("testUpdateProject") { (exp) in
             let resource = BMLMinimalResource(name:"testCreateProject",
                 type:BMLResourceType.project, uuid:"")
             self.connector!.createResource(BMLResourceType.project,
@@ -313,9 +313,9 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
                         }
                     } else {
                         print("Error: \(error)")
+                        XCTAssert(resource != nil && error == nil)
+                        exp.fulfill()
                     }
-                    XCTAssert(resource != nil && error == nil)
-                    exp.fulfill()
             }
         }
     }
@@ -425,11 +425,12 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
                                         (resource, error) -> Void in
                                         XCTAssert(error == nil &&
                                             resource?.name == "testUpdateDataset")
+                                        exp.fulfill()
                                 }
                             } else {
                                 XCTAssert(false)
+                                exp.fulfill()
                             }
-                            exp.fulfill()
                     }
             }
         }
