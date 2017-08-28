@@ -49,14 +49,18 @@ open class LogisticRegression : FieldedResource {
     var items : [String : Any] = [:]
     var itemAnalysis : [String : [String : Any]] = [:]
 
+    var inputFields : [String] = []
     var categories : [String : [String]] = [:]
+    var fieldCodings : [String : [String : Any]] = [:]
+    var fieldCodingList : [[String : Any]] = []
 
-    var coefficients : [String : [Double]] = [:]
+    var coefficients : [String : [[Double]]] = [:]
     var coefficient_shifts : [String : Int] = [:]
     let dataFieldTypes : [String : Int]
     let bias : Double
     var numericFieldIds : [String] = []
     var missingNumerics : Bool = false
+    var lrNormalize : Bool = false
     
     let c : Double
     let eps : Double
@@ -72,10 +76,14 @@ open class LogisticRegression : FieldedResource {
                 assert(false, "LogisticRegression not ready yet")
         }
         let logRegInfo = jsonLogReg["logistic_regression"] as? [String : Any] ?? [:]
+        self.inputFields = logRegInfo["input_fields"] as? [String] ?? []
         let fields = logRegInfo["fields"] as? [String : AnyObject] ?? [:]
         for tuple in (logRegInfo["coefficients"] as? [[Any]] ?? []) {
-            self.coefficients.updateValue(tuple.last as? [Double] ?? [], forKey:tuple.first as? String ?? "")
+            self.coefficients.updateValue(tuple.last as? [[Double]] ?? [], forKey:tuple.first as? String ?? "")
         }
+        
+        self.lrNormalize = logRegInfo["lr_normalize"] as? Bool ?? false
+        self.fieldCodingList = logRegInfo["field_codings"] as? [[String : Any]] ?? []
         
         self.bias = logRegInfo["bias"] as? Double ?? Double.nan
         self.c =  logRegInfo["c"] as? Double ?? Double.nan
@@ -127,6 +135,18 @@ open class LogisticRegression : FieldedResource {
             }
         }
         super.init(fields: fields, objectiveId: objectiveField)
+
+        self.fieldCodings = self.fieldCodingsMap(fieldCodings: self.fieldCodingList)
+        var newFieldCodings : [String : [String : Any]] = [:]
+        for (fieldId, _) in self.fieldCodings {
+            if !fields.keys.contains(fieldId) && self.inverseFieldMap.keys.contains(fieldId) {
+                newFieldCodings[self.inverseFieldMap[fieldId]!] = self.fieldCodings[fieldId]
+            } else {
+                newFieldCodings[fieldId] = self.fieldCodings[fieldId]
+            }
+        }
+        self.fieldCodings = newFieldCodings
+
         self.mapCoefficients()
     }
     
@@ -195,8 +215,9 @@ open class LogisticRegression : FieldedResource {
             for category in (self.categories[self.objectiveId!] ?? []) {
                 if let coefficients = self.coefficients[category] {
                     probabilities[category] = self.categoryProbability(filteredArguments,
-                        uniqueTerms: uniqueTerms,
-                        coefficients: coefficients)
+                                                                       uniqueTerms: uniqueTerms,
+                                                                       coefficients: coefficients,
+                                                                       category: category)
                     total += probabilities[category]!
                 }
             }
@@ -216,56 +237,141 @@ open class LogisticRegression : FieldedResource {
      */
     func categoryProbability(_ arguments : [String : Double],
         uniqueTerms : [String : [(Any, Int)]],
-        coefficients : [Double])
+        coefficients : [[Double]],
+        category : String)
         -> Double {
         
+            let bias : Double = (self.coefficients[category]!.last?.first)!
             var probability = 0.0
+            var norm2 = 0.0
             for (fieldId, argument) in arguments {
-                let shift = self.coefficient_shifts[fieldId] ?? -1
-                probability += (coefficients[shift] ) * argument
+                let coefficients = self.coefficients(category: category, fieldId: fieldId)
+                probability += coefficients[0] * argument
+                norm2 += arguments[fieldId]! * arguments[fieldId]!
             }
-            for (fieldId, uTerms) in uniqueTerms {
-                let shift = self.coefficient_shifts[fieldId] ?? -1
-                for (term, occurrences) in uTerms {
-                    var index = 0
-                    if let tCloud = self.tagCloud[fieldId] as? [String] {
-                        index = tCloud.index(of: term as! String) ?? -1
-                    } else if let cat = self.categories[fieldId] {
-                        index = cat.index(of: term as! String) ?? -1
-                    } else if let items = self.items[fieldId] as? [String] {
-                        index = items.index(of: term as! String) ?? -1
+            
+ //-- text, items and categories
+            for (fieldId, _) in uniqueTerms {
+                if self.inputFields.contains(fieldId) {
+                    let coefficients = self.coefficients(category: category, fieldId: fieldId)
+                    for (term, occurrences) in uniqueTerms[fieldId]! {
+                        var oneHot = true
+                        var index = -1
+                        if let tCloud = self.tagCloud[fieldId] as? [String] {
+                            index = tCloud.index(of: term as! String) ?? -1
+                        } else if let items = self.items[fieldId] as? [String] {
+                            index = items.index(of: term as! String) ?? -1
+                        } else if let cat = self.categories[fieldId] {
+                            if let coding = self.fieldCodings[fieldId] {
+                                if (coding["coding"] as? String) == "dummy" {
+                                    index = cat.index(of: term as! String) ?? -1
+                                } else {
+                                    oneHot = false
+                                    index = cat.index(of: term as! String) ?? -1
+                                    var coeffIndex = 0
+                                    if let coeffs = self.fieldCodings[fieldId]?.values.first as? [[Double]] {
+                                        for contribution in coeffs {
+                                            probability += coefficients[coeffIndex] * contribution[index] * Double(occurrences)
+                                            coeffIndex += 1
+                                        }
+                                    }
+                                }
+                                if oneHot {
+                                    probability += coefficients[index] * Double(occurrences)
+                                    norm2 += Double(occurrences * occurrences)
+                                }
+                            }
+                        }
                     }
-                    probability += (coefficients[shift + index]) * Double(occurrences)
                 }
             }
             
+            //-- missings
             for fieldId in self.numericFieldIds {
-                if !arguments.keys.contains(fieldId) {
-                    let shift = self.coefficient_shifts[fieldId] ?? -1
-                    probability += coefficients[shift + 1]
+                if self.inputFields.contains(fieldId) {
+                    let coefficients = self.coefficients(category: category, fieldId: fieldId)
+                    if !arguments.keys.contains(fieldId) {
+                        probability += coefficients[1]
+                        norm2 += 1
+                    }
                 }
             }
             for (fieldId, tCloud) in self.tagCloud {
-                let shift = self.coefficient_shifts[fieldId] ?? -1
-                if !uniqueTerms.keys.contains(fieldId) {
-                    probability += coefficients[shift + (tCloud as? [Any] ?? []).count] 
+                if self.inputFields.contains(fieldId) {
+                    let coefficients = self.coefficients(category: category, fieldId: fieldId)
+                    if !uniqueTerms.keys.contains(fieldId) {
+                        probability += coefficients[(tCloud as AnyObject).count]
+                        norm2 += 1
+                    }
                 }
             }
             for (fieldId, items) in self.items {
-                let shift = self.coefficient_shifts[fieldId] ?? -1
-                if !uniqueTerms.keys.contains(fieldId) {
-                    probability += coefficients[shift + (items as? [Any] ?? []).count] 
+                if self.inputFields.contains(fieldId) {
+                    let coefficients = self.coefficients(category: category, fieldId: fieldId)
+                    if !uniqueTerms.keys.contains(fieldId) {
+                        probability += coefficients[(items as AnyObject).count]
+                        norm2 += 1
+                    }
                 }
             }
-            for (fieldId, cat) in self.categories {
-                if fieldId != self.objectiveId! && !uniqueTerms.keys.contains(fieldId) {
-                    let shift = self.coefficient_shifts[fieldId] ?? -1
-                    probability += coefficients[shift + cat.count] 
+            
+            for (fieldId, _) in self.categories {
+                if self.inputFields.contains(fieldId) {
+                    let coefficients = self.coefficients(category: category, fieldId: fieldId)
+                    if fieldId != self.objectiveId! && !uniqueTerms.keys.contains(fieldId) {
+                        norm2 += 1
+                        if !self.fieldCodings.keys.contains(fieldId) ||
+                            (self.fieldCodings[fieldId]?["coding"] as? String) == "dummy" {
+                            probability += coefficients[(self.categories as AnyObject).count]
+                        } else {
+                            var coeffIndex = 0
+                            if let coeffs = self.fieldCodings[fieldId]?.values.first as? [[Double]] {
+                                for contribution in coeffs {
+                                    probability += coefficients[coeffIndex] * contribution.last!
+                                    coeffIndex += 1
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            probability += (coefficients[coefficients.count - 1] )
+            probability += bias
+            if self.bias != Double.nan {
+                norm2 += 1
+            }
+            if self.lrNormalize {
+                probability /= sqrt(norm2)
+            }
             probability = 1 / (1 + exp(-probability))
             return probability
+    }
+    
+    /**
+     * Returns the set of coefficients for the given category and fieldIds
+     */
+    func coefficients(category : String, fieldId : String) -> [Double] {
+        let index = self.inputFields.index(of: fieldId)
+        return self.coefficients[category]![index!]
+    }
+
+    /**
+     * Changes the field codings format to the dict notation
+     */
+    func fieldCodingsMap(fieldCodings : [Any]) -> [String : [String : Any]] {
+        
+        var result : [String : [String : Any]] = [:]
+        for element in fieldCodings {
+            if let e = element as? [String : Any] {
+                if let c = e["coding"] as? String, let fieldId = e["fieldId"] as? String {
+                    if c == "dummy" {
+                        result[fieldId] = [c : e["dummy_class"] ?? ""]
+                    } else {
+                        result[fieldId] = [c : e["coefficients"] ?? ""]
+                    }
+                }
+            }
+        }
+        return result
     }
     
     /**
