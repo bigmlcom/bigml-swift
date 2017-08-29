@@ -138,8 +138,8 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
             "petal length": 4.07],
             options: ["byName" : true])
         
-        XCTAssert(prediction1["prediction"] as! String == "Iris-versicolor" &&
-            compareDoubles(prediction1["probability"] as! Double, d2: 0.6700))
+        XCTAssert(prediction1["prediction"] as! String == "Iris-virginica" &&
+            compareDoubles(prediction1["probability"] as! Double, d2: 0.9099))
     }
     
     func testIrisLogisticRegression() {
@@ -160,10 +160,10 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
                     "000003": 1.51]) {
                         (prediction1 : [String : Any], prediction2 : [String : Any]) in
                         
-                        XCTAssert(prediction1["prediction"] as! String == "Iris-versicolor" &&
-                            compareDoubles(prediction1["probability"] as! Double, d2: 0.6700))
-                        XCTAssert(prediction2["prediction"] as! String == "Iris-versicolor" &&
-                            compareDoubles(prediction2["probability"] as! Double, d2: 0.6700))
+                        XCTAssert(prediction1["prediction"] as! String == "Iris-virginica" &&
+                            compareDoubles(prediction1["probability"] as! Double, d2: 0.9099))
+                        XCTAssert(prediction2["prediction"] as! String == "Iris-virginica" &&
+                            compareDoubles(prediction2["probability"] as! Double, d2: 0.16564))
 
                         exp.fulfill()
             }
