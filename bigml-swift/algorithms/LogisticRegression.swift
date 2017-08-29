@@ -76,18 +76,25 @@ open class LogisticRegression : FieldedResource {
                 assert(false, "LogisticRegression not ready yet")
         }
         let logRegInfo = jsonLogReg["logistic_regression"] as? [String : Any] ?? [:]
-        self.inputFields = logRegInfo["input_fields"] as? [String] ?? []
         let fields = logRegInfo["fields"] as? [String : AnyObject] ?? [:]
         for tuple in (logRegInfo["coefficients"] as? [[Any]] ?? []) {
             self.coefficients.updateValue(tuple.last as? [[Double]] ?? [], forKey:tuple.first as? String ?? "")
+        }
+        self.inputFields = logRegInfo["input_fields"] as? [String] ?? []
+        if self.inputFields.count == 0 {
+            var inputFieldsMap : [String : String] = [:]
+            for (fieldId, field) in fields {
+                inputFieldsMap[String(field["column_number"] as! Int)] = fieldId
+            }
+            self.inputFields = Array(inputFieldsMap.keys).sorted().map { inputFieldsMap[$0]! }
         }
         
         self.lrNormalize = logRegInfo["lr_normalize"] as? Bool ?? false
         self.fieldCodingList = logRegInfo["field_codings"] as? [[String : Any]] ?? []
         
         self.bias = logRegInfo["bias"] as? Double ?? Double.nan
-        self.c =  logRegInfo["c"] as? Double ?? Double.nan
-        self.eps =  logRegInfo["eps"] as? Double ?? Double.nan
+        self.c = logRegInfo["c"] as? Double ?? Double.nan
+        self.eps = logRegInfo["eps"] as? Double ?? Double.nan
         self.normalize =  logRegInfo["normalize"] as? Bool ?? false
         self.regularization =  logRegInfo["regularization"] as? String ?? "l1"
         self.missingNumerics = logRegInfo["missing_numerics"] as? Bool ?? false
