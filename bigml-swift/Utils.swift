@@ -30,6 +30,16 @@ func bridgedDictRep(_ dict : [String : Any]) -> [String : Any] {
     return result
 }
 
+func doubleFromNum(_ num : Any?) -> Double {
+    
+    if let d = num as? Double {
+        return d
+    } else if let i = num as? Int {
+        return Double(i)
+    }
+    return Double.nan
+}
+
 struct AnyKey : Hashable, Comparable {
     
     let underlying: Any

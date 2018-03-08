@@ -104,14 +104,14 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
                             compareDoubles(centroid1.centroidDistance, d2: 0.207))
                         
                         XCTAssert(centroid2.centroidName == "Cluster 0" &&
-                            compareDoubles(centroid2.centroidDistance, d2: 20.207))
+                            compareDoubles(centroid2.centroidDistance, d2: 0.207))
                         
                         exp.fulfill()
             }
         }
     }
     
-    func testSalariesCentroid() {
+    func testWinesCentroid() {
         
         self.runTest("testWinesCentroid") { (exp) in
             
@@ -126,16 +126,8 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
                     "000004": 5.8,
                     "000001": "Pinot Grigio",
                     "000000": "Italy",
-                    "000002": 89,
+                    "000002": 89.0,
                     "000005" : 50.0 ]) {
-//                argsByName:[
-//                    "Team": "Atlanta Braves",
-//                    "Salary": 1000000,
-//                    "Position": "Pitcher"],
-//                argsById:[
-//                    "000000": "Atlanta Braves",
-//                    "000001": 3000000000,
-//                    "000002": "Shortstop" ]) {
                         (centroid1 : CentroidInfo, centroid2 : CentroidInfo) in
                         
                         XCTAssert(centroid1.centroidName == "Cluster 0" &&

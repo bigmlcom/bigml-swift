@@ -62,7 +62,7 @@ class Centroid {
                         d2 += 1.0 * scale * scale
                     }
                 } else if let value = value as? Double {
-                    d2 += pow(scale * ((inputData[key] as? Double ?? Double.nan) - value), 2)
+                    d2 += pow(scale * (doubleFromNum(inputData[key]) - value), 2)
                 }
                 if nearestDistance <= d2 {
                     return Double.nan
