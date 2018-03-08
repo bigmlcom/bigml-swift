@@ -151,10 +151,10 @@ class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
                     "000003": 1.51,
                     "000002": 4.07]) { (prediction1 : [[String : Any]], prediction2 : [[String : Any]]) in
                         
-                        XCTAssert((prediction1[0]["item"] as! AssociationItem).name == "Iris-versicolor" &&
-                            compareDoubles(prediction1[0]["score"] as! Double, d2: 0.0864))
-                        XCTAssert((prediction2[0]["item"] as! AssociationItem).name == "Iris-versicolor" &&
-                            compareDoubles(prediction2[0]["score"] as! Double, d2: 0.0864))
+                        XCTAssert((prediction1[0]["item"] as! AssociationItem).name == "Iris-virginica" &&
+                            compareDoubles(prediction1[0]["score"] as! Double, d2: 0.1069))
+                        XCTAssert((prediction2[0]["item"] as! AssociationItem).name == "Iris-virginica" &&
+                            compareDoubles(prediction2[0]["score"] as! Double, d2: 0.1069))
                         
                         exp.fulfill()
             }

@@ -260,9 +260,10 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
                     
                     self.connector!.createResource(BMLResourceType.Dataset,
                         name: "testCreateDatasetFromCluster",
+                        options: ["centroid" : "000000"],
                         from: resource!) { (resource, error) -> Void in
                             
-                            XCTAssert(resource == nil && error?.code == 500)
+                            XCTAssert(resource != nil && error == nil)
                             exp.fulfill()
                     }
             }
@@ -423,7 +424,7 @@ class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
                         uuid: resources[0].uuid,
                         values: ["name" : "testUpdateDataset"]) { (error) -> Void in
                             if (error == nil) {
-                                self.connector!.getResource(BMLResourceType.Source,
+                                self.connector!.getResource(BMLResourceType.Dataset,
                                     uuid: resources[0].uuid) {
                                         (resource, error) -> Void in
                                         XCTAssert(error == nil &&

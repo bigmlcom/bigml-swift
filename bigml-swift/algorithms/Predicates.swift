@@ -54,19 +54,24 @@ public class Predicate {
     public func isFullTerm(_ fields : [String : Any]) -> Bool {
         
         if let term = self.term,
-            let fieldDict = fields[self.field] as? [String : Any],
-            let optype = fieldDict["optype"] as? String, optype != "items" {
-                
-                if let options = fieldDict["term_analysis"] as? [String : Any] {
-
-                    let tokenMode = options["token_mode"] as? String ?? Predicate.TM_TOKENS
-                    if tokenMode == Predicate.TM_FULL_TERMS {
-                        return true
-                    }
-                    if tokenMode == Predicate.TM_ALL {
-                        return term =~? Predicate.FULL_TERM_PATTERN
-                    }
+            let fieldDict = fields[self.field] as? [String : Any] {
+            
+            if let optype = fieldDict["optype"] as? String {
+                if optype != "items" {
+                    return false;
                 }
+            }
+            
+            if let options = fieldDict["term_analysis"] as? [String : Any] {
+                
+                let tokenMode = options["token_mode"] as? String ?? Predicate.TM_TOKENS
+                if tokenMode == Predicate.TM_FULL_TERMS {
+                    return true
+                }
+                if tokenMode == Predicate.TM_ALL {
+                    return term =~? Predicate.FULL_TERM_PATTERN
+                }
+            }
         }
         return false
     }

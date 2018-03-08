@@ -240,8 +240,8 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         
         self.runTestPrediction("spam.csv",
             tests: [
-                (["Message" : "Mobile call"], "spam", 0.903),
-                (["Message": "I'll call you tomorrow morning."], "ham", 0.866),
+                (["Message" : "Mobile call"], "spam", 0.701),
+                (["Message": "I'll call you tomorrow morning."], "ham", 0.904),
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.796)
             ],
             options: [
@@ -264,7 +264,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         self.runTestPrediction("spam.csv",
             tests: [
                 (["Message" : "Mobile calls"], "spam", 0.206),
-                (["Message": "I'll call you tomorrow morning."], "ham", 0.7),
+                (["Message": "I'll call you tomorrow morning."], "ham", 0.893),
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.609)
             ],
             options: [
