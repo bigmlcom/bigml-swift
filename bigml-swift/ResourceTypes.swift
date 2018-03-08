@@ -14,12 +14,6 @@
 
 import Foundation
 
-@objc public enum BMLMode : Int {
-    
-    case Development
-    case Production
-}
-
 @objc public enum BMLResourceType : Int, ExpressibleByStringLiteral {
     
     case File

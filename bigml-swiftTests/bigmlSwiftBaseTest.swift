@@ -157,8 +157,7 @@ class BigMLKitConnectorBaseTest: XCTestCase {
         super.setUp()
         
         self.connector = BMLConnector(username:BigMLKitTestCredentials.username(),
-            apiKey:BigMLKitTestCredentials.apiKey(),
-            mode:BMLMode.Production)
+            apiKey:BigMLKitTestCredentials.apiKey())
         
         self.__once()
     }

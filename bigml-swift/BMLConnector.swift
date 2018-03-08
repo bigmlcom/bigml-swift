@@ -17,14 +17,12 @@ import JavaScriptCore
 
 open class BMLConnector : NSObject {
     
-    let mode : BMLMode
     let authToken : String
 
     var connector : BMLHTTPConnector
     
-    public init(username : String, apiKey: String, mode:BMLMode = BMLMode.Production) {
+    public init(username : String, apiKey: String) {
         
-        self.mode = mode
         self.authToken = "username=\(username);api_key=\(apiKey);"
 
         self.connector = BMLHTTPConnector()
@@ -45,10 +43,9 @@ open class BMLConnector : NSObject {
         for (key, value) in arguments {
             args = "\(key)=\(value);\(args)"
         }
-        let modeSelector = self.mode == BMLMode.Development ? "dev/" : ""
         let serverUrl = self.serverUrl()
         guard let url =
-            URL(string:"\(serverUrl)/\(modeSelector)andromeda/\(uri)?\(self.authToken)\(args)") else {
+            URL(string:"\(serverUrl)/andromeda/\(uri)?\(self.authToken)\(args)") else {
                 throw NSError(info: "Could not access server",
                     code: -10100,
                     message:["Hint" : "Please review user credentials and server URL" as Any])
