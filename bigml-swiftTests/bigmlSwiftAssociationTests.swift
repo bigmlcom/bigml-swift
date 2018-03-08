@@ -7,7 +7,11 @@
 //
 
 import XCTest
-import bigmlSwift_macOS
+#if os(iOS)
+    import bigmlSwift
+#else
+    import bigmlSwift_macOS
+#endif
 
 class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
 
