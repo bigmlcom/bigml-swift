@@ -52,7 +52,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
         let m = (ensemble["models"] as? [String] ?? [])
         var remaining = m.count
         for model in (m.map{ $0.components(separatedBy: "/").last! }) {
-            self.connector!.getResource(BMLResourceType.model, uuid: model){
+            self.connector!.getResource(BMLResourceType.Model, uuid: model){
                 (resource, error) -> Void in
                 assert(error == nil, "Could not get model \(model)")
                 models.append(resource?.jsonDefinition ?? [:])
@@ -71,7 +71,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.ensemble, uuid: resId) {
+            self.connector!.getResource(BMLResourceType.Ensemble, uuid: resId) {
                 (resource, error) -> Void in
                 
                 if let ensemble = resource {
@@ -102,7 +102,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.ensemble,
+            self.connector!.createResource(BMLResourceType.Ensemble,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -119,7 +119,7 @@ class BigMLKitConnectorEnsembleTests: BigMLKitConnectorBaseTest {
                             argsById: argsById) { (prediction1 : [String : Any],
                                 prediction2 : [String : Any]) in
                                 
-                                self.connector!.deleteResource(BMLResourceType.ensemble,
+                                self.connector!.deleteResource(BMLResourceType.Ensemble,
                                     uuid: resource.uuid) {
                                     (error) -> Void in
                                     XCTAssert(error == nil, "Pass")

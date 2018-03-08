@@ -71,11 +71,11 @@ class BigMLKitConnectorBaseTest: XCTestCase {
             let semaphore = DispatchSemaphore(value: 0)
             let filePath = Bundle.pathForResource(file)
             let resource = BMLMinimalResource(name:file,
-                type:BMLResourceType.file,
+                type:BMLResourceType.File,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.source,
+            self.connector!.createResource(BMLResourceType.Source,
                 name: file,
-                options: options[BMLResourceType.source] ?? [:],
+                options: options[BMLResourceType.Source] ?? [:],
                 from: resource) { (resource, error) -> Void in
                     
                     XCTAssert(resource != nil)
@@ -92,9 +92,9 @@ class BigMLKitConnectorBaseTest: XCTestCase {
         
             var result : BMLResource? = nil
             let semaphore = DispatchSemaphore(value: 0)
-            self.connector!.createResource(BMLResourceType.dataset,
+            self.connector!.createResource(BMLResourceType.Dataset,
                 name: datasource.name,
-                options: options[BMLResourceType.dataset] ?? [:],
+                options: options[BMLResourceType.Dataset] ?? [:],
                 from: datasource) { (resource, error) -> Void in
                     
                     XCTAssert(resource != nil && error == nil)
@@ -113,9 +113,9 @@ class BigMLKitConnectorBaseTest: XCTestCase {
             let semaphore = DispatchSemaphore(value: 0)
             let filePath = Bundle.pathForResource(file)
             let resource = BMLMinimalResource(name:file,
-                type:BMLResourceType.file,
+                type:BMLResourceType.File,
                 uuid:filePath!)
-            self.connector!.createResource(BMLResourceType.source,
+            self.connector!.createResource(BMLResourceType.Source,
                 name: file,
                 options: [:],
                 from: resource) { (resource, error) -> Void in
@@ -123,14 +123,14 @@ class BigMLKitConnectorBaseTest: XCTestCase {
                     XCTAssert(resource != nil)
                     BigMLKitConnectorBaseTest.aSource = resource
 
-                    if let opts = options[BMLResourceType.source] {
+                    if let opts = options[BMLResourceType.Source] {
                         self.connector!.updateResource(resource!.type,
                             uuid: resource!.uuid,
                             values: opts) { error -> Void in
 
-                                self.connector!.createResource(BMLResourceType.dataset,
+                                self.connector!.createResource(BMLResourceType.Dataset,
                                     name: file,
-                                    options: options[BMLResourceType.dataset] ?? [:],
+                                    options: options[BMLResourceType.Dataset] ?? [:],
                                     from: resource!) { (resource, error) -> Void in
                                         XCTAssert(resource != nil && error == nil)
                                         result = resource
@@ -139,9 +139,9 @@ class BigMLKitConnectorBaseTest: XCTestCase {
                         }
                     } else {
                         
-                        self.connector!.createResource(BMLResourceType.dataset,
+                        self.connector!.createResource(BMLResourceType.Dataset,
                             name: file,
-                            options: options[BMLResourceType.dataset] ?? [:],
+                            options: options[BMLResourceType.Dataset] ?? [:],
                             from: resource!) { (resource, error) -> Void in
                                 XCTAssert(resource != nil && error == nil)
                                 result = resource
@@ -158,7 +158,7 @@ class BigMLKitConnectorBaseTest: XCTestCase {
         
         self.connector = BMLConnector(username:BigMLKitTestCredentials.username(),
             apiKey:BigMLKitTestCredentials.apiKey(),
-            mode:BMLMode.production)
+            mode:BMLMode.Production)
         
         self.__once()
     }

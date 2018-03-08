@@ -96,7 +96,7 @@ open class Anomaly : FieldedResource {
     
     public init(anomaly : BMLResource) {
         
-        assert(anomaly.type == BMLResourceType.anomaly, "Wrong resource passed in -- anomaly expected")
+        assert(anomaly.type == BMLResourceType.Anomaly, "Wrong resource passed in -- anomaly expected")
         //        println("RESOURCE \(anomaly.jsonDefinition)")
         if let sampleSize = anomaly.jsonDefinition["sample_size"] as? Double,
             let inputFields = anomaly.jsonDefinition["input_fields"] as? [String] {

@@ -36,7 +36,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.logisticRegression, uuid: resId) {
+            self.connector!.getResource(BMLResourceType.LogisticRegression, uuid: resId) {
                 (resource, error) -> Void in
                 
                 if let resource = resource {
@@ -63,7 +63,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping ([String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.prediction,
+            self.connector!.createResource(BMLResourceType.Prediction,
                 name: fromResource.name,
                 options: ["input_data" : argsById],
                 from: fromResource) { (resource, error) -> Void in
@@ -90,7 +90,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping ([String : Any], [String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.logisticRegression,
+            self.connector!.createResource(BMLResourceType.LogisticRegression,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -149,7 +149,7 @@ class BigMLKitConnectorLogisticRegressionTests: BigMLKitConnectorBaseTest {
         
         self.runTest("testIrisLogisticRegression") { (exp) in
             
-            self.localPredictionFromDataset(BMLResourceType.logisticRegression,
+            self.localPredictionFromDataset(BMLResourceType.LogisticRegression,
                 dataset: BigMLKitConnectorBaseTest.aDataset as! BMLMinimalResource,
                 argsByName: [
                     "sepal length": 6.02,

@@ -22,7 +22,7 @@ open class BMLConnector : NSObject {
 
     var connector : BMLHTTPConnector
     
-    public init(username : String, apiKey: String, mode:BMLMode = BMLMode.production) {
+    public init(username : String, apiKey: String, mode:BMLMode = BMLMode.Production) {
         
         self.mode = mode
         self.authToken = "username=\(username);api_key=\(apiKey);"
@@ -45,7 +45,7 @@ open class BMLConnector : NSObject {
         for (key, value) in arguments {
             args = "\(key)=\(value);\(args)"
         }
-        let modeSelector = self.mode == BMLMode.development ? "dev/" : ""
+        let modeSelector = self.mode == BMLMode.Development ? "dev/" : ""
         let serverUrl = self.serverUrl()
         guard let url =
             URL(string:"\(serverUrl)/\(modeSelector)andromeda/\(uri)?\(self.authToken)\(args)") else {
@@ -88,7 +88,7 @@ open class BMLConnector : NSObject {
             
             do {
                 let url = try self.authenticatedUrl(type.stringValue(), arguments:[:])
-                if (from.type == BMLResourceType.file) {
+                if (from.type == BMLResourceType.File) {
                     
                     if (FileManager.default.fileExists(atPath: from.uuid) &&
                         (try? Data(contentsOf: URL(fileURLWithPath: from.uuid))) != nil) {
@@ -114,11 +114,11 @@ open class BMLConnector : NSObject {
                     
                     var body = options
                     body.updateValue(name, forKey: "name")
-                    if from.type == type && type == BMLResourceType.dataset {
+                    if from.type == type && type == BMLResourceType.Dataset {
                         body.updateValue(from.fullUuid, forKey: "origin_dataset")
                         
-                    } else if from.type != BMLResourceType.project &&
-                        from.type != BMLResourceType.whizzmlSource {
+                    } else if from.type != BMLResourceType.Project &&
+                        from.type != BMLResourceType.WhizzmlSource {
                             body.updateValue(from.fullUuid, forKey: from.type.stringValue())
                     }
 
@@ -296,7 +296,7 @@ open class BMLConnector : NSObject {
         _ resource : BMLResource,
         completion:@escaping (_ resource : BMLResource?, _ error : NSError?) -> Void) {
     
-        if (resource.type == BMLResourceType.project) {
+        if (resource.type == BMLResourceType.Project) {
             completion(resource, nil)
         } else {
             self.getIntermediateResource(resource.type, uuid: resource.uuid) { (resourceDict, error) -> Void in

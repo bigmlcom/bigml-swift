@@ -26,7 +26,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         options : [String : Any],
         completion : @escaping ([String : Any]) -> ()) {
         
-        self.connector!.getResource(BMLResourceType.model, uuid: modelId) {
+        self.connector!.getResource(BMLResourceType.Model, uuid: modelId) {
             (resource, error) -> Void in
             
             if let model = resource {
@@ -46,7 +46,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         options : [String : Any],
         completion : @escaping ([String : Any]) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.model,
+            self.connector!.createResource(BMLResourceType.Model,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -61,7 +61,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                             args: args,
                             options: options) { (prediction : [String : Any]) in
                                     
-                                self.connector!.deleteResource(BMLResourceType.model,
+                                self.connector!.deleteResource(BMLResourceType.Model,
                                     uuid: resource.uuid) {
                                         (error) -> Void in
                                         XCTAssert(error == nil, "Pass")
@@ -85,21 +85,21 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 
                 let filePath = Bundle.pathForResource(csv)
                 let resource = BMLMinimalResource(name:name,
-                    type:BMLResourceType.file,
+                    type:BMLResourceType.File,
                     uuid:filePath!)
                 
-                self.connector!.createResource(BMLResourceType.source,
+                self.connector!.createResource(BMLResourceType.Source,
                     name: name,
-                    options: options[BMLResourceType.source] ?? [:],
+                    options: options[BMLResourceType.Source] ?? [:],
                     from: resource) { (resource, error) -> Void in
                         XCTAssert(resource != nil && error == nil, "Pass")
-                        self.connector!.createResource(BMLResourceType.dataset,
+                        self.connector!.createResource(BMLResourceType.Dataset,
                             name: name,
-                            options: options[BMLResourceType.dataset] ?? [:],
+                            options: options[BMLResourceType.Dataset] ?? [:],
                             from: resource!) { (resource, error) -> Void in
                                 XCTAssert(resource != nil && error == nil, "Pass")
                                 var opt = [String : Any]()
-                                for (k, v) in options[BMLResourceType.prediction] ?? [:] {
+                                for (k, v) in options[BMLResourceType.Prediction] ?? [:] {
                                     opt.updateValue(v as Any, forKey: k)
                                 }
                                 self.localPredictionFromDataset(resource as! BMLMinimalResource,
@@ -141,7 +141,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 "Grape": "Cabernet Sauvignon",
                 "Country": "France",
                 "Rating": 90],
-            options: [BMLResourceType.prediction : ["byName": true]]) {
+            options: [BMLResourceType.Prediction : ["byName": true]]) {
                 (prediction : [String : Any]) in
                 
                 XCTAssert(
@@ -159,7 +159,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
             args: [
                 "pétal.length": 4,
                 "pétal&width": 1.5],
-            options: [BMLResourceType.prediction : ["byName": true]]) {
+            options: [BMLResourceType.Prediction : ["byName": true]]) {
                 (prediction : [String : Any]) in
                 
                 XCTAssert(
@@ -203,7 +203,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 let dataset = self.createDataset(file, options: options)!
                 self.execTests(dataset,
                     tests: tests,
-                    options: options[BMLResourceType.prediction] ?? [:])
+                    options: options[BMLResourceType.Prediction] ?? [:])
                 
                 self.connector!.deleteResource(dataset.type,
                     uuid: dataset.uuid) {
@@ -245,7 +245,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.796)
             ],
             options: [
-                BMLResourceType.source : [
+                BMLResourceType.Source : [
                     "fields" : [
                         "000001" : [
                             "optype" : "text",
@@ -255,7 +255,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                                 "stem_words" : true,
                                 "use_stopwords" : true,
                                 "language" : "en"]]]],
-                BMLResourceType.prediction : [
+                BMLResourceType.Prediction : [
                     "byName" : true]])
     }
     
@@ -268,7 +268,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.609)
             ],
             options: [
-                BMLResourceType.source : [
+                BMLResourceType.Source : [
                     "fields" : [
                         "000001" : [
                             "optype" : "text",
@@ -278,7 +278,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                                 "stem_words" : false,
                                 "use_stopwords" : false,
                                 "language" : "en"]]]],
-                BMLResourceType.prediction : [
+                BMLResourceType.Prediction : [
                     "byName" : true]])
     }
     
@@ -291,7 +291,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 (["Message": "FREE for 1st week! No1 Nokia tone 4 ur mob every week just txt NOKIA to 87077 Get txting and tell ur mates. zed POBox 36504 W45WQ norm150p/tone 16+"], "spam", 0.2065)
             ],
             options: [
-                BMLResourceType.source : [
+                BMLResourceType.Source : [
                     "fields" : [
                         "000001" : [
                             "optype" : "text",
@@ -299,7 +299,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                                 "enabled" : true,
                                 "token_mode" : "full_terms_only",
                                 "language" : "en"]]]],
-                BMLResourceType.prediction : [
+                BMLResourceType.Prediction : [
                     "byName" : true]])
     }
     
@@ -311,7 +311,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
                 "sepal width": 3.15], "Iris-setosa", 0.2629)
             ],
             options: [
-                BMLResourceType.prediction : [
+                BMLResourceType.Prediction : [
                     "missing_strategy" : MissingStrategy.proportional,
                     "byName" : true]])
     }
@@ -321,7 +321,7 @@ class BigMLKitConnectorPredictionTests: BigMLKitConnectorBaseTest {
         self.runTest(name!) { (exp) in
             
             let dataset = self.createDataset("movies.csv",
-                options: [BMLResourceType.source : [
+                options: [BMLResourceType.Source : [
                     "fields" : [
                         "000007" : [
                             "optype" : "items",

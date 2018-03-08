@@ -26,7 +26,7 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping (CentroidInfo, CentroidInfo) -> ()) {
             
-            self.connector!.getResource(BMLResourceType.cluster, uuid: modelId) {
+            self.connector!.getResource(BMLResourceType.Cluster, uuid: modelId) {
                 (resource, error) -> Void in
                 
                 if let model = resource {
@@ -52,7 +52,7 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
         argsById : [String : Any],
         completion : @escaping (CentroidInfo, CentroidInfo) -> ()) {
             
-            self.connector!.createResource(BMLResourceType.cluster,
+            self.connector!.createResource(BMLResourceType.Cluster,
                 name: dataset.name,
                 options: [:],
                 from: dataset) { (resource, error) -> Void in
@@ -68,7 +68,7 @@ class BigMLKitConncetorCentroidTests: BigMLKitConnectorBaseTest {
                             argsById: argsById) {
                                 (prediction1 : CentroidInfo, prediction2 : CentroidInfo) in
                                 
-                                self.connector!.deleteResource(BMLResourceType.cluster, uuid: resource.uuid) {
+                                self.connector!.deleteResource(BMLResourceType.Cluster, uuid: resource.uuid) {
                                     (error) -> Void in
                                     XCTAssert(error == nil, "Pass")
                                     completion(prediction1, prediction2)

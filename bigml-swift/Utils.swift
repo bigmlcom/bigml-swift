@@ -17,7 +17,6 @@ import Foundation
 let DEFAULT_RZ = 1.96
 
 func delay(_ delay : Double, closure : @escaping ()->()) {
-    
     DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).asyncAfter(
         deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }
