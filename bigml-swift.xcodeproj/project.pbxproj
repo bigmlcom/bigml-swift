@@ -32,7 +32,6 @@
 		494F67A02050685000F128B5 /* BMLHTTPMethodHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C699C1C52709000FCB6F5 /* BMLHTTPMethodHandler.swift */; };
 		494F67A12050685000F128B5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69A01C52709000FCB6F5 /* Utils.swift */; };
 		494F67A42050685000F128B5 /* BMLConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 497C69981C52709000FCB6F5 /* BMLConnector.h */; };
-		494F67B8205143EE00F128B5 /* bigmlSwift_macOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494F67B7205143EE00F128B5 /* bigmlSwift_macOSTests.swift */; };
 		494F67BA205143EE00F128B5 /* bigmlSwift_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F67A92050685000F128B5 /* bigmlSwift_macOS.framework */; };
 		494F67C02051444000F128B5 /* bigmlSwiftAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69FE1C5271C400FCB6F5 /* bigmlSwiftAPITests.swift */; };
 		494F67C12051444000F128B5 /* bigmlSwiftAssociationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C69FF1C5271C400FCB6F5 /* bigmlSwiftAssociationTests.swift */; };
@@ -133,7 +132,6 @@
 
 /* Begin PBXFileReference section */
 		494F67A92050685000F128B5 /* bigmlSwift_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = bigmlSwift_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		494F67AA2050685000F128B5 /* bigmlSwift-iOS copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "bigmlSwift-iOS copy-Info.plist"; path = "/Users/sergio/Documents/dev/apps/bigml/bigml-swift/bigmlSwift-iOS copy-Info.plist"; sourceTree = "<absolute>"; };
 		494F67B5205143EE00F128B5 /* bigmlSwift_macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bigmlSwift_macOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		494F67B7205143EE00F128B5 /* bigmlSwift_macOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bigmlSwift_macOSTests.swift; sourceTree = "<group>"; };
 		494F67B9205143EE00F128B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -340,7 +338,6 @@
 				494F67DF20514CF100F128B5 /* bigmlSwift_iOS_Tests */,
 				494F67EE20514D0700F128B5 /* bigmlSwift_iOSTests */,
 				49C5AA6F1AEF943800B81AA6 /* Products */,
-				494F67AA2050685000F128B5 /* bigmlSwift-iOS copy-Info.plist */,
 				494F67AE205096F000F128B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -644,7 +641,6 @@
 				494F67C62051444000F128B5 /* bigmlSwiftLogisticRegressionTests.swift in Sources */,
 				494F67C72051444000F128B5 /* bigmlSwiftPredicateTests.swift in Sources */,
 				494F67C82051444000F128B5 /* bigmlSwiftPredictionTests.swift in Sources */,
-				494F67B8205143EE00F128B5 /* bigmlSwift_macOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +716,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "bigmlSwift-iOS copy-Info.plist";
+				INFOPLIST_FILE = "bigml-swift_iOSInfo.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -743,7 +739,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "bigmlSwift-iOS copy-Info.plist";
+				INFOPLIST_FILE = "bigml-swift_iOSInfo.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -933,7 +929,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "bigml-swift/Info.plist";
+				INFOPLIST_FILE = "bigml-swift_iOSInfo.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -954,7 +950,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "bigml-swift/Info.plist";
+				INFOPLIST_FILE = "bigml-swift_iOSInfo.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
