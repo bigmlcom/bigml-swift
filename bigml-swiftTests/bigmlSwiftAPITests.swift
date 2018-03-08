@@ -12,10 +12,10 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-import UIKit
+//import AppKit
 import XCTest
 
-import bigmlSwift
+import bigmlSwift_macOS
 
 class BigMLKitConnectorTests: BigMLKitConnectorBaseTest {
     

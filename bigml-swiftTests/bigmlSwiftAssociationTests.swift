@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import bigmlSwift
+import bigmlSwift_macOS
 
 class BigMLKitConnectorAssociationTests: BigMLKitConnectorBaseTest {
 

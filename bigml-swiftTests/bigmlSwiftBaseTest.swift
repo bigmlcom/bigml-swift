@@ -13,7 +13,7 @@
 // under the License.
 
 import XCTest
-import bigmlSwift
+import bigmlSwift_macOS
 
 extension Bundle {
     
