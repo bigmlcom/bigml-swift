@@ -980,6 +980,7 @@
 				494F67BF205143EE00F128B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		494F67F520514D0700F128B5 /* Build configuration list for PBXNativeTarget "bigmlSwift_iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -988,6 +989,7 @@
 				494F67F720514D0700F128B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		49C5AA681AEF943800B81AA6 /* Build configuration list for PBXProject "bigml-swift" */ = {
 			isa = XCConfigurationList;

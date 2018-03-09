@@ -22,21 +22,27 @@ public enum BMLResourceType : String {
     case Model = "model"
     case Cluster = "cluster"
     case Anomaly = "anomaly"
+    case AnomalyScore = "anomalyscore"
     case Ensemble = "ensemble"
     case LogisticRegression = "logisticregression"
     case TopicModel = "topicmodel"
     case TopicDistribution = "topicdistribution"
     case Association = "association"
-    case Evaluation = "evaluation"
+    case AssociationSet = "associationset"
+    case TimeSeries = "timeseries"
+    case Forecasts = "forecasts"
+    case Deepnets = "deepnets"
     case Prediction = "prediction"
+    case BatchPrediction = "batchprediction"
+    case BatchCentroid = "batchcentroid"
+    case BatchScore = "batchscore"
+    case Evaluation = "evaluation"
     case Project = "project"
     case Configuration = "configuration"
     case WhizzmlSource = "sourcecode"
     case WhizzmlScript = "script"
     case WhizzmlExecution = "execution"
     case NotAResource = "invalid"
-    
-    static let all = [File, Source, Dataset, Model, Cluster, Anomaly, Prediction, Project]
     
     public init(stringLiteral value: String) {
         if let r = BMLResourceType(rawValue: value) {
