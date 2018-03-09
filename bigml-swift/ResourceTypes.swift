@@ -14,69 +14,34 @@
 
 import Foundation
 
-@objc public enum BMLResourceType : Int, ExpressibleByStringLiteral {
+public enum BMLResourceType : String {
     
-    case File
-    case Source
-    case Dataset
-    case Model
-    case Cluster
-    case Anomaly
-    case Ensemble
-    case LogisticRegression
-    case TopicModel
-    case TopicDistribution
-    case Association
-    case Evaluation
-    case Prediction
-    case Project
-    case Configuration
-    case WhizzmlSource
-    case WhizzmlScript
-    case WhizzmlExecution
-    case NotAResource
+    case File = "file"
+    case Source = "source"
+    case Dataset = "dataset"
+    case Model = "model"
+    case Cluster = "cluster"
+    case Anomaly = "anomaly"
+    case Ensemble = "ensemble"
+    case LogisticRegression = "logisticregression"
+    case TopicModel = "topicmodel"
+    case TopicDistribution = "topicdistribution"
+    case Association = "association"
+    case Evaluation = "evaluation"
+    case Prediction = "prediction"
+    case Project = "project"
+    case Configuration = "configuration"
+    case WhizzmlSource = "sourcecode"
+    case WhizzmlScript = "script"
+    case WhizzmlExecution = "execution"
+    case NotAResource = "invalid"
     
     static let all = [File, Source, Dataset, Model, Cluster, Anomaly, Prediction, Project]
     
     public init(stringLiteral value: String) {
-        switch (value) {
-        case "file":
-            self = .File
-        case "source":
-            self = .Source
-        case "dataset":
-            self = .Dataset
-        case "model":
-            self = .Model
-        case "cluster":
-            self = .Cluster
-        case "prediction":
-            self = .Prediction
-        case "anomaly":
-            self = .Anomaly
-        case "ensemble":
-            self = .Ensemble
-        case "logisticregression":
-            self = .LogisticRegression
-        case "topicmodel":
-            self = .TopicModel
-        case "topicdistribution":
-            self = .TopicDistribution
-        case "association":
-            self = .Association
-        case "evaluation":
-            self = .Evaluation
-        case "configuration":
-            self = .Configuration
-        case "sourcecode":
-            self = .WhizzmlSource
-        case "script":
-            self = .WhizzmlScript
-        case "execution":
-            self = .WhizzmlExecution
-        case "project":
-            self = .Project
-        default:
+        if let r = BMLResourceType(rawValue: value) {
+            self = r
+        } else {
             self = .NotAResource
         }
     }
@@ -84,56 +49,20 @@ import Foundation
     public init(_ value: String) {
         self.init(stringLiteral: value)
     }
-    
+
+    @available(*, deprecated)
     public init(extendedGraphemeClusterLiteral value: String) {
         self = BMLResourceType(value)
     }
-    
+
+    @available(*, deprecated)
     public init(unicodeScalarLiteral value: String) {
         self = BMLResourceType(value)
     }
-    
+
+    @available(*, deprecated)
     public func stringValue() -> String {
-        switch (self) {
-        case .File:
-            return "file"
-        case .Source:
-            return "source"
-        case .Dataset:
-            return "dataset"
-        case .Model:
-            return "model"
-        case .Cluster:
-            return "cluster"
-        case .Prediction:
-            return "prediction"
-        case .Anomaly:
-            return "anomaly"
-        case .Ensemble:
-            return "ensemble"
-        case .LogisticRegression:
-            return "logisticregression"
-        case .TopicModel:
-            return "topicmodel"
-        case .TopicDistribution:
-            return "topicdistribution"
-        case .Association:
-            return "association"
-        case .Configuration:
-            return "configuration"
-        case .Evaluation:
-            return "evaluation"
-        case .WhizzmlSource:
-            return "sourcecode"
-        case .WhizzmlScript:
-            return "script"
-        case .WhizzmlExecution:
-            return "execution"
-        case .Project:
-            return "project"
-        default:
-            return "invalid"
-        }
+        return self.rawValue
     }
 }
 
@@ -145,6 +74,7 @@ import Foundation
  * in Objective-C.
  */
 
+@available(*, deprecated)
 @objc public class BMLResourceTypeIdentifier : NSObject, ExpressibleByStringLiteral {
     
     public var type : BMLResourceType
@@ -186,10 +116,12 @@ import Foundation
     }
 }
 
+@available(*, deprecated)
 public func == (left : BMLResourceTypeIdentifier, right : BMLResourceType) -> Bool {
     return left.type == right
 }
 
+@available(*, deprecated)
 public func != (left : BMLResourceTypeIdentifier, right : BMLResourceType) -> Bool {
     return left.type != right
 }

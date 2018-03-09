@@ -14,7 +14,7 @@
 
 import Foundation
 
-@objc public protocol BMLResource {
+public protocol BMLResource {
     
     var name : String  { get }
     var type : BMLResourceType  { get }
@@ -49,7 +49,7 @@ open class BMLMinimalResource : NSObject, BMLResource {
     open var uuid : BMLResourceUuid
     open var fullUuid : BMLResourceFullUuid {
         get {
-            return "\(type.stringValue())/\(uuid)"
+            return "\(type.rawValue)/\(uuid)"
         }
     }
     

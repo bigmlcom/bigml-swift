@@ -84,7 +84,7 @@ open class BMLConnector : NSObject {
         completion :@escaping (_ resource : BMLResource?, _ error : NSError?) -> Void) {
             
             do {
-                let url = try self.authenticatedUrl(type.stringValue(), arguments:[:])
+                let url = try self.authenticatedUrl(type.rawValue, arguments:[:])
                 if (from.type == BMLResourceType.File) {
                     
                     if (FileManager.default.fileExists(atPath: from.uuid) &&
@@ -116,7 +116,7 @@ open class BMLConnector : NSObject {
                         
                     } else if from.type != BMLResourceType.Project &&
                         from.type != BMLResourceType.WhizzmlSource {
-                            body.updateValue(from.fullUuid, forKey: from.type.stringValue())
+                            body.updateValue(from.fullUuid, forKey: from.type.rawValue)
                     }
 
                     self.connector.post(url, body: body) {
@@ -140,7 +140,7 @@ open class BMLConnector : NSObject {
             
             do {
                 
-                let url = try self.authenticatedUrl(type.stringValue(), arguments:[:])
+                let url = try self.authenticatedUrl(type.rawValue, arguments:[:])
                 var body = options
                 body.updateValue(name, forKey: "name")
                 self.connector.post(url, body: body) {
@@ -162,7 +162,7 @@ open class BMLConnector : NSObject {
         completion : @escaping (_ resources : [BMLResource], _ error : NSError?) -> Void) {
             
             do {
-                let url = try self.authenticatedUrl(type.stringValue(),
+                let url = try self.authenticatedUrl(type.rawValue,
                     arguments: bridgedDictRep(filters))
                 
                 self.connector.get(url) { (jsonObject, error) in
@@ -205,7 +205,7 @@ open class BMLConnector : NSObject {
         completion : @escaping (_ error : NSError?) -> Void) {
             
             do {
-                let url = try self.authenticatedUrl("\(type.stringValue())/\(uuid)", arguments: [:])
+                let url = try self.authenticatedUrl("\(type.rawValue)/\(uuid)", arguments: [:])
                 self.connector.delete(url) { (error) in
                     completion(error)
                 }
@@ -221,7 +221,7 @@ open class BMLConnector : NSObject {
         completion : @escaping (_ error : NSError?) -> Void) {
             
             do {
-                let url = try self.authenticatedUrl("\(type.stringValue())/\(uuid)", arguments: [:])
+                let url = try self.authenticatedUrl("\(type.rawValue)/\(uuid)", arguments: [:])
                 self.connector.put(url, body: values) { (error) in
                     completion(error)
                 }
@@ -236,7 +236,7 @@ open class BMLConnector : NSObject {
         completion :@escaping (_ resourceDict : [String : Any], _ error : NSError?) -> Void) {
             
             do {
-                let url = try self.authenticatedUrl("\(type.stringValue())/\(uuid)", arguments:[:])
+                let url = try self.authenticatedUrl("\(type.rawValue)/\(uuid)", arguments:[:])
                 self.connector.get(url) { (jsonObject, error) in
                     
                     var localError = error;
@@ -299,6 +299,7 @@ open class BMLConnector : NSObject {
             self.getIntermediateResource(resource.type, uuid: resource.uuid) { (resourceDict, error) -> Void in
                 
                 var localError = error
+                var localResource = resource;
                 if (localError == nil) {
                     if let statusDict = resourceDict["status"] as? [String : Any],
                         let statusCodeInt = statusDict["code"] as? Int {
@@ -307,21 +308,21 @@ open class BMLConnector : NSObject {
                             if let code = statusDict["error"] as? Int {
                                 localError = NSError(status: statusDict as Any?, code: code)
                             }
-                            resource.status = BMLResourceStatus.failed
+                            localResource.status = BMLResourceStatus.failed
                         } else if (statusCode < BMLResourceStatus.ended) {
                             delay(1.0) {
                                 self.trackResourceStatus(resource, completion: completion)
                             }
-                            if (resource.status != statusCode) {
-                                resource.status = statusCode
+                            if (localResource.status != statusCode) {
+                                localResource.status = statusCode
                                 if let progress = statusDict["progress"] as? Float {
-                                    resource.progress = progress
+                                    localResource.progress = progress
                                 }
                             }
                         } else if (statusCode == BMLResourceStatus.ended) {
-                            resource.status = statusCode
-                            resource.jsonDefinition = resourceDict
-                            completion(resource, error)
+                            localResource.status = statusCode
+                            localResource.jsonDefinition = resourceDict
+                            completion(localResource, error)
                         }
                     } else {
                         localError = NSError(info: "Bad response format: no status found", code: -10001)
@@ -329,7 +330,6 @@ open class BMLConnector : NSObject {
                 }
                 if (localError != nil) {
                     print("Tracking error \(localError)", terminator: "")
-                    resource.status = BMLResourceStatus.failed
                     completion(nil, localError)
                 }
             }
